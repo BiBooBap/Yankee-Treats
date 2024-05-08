@@ -1,0 +1,20 @@
+#footer {
+    text-align: center;
+    background-color: rgb(236, 79, 85);
+    padding: 7.3em 1em;
+
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    display: flex;
+    place-items: center;
+
+    z-index: -1;
+}
+
+* {
+    box-sizing: border-box;
+}
+
