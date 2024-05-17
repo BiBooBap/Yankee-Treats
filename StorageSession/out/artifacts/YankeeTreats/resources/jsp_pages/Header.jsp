@@ -35,7 +35,7 @@
 
         <span id="icons">
             <a href=""><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
-            <a href=""><i class="fa-solid fa-circle-user fa-lg"></i></a>
+            <a href="resources/jsp_pages/Login.jsp"><i class="fa-solid fa-circle-user fa-lg"></i></a>
         </span>
 
 
