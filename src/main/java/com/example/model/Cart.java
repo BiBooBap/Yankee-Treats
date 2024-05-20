@@ -2,29 +2,75 @@ package com.example.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.example.model.CartItem;
+import com.example.model.ProductBean;
 
 public class Cart {
 
-	private List<ProductBean> products;
-	
+	private ArrayList<CartItem> cart;
+
+
 	public Cart() {
-		products = new ArrayList<ProductBean>();
+		cart = new ArrayList<CartItem>();
 	}
-	
+
 	public void addProduct(ProductBean product) {
-		products.add(product);
+		for (CartItem item : cart) {
+			if(item.getId() == product.getCode())
+			{
+				item.addQuantity();
+				return;
+			}
+		}
+
+		CartItem item = new CartItem(product);
+		cart.add(item);
 	}
-	
+
 	public void deleteProduct(ProductBean product) {
-		for(ProductBean prod : products) {
-			if(prod.getCode() == product.getCode()) {
-				products.remove(prod);
+		for(CartItem item : cart) {
+			if(item.getId() == product.getCode()) {
+				cart.remove(item);
 				break;
 			}
 		}
  	}
-	
-	public List<ProductBean> getProducts() {
-		return  products;
+
+	 public CartItem getCartItem(int id)
+	 {
+		 for(CartItem item : cart) {
+			 if(item.getId() == id)
+				 return item;
+		 }
+
+		 return null;
+	 }
+
+	public double getCartTotalPrice() {
+		double tot = 0;
+		for(CartItem item : cart)
+			tot += item.getTotalPrice();
+
+		return tot;
+	}
+
+	public int getTotalItemCount() {
+		int totalCount = 0;
+		for (CartItem item : cart) {
+			totalCount += item.getQuantityCart();
+		}
+		return totalCount;
+	}
+
+	public boolean isEmpty() {
+		return (cart.isEmpty());
+	}
+
+	public ArrayList<CartItem> getCart() {
+		return cart;
+	}
+
+	public void clearCart(){
+		cart.removeAll(cart);
 	}
 }
