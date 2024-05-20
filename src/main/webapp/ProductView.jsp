@@ -12,7 +12,6 @@
 %>
 
 <!DOCTYPE html>
-<html>
 <%@ page import="java.util.*,com.example.model.ProductBean,com.example.model.Cart"%>
 
 <head>
@@ -21,6 +20,7 @@
 	<title>Catalogo</title>
 </head>
 
+<html>
 <body>
 <%@ include file="resources/jsp_pages/Header.jsp" %>
 <%@ include file="resources/jsp_pages/Subheader.jsp" %>
@@ -137,6 +137,5 @@
 
 
 <%@ include file="resources/jsp_pages/Footer.jsp" %>
-
 </body>
 </html>
