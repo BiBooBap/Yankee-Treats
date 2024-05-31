@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/add-to-cart")
+@WebServlet("/cart")
 public class CartControl extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -35,16 +35,6 @@ public class CartControl extends HttpServlet {
                 int productId = Integer.parseInt(request.getParameter("id"));
                 cart.deleteProduct(product.doRetrieveByKey(productId));
             }
-            else if (action != null && action.equalsIgnoreCase("incrementC")) {
-                int productId = Integer.parseInt(request.getParameter("id"));
-                cart.getCartItem(productId).addQuantity();
-            }
-            else if (action != null && action.equalsIgnoreCase("decrementC")) {
-                int productId = Integer.parseInt(request.getParameter("id"));
-                cart.getCartItem(productId).reduceQuantity();
-            }
-
-
         } catch (SQLException e) {
             System.out.println("Error:" + e.getMessage());
         }

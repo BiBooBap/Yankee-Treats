@@ -40,6 +40,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>CartControl</servlet-name>
-    <url-pattern>/add-to-cart</url-pattern>
+    <url-pattern>/cart</url-pattern>
   </servlet-mapping>
 </web-app>

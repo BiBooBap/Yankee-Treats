@@ -1,6 +1,9 @@
 <%@ page language="java"%>
 
-<% request.setAttribute("cart", cart); %>
+<%
+    request.getSession().setAttribute("cart", cart);
+    cart = (Cart) request.getSession().getAttribute("cart");
+%>
 
 <link rel="stylesheet" href="resources/css/Header.css" type="text/css"/>
 
