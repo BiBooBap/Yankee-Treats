@@ -95,7 +95,7 @@
     otp.sentEmail();
 %>
 
-<form action="${pageContext.request.contextPath}/RegistrationControl" method="post" id="registerForm" onsubmit="return validateOTP()">
+<form action="${pageContext.request.contextPath}/register" method="post" id="registerForm" onsubmit="return validateOTP()">
     <input type="hidden" name="nome" value="<%= nome %>">
     <input type="hidden" name="cognome" value="<%= cognome %>">
     <input type="hidden" name="data_di_nascita" value="<%= dataDiNascita %>">
