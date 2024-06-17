@@ -34,4 +34,12 @@
     <servlet-name>LoginControl</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>CartControl</servlet-name>
+    <servlet-class>com.example.control.CartControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CartControl</servlet-name>
+    <url-pattern>/cart</url-pattern>
+  </servlet-mapping>
 </web-app>

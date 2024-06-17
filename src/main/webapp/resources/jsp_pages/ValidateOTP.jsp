@@ -1,5 +1,5 @@
 <%@ page language="java"%>
-<%@ page import="it.unisa.model.OtpBean" %>
+<%@ page import="com.example.model.OtpBean" %>
 
 <!DOCTYPE html>
 <html lang="it">

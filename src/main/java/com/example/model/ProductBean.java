@@ -20,7 +20,8 @@ public class ProductBean implements Serializable {
 	boolean novita;
 	boolean offerta;
 
-	public ProductBean() {
+	public ProductBean()
+	{
 		code = -1;
 		name = "";
 		description = "";
