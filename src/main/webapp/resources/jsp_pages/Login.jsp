@@ -80,6 +80,11 @@
     <div class="register-button">
         <a href="Registration.jsp">Non hai un account? Registrati qui</a>
     </div>
+    <% if (request.getParameter("fromProductView") != null && request.getParameter("fromProductView").equals("true")) { %>
+    <div class="checkout-no-account">
+        <a href="Checkout.jsp">Premi qui per ordinare senza creare un account</a>
+    </div>
+    <% } %>
 </div>
 
 

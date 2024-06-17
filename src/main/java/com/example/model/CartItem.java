@@ -1,13 +1,12 @@
 package com.example.model;
 
 public class CartItem {
-
     private ProductBean product;
     private int quantityCart;
 
-    public CartItem(ProductBean product){
+    public CartItem(ProductBean product) {
         this.product = product;
-        quantityCart = 1;
+        this.quantityCart = 1;
     }
 
     public ProductBean getProduct() {
@@ -19,11 +18,13 @@ public class CartItem {
     }
 
     public int getQuantityCart() {
-        return this.quantityCart;
+        return quantityCart;
     }
 
     public void setQuantityCart(int quantity) {
-        this.quantityCart = quantity;
+        if (quantity > 0 && quantity <= product.getQuantity()) {
+            this.quantityCart = quantity;
+        }
     }
 
     public int getId() {
@@ -42,13 +43,15 @@ public class CartItem {
         return product.getName();
     }
 
-    public void addQuantity(){
-        if(quantityCart < product.getQuantity() )
+    public void addQuantity() {
+        if (quantityCart < product.getQuantity()) {
             quantityCart += 1;
+        }
     }
 
     public void reduceQuantity() {
-        if( quantityCart > 1)
+        if (quantityCart > 1) {
             quantityCart -= 1;
+        }
     }
 }

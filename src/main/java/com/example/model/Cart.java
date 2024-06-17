@@ -47,11 +47,10 @@ public class Cart {
 	 }
 
 	public double getCartTotalPrice() {
-		double tot = 0;
+		double total = 0;
 		for(CartItem item : cart)
-			tot += item.getTotalPrice();
-
-		return tot;
+			total += item.getTotalPrice();
+		return total;
 	}
 
 	public int getTotalItemCount() {
