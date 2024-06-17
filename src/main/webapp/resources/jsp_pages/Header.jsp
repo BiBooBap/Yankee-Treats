@@ -3,6 +3,8 @@
 <%
     request.getSession().setAttribute("cart", cart);
     cart = (Cart) request.getSession().getAttribute("cart");
+    String userEmail = (String) request.getSession().getAttribute("userEmail");
+
 %>
 
 <link rel="stylesheet" href="resources/css/Header.css" type="text/css"/>
@@ -25,8 +27,19 @@
 <div id="header">
     <img id="logo" src="resources/images/logo.png" alt=""/>
 
-        <span id="icons">
+    <span id="icons">
+            <% if (userEmail != null && !userEmail.isEmpty()) { %>
+            <div class="welcome-message">Benvenuto: <%= userEmail %></div>
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fa-solid fa-circle-user fa-2x"></i></button>
+                <div class="dropdown-content">
+                    <a href="">Dati personali</a>
+                    <a href="${pageContext.request.contextPath}/logout">Logout</a>
+                </div>
+            </div>
+            <% } else { %>
             <a href="resources/jsp_pages/Login.jsp"><i class="fa-solid fa-circle-user fa-2x"></i></a>
+            <% } %>
             <i class="fa-solid fa-cart-shopping fa-2x"></i>
             <span class="totalQuantity"><%=cart.getTotalItemCount()%></span>
         </span>

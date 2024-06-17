@@ -72,15 +72,18 @@
 
 <div class="container">
     <h2>Login</h2>
-    <form action="${pageContext.request.contextPath}/LoginControl" method="post">
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <input type="submit" value="Accedi">
+    <form action="${pageContext.request.contextPath}/login" method="post">
+    <input type="hidden" name="fromCart" value="${param.fromCart}" />
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <input type="submit" value="Accedi">
     </form>
+
+
     <div class="register-button">
         <a href="Registration.jsp">Non hai un account? Registrati qui</a>
     </div>
-    <% if (request.getParameter("fromProductView") != null && request.getParameter("fromProductView").equals("true")) { %>
+    <% if (request.getParameter("fromCart") != null && request.getParameter("fromCart").equals("true")) { %>
     <div class="checkout-no-account">
         <a href="Checkout.jsp">Premi qui per ordinare senza creare un account</a>
     </div>

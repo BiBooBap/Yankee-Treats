@@ -16,6 +16,9 @@
 		cart = new Cart();
 		request.getSession().setAttribute("cart", cart);
 	}
+
+	String user = (String) request.getSession().getAttribute("userEmail");
+	boolean userLoggedIn = user != null && !user.isEmpty();
 %>
 
 <!DOCTYPE html>
@@ -46,21 +49,21 @@
 		<% } %>
 	</div>
 	<div class="buttons">
+		<div class="total">Totale: <%= cart.getCartTotalPrice() %> &euro;</div>
 		<div class="close" id="closeCart">CHIUDI</div>
 		<div class="checkout">
 			<%
 				// Controlla se l'utente è autenticato
-				if (request.getSession().getAttribute("user") != null) {
+				if (userLoggedIn) {
 			%>
 			<a href="Checkout.jsp">CHECKOUT</a>
 			<%
 			} else {
 			%>
-			<a href="resources/jsp_pages/Login.jsp?fromProductView=true">CHECKOUT</a> <!-- Questo parametro serve a visualizzare in login.jsp la possibilità di effettuare un ordine anche senza registrarsi -->
+			<a href="resources/jsp_pages/Login.jsp?fromCart=true">CHECKOUT</a> <!-- Questo parametro serve a visualizzare in login.jsp la possibilità di effettuare un ordine anche senza registrarsi -->
 			<%
 				}
-			%>
-		</div>
+			%>		</div>
 	</div>
 
 </div>
