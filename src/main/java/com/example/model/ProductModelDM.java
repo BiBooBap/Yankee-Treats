@@ -121,7 +121,7 @@ public class ProductModelDM implements ProductModel {
 		String selectSQL = "SELECT * FROM " + ProductModelDM.TABLE_NAME;
 
 		if (order != null && !order.equals("")) {
-			selectSQL += " ORDER BY " + order;
+			selectSQL += " WHERE " + order + " = 1 ";
 		}
 
 		try {

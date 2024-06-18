@@ -19,11 +19,42 @@ body::-webkit-scrollbar{
 h2 {
 	font-family: "Playwrite GB S", cursive;
 	font-optical-sizing: auto;
-	font-weight: 350;
-	font-style: normal;
-
+	font-weight: bold;
+	font-size: 50px;
 	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+	text-align: center;
 }
+#filtro-prodotti {
+	background-color: #eee;
+	padding: 10px;
+	margin-left: 40px;
+	max-width: 335px;
+}
+
+#filtro-prodotti ul {
+	display: flex; /* Attiva il layout Flexbox */
+	flex-direction: row; /* Disposizione in fila (orizzontale) */
+	align-items: center; /* Allineamento verticale al centro */
+}
+
+#filtro-prodotti ul li {
+	margin-right: 15px; /* Spaziatura tra gli elementi */
+	font-size: 20px;
+}
+
+#filtro-prodotti a {
+	text-decoration: none;
+	color: #333;
+}
+
+#filtro-prodotti a:hover {
+	color: #007bff;
+}
+
+#filtro-prodotti ul li {
+	margin-right: 15px; /* Spaziatura tra gli elementi */
+}
+
 
 a:link {
 	color: black;
