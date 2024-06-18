@@ -13,7 +13,7 @@
 <div id="subheader">
     <ul>
         <li>
-            <a href="#" class="link">
+            <a href="ProductView.jsp" class="link">
                 <span class="link--top">Tutti i prodotti &#128269;</span>
                 <span class="link--bottom">Tutti i prodotti &#128269;</span>
             </a>
