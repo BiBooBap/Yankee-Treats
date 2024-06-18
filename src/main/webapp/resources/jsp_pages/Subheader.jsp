@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page language="java"%>
 
 
@@ -14,6 +15,18 @@
     <ul>
         <li>
             <a href="ProductView.jsp" class="link">
+=======
+
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/Header.css" type="text/css"/>
+
+
+
+<div id="subheader">
+    <ul>
+        <li>
+            <a href="#" class="link">
+>>>>>>> a0017e3 (Restructured pages, Header now is sticky, Offers.jsp page implemented (differenced to Header.jsp), created proper CSS files for some of the pages, made relative references for most of the implementations)
                 <span class="link--top">Tutti i prodotti &#128269;</span>
                 <span class="link--bottom">Tutti i prodotti &#128269;</span>
             </a>
@@ -52,6 +65,7 @@
 </div>
 
 
+<<<<<<< HEAD
 <script>
     window.onscroll = function() {myFunction()};
 
@@ -66,3 +80,6 @@
         }
     }
 </script>
+=======
+
+>>>>>>> a0017e3 (Restructured pages, Header now is sticky, Offers.jsp page implemented (differenced to Header.jsp), created proper CSS files for some of the pages, made relative references for most of the implementations)

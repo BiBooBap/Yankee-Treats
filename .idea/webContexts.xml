@@ -4,7 +4,11 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/ProductView.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
+<<<<<<< HEAD
         <entry key="file://$PROJECT_DIR$/src/main/webapp/resources/jsp_pages/Subheader.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
+=======
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/resources/jsp_pages/Login.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
+>>>>>>> a0017e3 (Restructured pages, Header now is sticky, Offers.jsp page implemented (differenced to Header.jsp), created proper CSS files for some of the pages, made relative references for most of the implementations)
       </map>
     </option>
   </component>

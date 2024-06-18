@@ -35,11 +35,13 @@ public class LoginControl extends HttpServlet {
                 session.setAttribute("cart", cart);
             }
 
-            if(fromCart) {
+            if (fromCart) {
                 response.sendRedirect(request.getContextPath() + "/Checkout.jsp");
             } else
-            response.sendRedirect(request.getContextPath() + "/ProductView.jsp");
-        } else
-            response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/Login.jsp?error=invalidCredentials");
+                response.sendRedirect(request.getContextPath() + "/ProductView.jsp");
+        }
+
+             else response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/Login.jsp?error=invalidCredentials");
+
     }
 }

@@ -1,6 +1,6 @@
 <%@ page language="java"%>
 
-<link rel="stylesheet" href="resources/css/Footer.css" type="text/css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/Footer.css" type="text/css"/>
 
 
 
