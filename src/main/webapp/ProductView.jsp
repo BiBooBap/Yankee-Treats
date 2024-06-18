@@ -56,7 +56,7 @@
 				// Controlla se l'utente è autenticato
 				if (userLoggedIn) {
 			%>
-			<a href="Checkout.jsp">CHECKOUT</a>
+			<a href="resources/jsp_pages/Checkout.jsp">CHECKOUT</a>
 			<%
 			} else {
 			%>
