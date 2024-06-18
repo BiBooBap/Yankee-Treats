@@ -6,5 +6,5 @@
     <title>Link</title>
 </head>
 <a href="UserData.jsp">Inserisci dati personali</a>
-<a href="ViewUserData.jsp">Visualizza ed elimina</a>
+<a href="ViewUserData.jsp">Visualizza ed elimina (da fare la modifica)</a>
 </html>
