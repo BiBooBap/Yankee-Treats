@@ -50,4 +50,36 @@
     <servlet-name>LogoutControl</servlet-name>
     <url-pattern>/logout</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>BillingAddress</servlet-name>
+    <servlet-class>com.example.control.BillingAddress</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BillingAddress</servlet-name>
+    <url-pattern>/Billing</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DeliveryAddress</servlet-name>
+    <servlet-class>com.example.control.DeliveryAddress</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeliveryAddress</servlet-name>
+    <url-pattern>/Delivery</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PaymentMethods</servlet-name>
+    <servlet-class>com.example.control.PaymentMethods</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PaymentMethods</servlet-name>
+    <url-pattern>/Payment</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DeleteServlet</servlet-name>
+    <servlet-class>com.example.control.DeleteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteServlet</servlet-name>
+    <url-pattern>/Delete</url-pattern>
+  </servlet-mapping>
 </web-app>
