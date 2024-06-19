@@ -60,7 +60,7 @@
                 <div class="dropdown">
                     <button class="dropbtn"><i class="fa-solid fa-circle-user fa-2x"></i></button>
                     <div class="dropdown-content">
-                        <a href="${pageContext.request.contextPath}/resources/jsp_pages/MiddleUserData.jsp">Dati personali</a>
+                        <a href="c/resources/jsp_pages/MiddleUserData.jsp">Dati personali</a>
                         <a href="${pageContext.request.contextPath}/logout">Logout</a>
                     </div>
                 </div>

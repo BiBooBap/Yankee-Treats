@@ -7,7 +7,7 @@
 <body>
 <h1>403 - Accesso negato</h1>
 <p>Non hai i permessi per accedere a questa risorsa.</p>
-<button onclick="window.location.href='/ProductView.jsp'">Torna alla Home</button>
+<button onclick="window.location.href='${pageContext.request.contextPath}/ProductView.jsp)'">Torna alla Home</button>
 </body>
 </html>
 
