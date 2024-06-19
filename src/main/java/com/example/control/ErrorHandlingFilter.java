@@ -31,7 +31,7 @@ public class ErrorHandlingFilter implements Filter {
 
             httpResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             httpRequest.setAttribute("errorMessage", e.getMessage());
-            httpRequest.getRequestDispatcher("/WEB-INF/views/error/500.jsp").forward(httpRequest, httpResponse);
+            httpRequest.getRequestDispatcher("/WEB-INF/views/errors/500.jsp").forward(httpRequest, httpResponse);
         }
     }
 
