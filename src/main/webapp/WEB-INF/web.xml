@@ -82,4 +82,12 @@
     <servlet-name>DeleteServlet</servlet-name>
     <url-pattern>/Delete</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>CheckEmail</servlet-name>
+    <servlet-class>com.example.control.CheckEmail</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CheckEmail</servlet-name>
+    <url-pattern>/Check</url-pattern>
+  </servlet-mapping>
 </web-app>

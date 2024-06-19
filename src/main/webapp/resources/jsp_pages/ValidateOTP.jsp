@@ -116,7 +116,7 @@
     function validateOTP() {
         var otpInput = document.getElementById('otp').value;
         if (otpInput !== code) {
-            alert('Codice OTP incorretto.');
+            alert('Codice OTP non corretto.');
             return false;
         }
         return true;

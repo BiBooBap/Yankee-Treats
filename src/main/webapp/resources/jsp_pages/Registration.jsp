@@ -20,7 +20,8 @@
         <input type="date" name="data_di_nascita" placeholder="Data di nascita" required>
         <br>
         <br>
-        <input type="email" name="email" placeholder="Email" required>
+        <input type="email" id="email" name="email" placeholder="Email" required onkeyup="checkEmail()">
+        <div id="email-error" class="error-message" style="display: none;"></div>
         <input type="password" id="password" name="password" placeholder="Password" required>
         <input type="password" name="confermapassword" id="conferma-password" placeholder="Conferma Password" onkeyup="checkPasswordMatch()" required>
         <div id="password-error" class="error-message" style="display: none;">Le password non corrispondono. Riprova.</div>
@@ -35,7 +36,7 @@
         <div id="codice_fiscale" style="display: none;">
             <input type="text" name="codice_fiscale" placeholder="Codice Fiscale">
         </div>
-        <input type="submit" value="Registrati">
+        <input type="submit" id="submit-btn" value="Registrati">
     </form>
 </div>
 
@@ -66,6 +67,35 @@
             document.getElementById('codice_fiscale').style.display = 'none';
         }
     });
+
+    function checkEmail() {
+        var email = document.getElementById("email").value;
+        var errorDiv = document.getElementById("email-error");
+        var submitBtn = document.getElementById("submit-btn");
+
+        if (email) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "${pageContext.request.contextPath}/Check", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.exists) {
+                        errorDiv.style.display = "block";
+                        errorDiv.textContent = "Email gia' registrata. Scegli un'altra email.";
+                        submitBtn.disabled = true;
+                    } else {
+                        errorDiv.style.display = "none";
+                        submitBtn.disabled = false;
+                    }
+                }
+            };
+            xhr.send("email=" + encodeURIComponent(email));
+        } else {
+            errorDiv.style.display = "none";
+            submitBtn.disabled = false;
+        }
+    }
 </script>
 
 

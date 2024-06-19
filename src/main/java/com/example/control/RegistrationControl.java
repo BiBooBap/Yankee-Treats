@@ -34,9 +34,9 @@ public class RegistrationControl extends HttpServlet {
         boolean inserimentoRiuscito = registrationModelDS.insertUser(registrazioneBean);
 
         if (inserimentoRiuscito) {
-            response.sendRedirect("registrazione_successo.jsp");
+            response.sendRedirect(request.getContextPath()+"/ProductView.jsp?userEmail=" + email);
         } else {
-            response.sendRedirect("registrazione_errore.jsp");
+            response.sendRedirect("error.jsp");
         }
         }
 

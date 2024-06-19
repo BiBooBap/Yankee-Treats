@@ -1,6 +1,13 @@
 <%@ page language="java"%>
 
 <%
+	String userMail = request.getParameter("userEmail");
+	if (userMail != null && !userMail.isEmpty()) {
+		session.setAttribute("userEmail", userMail);
+	} else {
+		userMail = (String) session.getAttribute("userEmail");
+	}
+
 	List<ProductBean> products = (List<ProductBean>) request.getAttribute("products");
 	if(products == null) {
 		response.sendRedirect(request.getContextPath() + "/product");

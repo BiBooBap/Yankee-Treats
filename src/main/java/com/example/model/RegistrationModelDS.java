@@ -6,6 +6,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class RegistrationModelDS {
@@ -54,5 +55,20 @@ public class RegistrationModelDS {
             System.out.println("Errore durante l'inserimento utente: " + e.getMessage());
             return false;
         }
+    }
+
+    public boolean checkEmail(String email) {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE email = ?";
+        try (Connection conn = ds.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                boolean exists = rs.next();
+                return exists;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error validating user: " + e.getMessage());
+        }
+        return false;
     }
 }
