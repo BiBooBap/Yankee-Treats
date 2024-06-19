@@ -46,14 +46,8 @@ input[type="submit"] {
 }
 
 .error-message {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #f2dede;
-    color: #a94442;
-    border: 1px solid #a94442;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
+    display: none;
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
 }

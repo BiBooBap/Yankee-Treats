@@ -95,7 +95,6 @@
                 <div class="close" id="closeCart">CHIUDI</div>
                 <div class="checkout">
                     <%
-                        // Controlla se l'utente è autenticato
                         if (userLoggedIn) {
                     %>
                     <a href="${pageContext.request.contextPath}/resources/jsp_pages/Checkout.jsp">CHECKOUT</a>

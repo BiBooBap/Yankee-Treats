@@ -1,5 +1,6 @@
 <%@ page language="java"%>
 
+
 <%
 	String userMail = request.getParameter("userEmail");
 	if (userMail != null && !userMail.isEmpty()) {
@@ -8,11 +9,20 @@
 		userMail = (String) session.getAttribute("userEmail");
 	}
 
+
 	List<ProductBean> products = (List<ProductBean>) request.getAttribute("products");
 	if(products == null) {
 		response.sendRedirect(request.getContextPath() + "/product");
 		return;
 	}
+
+	String user_type=request.getParameter("userType");
+	if (user_type != null && !user_type.isEmpty()) {
+		session.setAttribute("userType", user_type);
+	} else {
+		user_type = (String) session.getAttribute("userType");
+	}
+
 %>
 
 <!DOCTYPE html>

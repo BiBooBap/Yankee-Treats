@@ -15,6 +15,7 @@
     <h2>Login</h2>
     <form action="${pageContext.request.contextPath}/login" method="post">
     <input type="hidden" name="fromCart" value="${param.fromCart}" />
+        <input type="hidden" name="fromB2B" value="${param.fromB2B}" />
     <input type="email" name="email" placeholder="Email" required>
     <input type="password" name="password" placeholder="Password" required>
     <input type="submit" value="Accedi">
