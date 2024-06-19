@@ -24,27 +24,51 @@
             </a>
         </li>
         <li>
-            <a href="#" class="link">
+            <a href="product?sort=offerta" class="link">
                 <span class="link--top">Offerte &#128293;</span>
                 <span class="link--bottom">Offerte &#128293;</span>
             </a>
         </li>
         <li>
-            <a href="#" class="link">
+            <a href="product?sort=novita" class="link">
                 <span class="link--top">Novit&agrave; &#10024;</span>
                 <span class="link--bottom">Novit&agrave; &#10024;</span>
             </a>
         </li>
         <li>
-            <a href="#" class="link">
+            <a href="product?sort=trend" class="link">
                 <span class="link--top">Trend &#127852;</span>
                 <span class="link--bottom">Trend &#127852;</span>
             </a>
         </li>
         <li>
-            <a href="#" class="link">
+            <a href="product?sort=bundle" class="link">
                 <span class="link--top">Bundle &#127873;</span>
                 <span class="link--bottom">Bundle &#127873;</span>
+            </a>
+        </li>
+        <li>
+            <a href="product?sort=bestseller" class="link">
+                <span class="link--top">Bestsellers &#127881;</span>
+                <span class="link--bottom">Bestsellers &#127881;</span>
+            </a>
+        </li>
+        <li>
+            <a href="product?sort=bevanda" class="link">
+                <span class="link--top">Bevande &#127862;</span>
+                <span class="link--bottom">Bevande &#127862;</span>
+            </a>
+        </li>
+        <li>
+            <a href="product?sort=dolce" class="link">
+                <span class="link--top">Dolci &#127849;</span>
+                <span class="link--bottom">Dolci &#127849;</span>
+            </a>
+        </li>
+        <li>
+            <a href="product?sort=salato" class="link">
+                <span class="link--top">Salati &#127839;</span>
+                <span class="link--bottom">Salati &#127839;</span>
             </a>
         </li>
         <li>

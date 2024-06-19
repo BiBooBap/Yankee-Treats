@@ -46,15 +46,6 @@
 
 	<h2>Vetrina prodotti</h2>
 
-	<nav id="filtro-prodotti">
-		<ul>
-			<li><a href="product?sort=bestseller">Bestsellers</a></li>
-			<li><a href="product?sort=bevanda">Bevande</a></li>
-			<li><a href="product?sort=dolce">Dolce</a></li>
-			<li><a href="product?sort=salato">Salato</a></li>
-		</ul>
-	</nav>
-
 	<div class="container">
 		<% for (ProductBean bean : products) {%>
 		<div class="card">
