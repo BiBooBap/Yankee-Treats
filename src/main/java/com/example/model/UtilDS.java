@@ -64,6 +64,25 @@ public class UtilDS     {
         return null;
     }
 
+    public static String getNamebyEmail(String email) {
+        String query = "SELECT name FROM " + TABLE_NAME + " WHERE email = ?";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, email);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("name");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error validating user: " + e.getMessage());
+        }
+        return null;
+    }
+
     public static ArrayList<String[]> returnDeliveryAddress(String userEmail) throws NamingException, SQLException {
         ArrayList<String[]> deliveryAddresses = new ArrayList<>();
 

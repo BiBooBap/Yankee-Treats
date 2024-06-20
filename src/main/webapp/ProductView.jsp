@@ -10,8 +10,9 @@
 		userMail = (String) session.getAttribute("userEmail");
 	}
 
-
 	List<ProductBean> products = (List<ProductBean>) request.getAttribute("products");
+	request.getSession().setAttribute("products", products);
+
 	if(products == null) {
 		response.sendRedirect(request.getContextPath() + "/product");
 		return;

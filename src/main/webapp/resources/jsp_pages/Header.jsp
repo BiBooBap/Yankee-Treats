@@ -10,7 +10,6 @@
 <%
     ProductBean product = (ProductBean) request.getAttribute("product");
 
-    // Ottieni il carrello dalla sessione
     Cart cart = (Cart) request.getSession().getAttribute("cart");
     if (cart == null) {
         cart = new Cart();
@@ -19,13 +18,11 @@
 
     String user = (String) request.getSession().getAttribute("userEmail");
     boolean userLoggedIn = user != null && !user.isEmpty();
-%>
 
+    String username= (String) request.getSession().getAttribute("userName");
 
-<%
     request.getSession().setAttribute("cart", cart);
     cart = (Cart) request.getSession().getAttribute("cart");
-    String userEmail = (String) request.getSession().getAttribute("userEmail");
 %>
 
 
@@ -59,8 +56,8 @@
         <img id="logo" src="${pageContext.request.contextPath}/resources/images/logo.png" alt=""/>
 
         <span id="icons">
-                <% if (userEmail != null && !userEmail.isEmpty()) { %>
-                <div class="welcome-message">Benvenuto, <%= userEmail %></div>
+                <% if (username != null && !username.isEmpty()) { %>
+                <div class="welcome-message">Benvenuto, <%= username %></div>
                 <div class="dropdown">
                     <button class="dropbtn"><i class="fa-solid fa-circle-user" style="font-size: 30px;"></i></button>
                     <div class="dropdown-content">
