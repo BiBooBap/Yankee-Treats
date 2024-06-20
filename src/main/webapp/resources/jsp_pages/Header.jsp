@@ -49,13 +49,10 @@
 
 <html>
 <body>
+<div id="header">
+    <img id="logo" src="${pageContext.request.contextPath}/resources/images/logo.png" alt=""/>
 
-
-
-    <div id="header">
-        <img id="logo" src="${pageContext.request.contextPath}/resources/images/logo.png" alt=""/>
-
-        <span id="icons">
+    <span id="icons">
                 <% if (username != null && !username.isEmpty()) { %>
                 <div class="welcome-message">Benvenuto, <%= username %></div>
                 <div class="dropdown">
@@ -68,95 +65,10 @@
                 <% } else { %>
                 <a href="${pageContext.request.contextPath}/resources/jsp_pages/Login.jsp"><i class="fa-solid fa-circle-user" style="font-size: 30px;"></i></a>
                 <% } %>
-                <i class="fa-solid fa-cart-shopping" style="font-size: 30px;"></i>
+                <a href="${pageContext.request.contextPath}/resources/jsp_pages/Cart.jsp"><i class="fa-solid fa-cart-shopping" style="font-size: 30px;"></i></a>
                 <span class="totalQuantity"><%=cart.getTotalItemCount()%></span>
-            </span>
-
-        <div class="cart" id="cart"> <!-- LASCIARE SIA CLASS CHE ID = CART -->
-
-            <h2>CARRELLO</h2>
-
-            <div class="listCart">
-
-                <% for (CartItem item : cart.getCart()) { %>
-
-                <div class="item">
-                    <div class="content">
-                        <div class="name"><%= item.getName() %></div>
-
-                        <div class="price"><%= item.getTotalPrice() %><span>&euro;</span></div>
-
-                        <div class="quantity">
-                            <button><a href="cart?action=decrementC&id=<%=item.getId()%>">-</a></button>
-                            <span class="value"><%= item.getQuantityCart() %></span>
-                            <button><a href="cart?action=incrementC&id=<%=item.getId()%>">+</a></button>
-                        </div>
-
-                        <a href="cart?action=deleteC&id=<%=item.getId()%>"> Rimuovi </a>
-
-                        <img src="${pageContext.request.contextPath}/images/product_<%= item.getId() %>.png" class="productimage" alt="">
-                    </div>
-                </div>
-                <% } %>
-            </div>
-
-
-
-            <div class="buttons">
-                <div class="total">Totale: <%= cart.getCartTotalPrice() %> &euro;</div>
-                <div class="close" id="closeCart">CHIUDI</div>
-                <div class="checkout">
-                    <%
-                        if (userLoggedIn) {
-                    %>
-                    <a href="${pageContext.request.contextPath}/resources/jsp_pages/Checkout.jsp">CHECKOUT</a>
-                    <%
-                    } else {
-                    %>
-                    <a href="${pageContext.request.contextPath}/resources/jsp_pages/Login.jsp?fromCart=true">CHECKOUT</a> <!-- Questo parametro serve a visualizzare in login.jsp la possibilità di effettuare un ordine anche senza registrarsi -->
-                    <%
-                        }
-                    %>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-    <script>
-        const cartIcon = document.querySelector('.fa-cart-shopping');
-        cartIcon.addEventListener('click', toggleCart);
-
-        const closeCartBtn = document.querySelector('.cart .buttons #closeCart');
-        closeCartBtn.addEventListener('click', closeCart);
-
-        function toggleCart() {
-            const cart = document.querySelector('.cart');
-            const container = document.querySelector('.body-container');
-
-            if (cart.style.right === '-400px') {
-                cart.style.right = '0'; // Mostra il carrello
-                container.style.transform = 'translateX(-400px)'; // Sposta il contenitore a sinistra
-            } else {
-                cart.style.right = '-400px'; // Nascondi il carrello
-                container.style.transform = 'translateX(0px)'; // Riporta il contenitore alla posizione originale
-            }
-        }
-
-        function closeCart() {
-            const cart = document.querySelector('.cart');
-            const container = document.querySelector('.body-container');
-
-            cart.style.right = '-400px'; // Nascondi il carrello
-            container.style.transform = 'translateX(0px)'; // Riporta il contenitore alla posizione originale
-        }
-    </script>
-
-
+    </span>
+</div>
 
     <script>
         window.onscroll = function() {myFunction()};
@@ -172,9 +84,5 @@
             }
         }
     </script>
-
-
-
-
 </body>
 </html>
