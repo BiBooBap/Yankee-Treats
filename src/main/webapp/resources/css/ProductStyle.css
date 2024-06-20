@@ -55,23 +55,8 @@ h2 {
 	margin-right: 15px; /* Spaziatura tra gli elementi */
 }
 
-
-a:link {
-	color: black;
-	font-weight: bold;
+a {
 	text-decoration: none;
-}
-
-a:hover {
-	color: white;
-}
-
-a:visited {
-	color: black;
-}
-
-a:active {
-	color: black;
 }
 
 .product-image {
