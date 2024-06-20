@@ -72,10 +72,16 @@
             </a>
         </li>
         <li>
-            <a href="${pageContext.request.contextPath}/resources/jsp_pages/B2b.jsp" class="link">
-                <span class="link--top">B2B &#128666;</span>
-                <span class="link--bottom">B2B &#128666;</span>
-            </a>
+            <% if (userLogged && user_typ != null && user_typ.equals("venditore")) { %>
+            <a href="b2b?action=viewB2B" class="link">
+                    <% } else if (!userLogged) { %>
+                <a href="resources/jsp_pages/Login.jsp?fromB2B=true" class="link">
+                        <% } else { %>
+                    <a href="resources/jsp_pages/errors/403.jsp" class="link">
+                        <% } %>
+                        <span class="link--top">B2B &#128666;</span>
+                        <span class="link--bottom">B2B &#128666;</span>
+                    </a>
         </li>
     </ul>
 

@@ -98,6 +98,14 @@
     <filter-name>ErrorHandlingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  <servlet>
+    <servlet-name>B2bControl</servlet-name>
+    <servlet-class>com.example.control.B2bControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>B2bControl</servlet-name>
+    <url-pattern>/b2b</url-pattern>
+  </servlet-mapping>
   <error-page>
     <error-code>404</error-code>
     <location>/resources/jsp_pages/errors/404.jsp</location>
