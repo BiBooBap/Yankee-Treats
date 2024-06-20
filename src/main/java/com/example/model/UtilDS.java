@@ -190,4 +190,23 @@ public class UtilDS     {
 
         return PaymentMethod;
     }
+
+    public static int getNextCode() {
+        String query = "SELECT MAX(code) AS max_code FROM product";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getInt("max_code");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving max product code: " + e.getMessage());
+        }
+
+        return -1;
+    }
+
 }

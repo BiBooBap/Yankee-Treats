@@ -17,12 +17,15 @@
     }
 
     String user = (String) request.getSession().getAttribute("userEmail");
+    String user_ty =(String) request.getSession().getAttribute("userType");
     boolean userLoggedIn = user != null && !user.isEmpty();
 
     String username= (String) request.getSession().getAttribute("userName");
 
     request.getSession().setAttribute("cart", cart);
     cart = (Cart) request.getSession().getAttribute("cart");
+
+
 %>
 
 
@@ -59,7 +62,11 @@
                     <button class="dropbtn"><i class="fa-solid fa-circle-user" style="font-size: 30px;"></i></button>
                     <div class="dropdown-content">
                         <a href="${pageContext.request.contextPath}/resources/jsp_pages/MiddleUserData.jsp">Dati personali</a>
+                        <% if (user_ty.equals("admin")) { %>
+                        <a href="${pageContext.request.contextPath}/resources/jsp_pages/InsertProduct.jsp">Inserisci prodotti</a>
+                        <% } %>
                         <a href="${pageContext.request.contextPath}/logout">Logout</a>
+
                     </div>
                 </div>
                 <% } else { %>
