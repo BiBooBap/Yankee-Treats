@@ -24,7 +24,7 @@
     <a href="#" id="drop">Prodotti</a>
     <ul>
         <li>
-            <a href="ProductView.jsp">
+            <a href="/product">
                 &#128269; Tutti i prodotti &#128269;
             </a>
         </li>
@@ -70,7 +70,7 @@
         </li>
         <li>
             <% if (userLogged && user_typ != null && user_typ.equals("venditore")) { %>
-            <a href="b2b?action=viewB2B">
+            <a href="${pageContext.request.contextPath}resources/jsp_pages/B2b.jsp" class="link">
                     <% } else if (!userLogged) { %>
                 <a href="resources/jsp_pages/Login.jsp?fromB2B=true">
                         <% } else { %>

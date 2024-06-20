@@ -90,6 +90,14 @@
     <servlet-name>CheckEmail</servlet-name>
     <url-pattern>/Check</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>InsertProductAdmin</servlet-name>
+    <servlet-class>com.example.control.InsertProductAdmin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InsertProductAdmin</servlet-name>
+    <url-pattern>/InsertProduct</url-pattern>
+  </servlet-mapping>
   <filter>
     <filter-name>ErrorHandlingFilter</filter-name>
     <filter-class>com.example.control.ErrorHandlingFilter</filter-class>
@@ -98,14 +106,6 @@
     <filter-name>ErrorHandlingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  <servlet>
-    <servlet-name>B2bControl</servlet-name>
-    <servlet-class>com.example.control.B2bControl</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>B2bControl</servlet-name>
-    <url-pattern>/b2b</url-pattern>
-  </servlet-mapping>
   <error-page>
     <error-code>404</error-code>
     <location>/resources/jsp_pages/errors/404.jsp</location>

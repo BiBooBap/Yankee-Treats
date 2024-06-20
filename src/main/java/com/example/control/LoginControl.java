@@ -18,6 +18,7 @@ public class LoginControl extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
+
         LoginBean loginBean = new LoginBean();
         loginBean.setEmail(email);
         loginBean.setPassword(password);
@@ -28,10 +29,13 @@ public class LoginControl extends HttpServlet {
         boolean fromB2B = Boolean.parseBoolean(request.getParameter("fromB2B"));
 
         String userType = UtilDS.getUserTypebyEmail(email);
+        String name= UtilDS.getNamebyEmail(email);
         if (loginSuccess) {
             HttpSession session = request.getSession();
             session.setAttribute("userEmail", email);
             session.setAttribute("userType", userType);
+            session.setAttribute("userName", name);
+
             Cart cart = (Cart) session.getAttribute("cart");
             if (cart == null) {
                 cart = new Cart();
