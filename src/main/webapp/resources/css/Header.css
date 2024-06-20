@@ -28,21 +28,21 @@
     margin-right: 35px;
 }
 
-#header #icons .fa-cart-shopping{
+.fa-cart-shopping{
     margin-left: 15px;
     color: black !important;
 }
 
-#header #icons .fa-circle-user{
+.fa-circle-user{
     color: black !important;
 }
 
 #logo {
-    max-width: 150px;
+    max-width: 100px;
     margin: 20px;
 }
 
-#header #icons .totalQuantity {
+.totalQuantity {
     position: absolute;
     top: 0;
     right: 0;
@@ -73,7 +73,7 @@
     }
 
     #header-right {
-        float: none;
+        float: right;
         display: flex;
         align-items: center;
         margin-top: 10px;
@@ -257,7 +257,7 @@
     width: 100%;
 
     #logo {
-        max-width: 80px;
+        max-width: 70px;
         margin: 20px;
     }
 }

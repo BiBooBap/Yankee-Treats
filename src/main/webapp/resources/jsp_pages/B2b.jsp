@@ -30,6 +30,9 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <link href="${pageContext.request.contextPath}/resources/css/B2bStyle.css" rel="stylesheet" type="text/css">
     <title>B2B</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
 <body>

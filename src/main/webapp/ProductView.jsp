@@ -64,6 +64,9 @@
 	</div>
 
 	<%@ include file="resources/jsp_pages/Footer.jsp" %>
+
+
+
 </body>
 </html>
 

@@ -2,6 +2,10 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/Header.css" type="text/css"/>
 
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
 
 <div class="body-container">
     <div class="text-container">
