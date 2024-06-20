@@ -24,21 +24,23 @@
     font-size: 18px;
     line-height: 25px;
     border-radius: 4px;
-    color: black;
     position: relative;
     margin-right: 35px;
 }
 
 #header #icons .fa-cart-shopping{
     margin-left: 15px;
+    color: black !important;
+}
+
+#header #icons .fa-circle-user{
+    color: black !important;
 }
 
 #logo {
     max-width: 150px;
     margin: 20px;
 }
-
-
 
 #header #icons .totalQuantity {
     position: absolute;

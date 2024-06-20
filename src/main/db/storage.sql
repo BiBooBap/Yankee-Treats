@@ -17,7 +17,8 @@ CREATE TABLE product (
                          trend			TINYINT(1),
                          novita		TINYINT(1),
                          offerta		TINYINT(1),
-                         bundle		TINYINT(1)
+                         bundle		TINYINT(1),
+                         B2B        TINYINT(1)
 );
 
 
@@ -74,6 +75,13 @@ VALUES
     ('Chocolate Sampler', 'Assortimento di barrette e dolci di cioccolato americani', 10, 30, 1, 0, 1, 0, 0),
     ('Soda Variety Pack', 'Assortimento di bibite gassate americane', 12, 20, 1, 0, 1, 0, 0),
     ('Energy Drink Combo', 'Varietà di bevande energetiche americane', 15, 15, 1, 1, 0, 0, 0);
+
+-- Prodotti B2B
+INSERT INTO product(name, description, price, quantity, B2B)
+VALUES
+    ('Chips Stock', '50 unità di potato chips di marche diverse di rilievo', 250, 70, 1),
+    ('Soda Stock', '50 unità di bibite gassate di marche diverse di rilievo', 250, 65, 1),
+    ('Chocolate Stock', '50 unità di confezioni di cioccolato di marche diverse di rilievo', 220, 80, 1);
 
 CREATE TABLE users (
                        code INT PRIMARY KEY AUTO_INCREMENT,

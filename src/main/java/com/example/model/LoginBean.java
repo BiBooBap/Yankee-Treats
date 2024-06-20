@@ -3,6 +3,7 @@ package com.example.model;
 public class LoginBean {
     private String email;
     private String password;
+    private String name;
 
     public String getEmail() {
         return email;
@@ -12,9 +13,7 @@ public class LoginBean {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
+    public String getPassword() { return password; }
 
     public void setPassword(String password) {
         this.password = password;

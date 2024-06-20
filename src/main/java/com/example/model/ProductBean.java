@@ -19,6 +19,7 @@ public class ProductBean implements Serializable {
 	boolean trend;
 	boolean novita;
 	boolean offerta;
+	boolean B2B;
 
 	public ProductBean()
 	{
@@ -34,6 +35,7 @@ public class ProductBean implements Serializable {
 		trend = false;
 		novita = false;
 		offerta = false;
+		B2B = false;
 	}
 
 	public int getCode() {
@@ -92,6 +94,8 @@ public class ProductBean implements Serializable {
 
 	public boolean isBundle() {return bundle;}
 
+	public boolean isB2B() {return B2B;}
+
 	public void setBestseller(boolean bestseller) {this.bestseller = bestseller;}
 
 	public void setDolce(boolean dolce) {this.dolce = dolce;}
@@ -107,6 +111,8 @@ public class ProductBean implements Serializable {
 	public void setOfferta(boolean offerta) {this.offerta = offerta;}
 
 	public void setBundle(boolean bundle) {this.bundle = bundle;}
+
+	public void setB2B(boolean B2B) {this.B2B = B2B;}
 
 	@Override
 	public String toString() {

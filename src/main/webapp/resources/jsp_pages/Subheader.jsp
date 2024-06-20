@@ -4,7 +4,7 @@
     String userE = (String) request.getSession().getAttribute("userEmail");
     boolean userLogged = userE != null && !userE.isEmpty();
 
-    String user_typ=(String) request.getSession().getAttribute("userType");
+    String user_typ =(String) request.getSession().getAttribute("userType");
 %>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -72,14 +72,8 @@
             </a>
         </li>
         <li>
-            <% if (userLogged && user_typ != null && user_typ.equals("venditore")) { %>
-            <a href="resources/jsp_pages/B2b.jsp" class="link">
-                    <% } else if (!userLogged) { %>
-                <a href="resources/jsp_pages/Login.jsp?fromB2B=true" class="link">
-                    <% } else { %>
-                        <a href="#" class="link">
-                    <% } %>
-                    <span class="link--top">B2B &#128666;</span>
+            <a href="${pageContext.request.contextPath}/resources/jsp_pages/B2b.jsp" class="link">
+                <span class="link--top">B2B &#128666;</span>
                 <span class="link--bottom">B2B &#128666;</span>
             </a>
         </li>
@@ -104,6 +98,5 @@
     function showErrorMessage() {
 
     }
-
 </script>
 

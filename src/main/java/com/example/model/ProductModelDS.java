@@ -37,7 +37,7 @@ public class ProductModelDS implements ProductModel {
 		PreparedStatement preparedStatement = null;
 
 		String insertSQL = "INSERT INTO " + ProductModelDS.TABLE_NAME
-				+ " (NAME, DESCRIPTION, PRICE, QUANTITY, BESTSELLER, DOLCE, SALATO, BEVANDA, TREND, NOVITA, OFFERTA, BUNDLE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ " (NAME, DESCRIPTION, PRICE, QUANTITY, BESTSELLER, DOLCE, SALATO, BEVANDA, TREND, NOVITA, OFFERTA, BUNDLE, B2B) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			connection = ds.getConnection();
@@ -91,6 +91,7 @@ public class ProductModelDS implements ProductModel {
 				bean.setNovita(rs.getBoolean("NOVITA"));
 				bean.setOfferta(rs.getBoolean("OFFERTA"));
 				bean.setBundle(rs.getBoolean("BUNDLE"));
+				bean.setB2B(rs.getBoolean("B2B"));
 			}
 
 		} finally {
@@ -167,6 +168,7 @@ public class ProductModelDS implements ProductModel {
 				bean.setNovita(rs.getBoolean("NOVITA"));
 				bean.setOfferta(rs.getBoolean("OFFERTA"));
 				bean.setBundle(rs.getBoolean("BUNDLE"));
+				bean.setB2B(rs.getBoolean("B2B"));
 				products.add(bean);
 			}
 
