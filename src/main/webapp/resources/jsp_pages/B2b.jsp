@@ -29,8 +29,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <link href="${pageContext.request.contextPath}/resources/css/B2bStyle.css" rel="stylesheet" type="text/css">
-    <title>B2B</title>
-
+    <title>B2B - Yankee Treats</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
@@ -39,9 +38,9 @@
 <%@ include file="Header.jsp" %>
 
 <section id="intro">
-    <h1>Benvenuti al nostro Programma B2B</h1>
+    <h1>Benvenuto al nostro programma B2B</h1>
     <p>Scopri la nostra vasta selezione di snack americani, perfetti per rivenditori, distributori e aziende che desiderano offrire il meglio ai propri clienti o dipendenti. Approfitta di prezzi competitivi, offerte speciali e un servizio clienti dedicato.</p>
-    <p>I nostri prezzi all'ingrosso sono pensati per offrire il massimo vantaggio ai nostri clienti B2B. Offriamo sconti speciali per ordini di grandi dimensioni</p>
+    <p>I nostri prezzi all'ingrosso sono pensati per offrire il massimo vantaggio ai nostri clienti B2B. Offriamo prezzi speciali per ordini di grandi dimensioni.</p>
 </section>
 
 <div class="container">
@@ -61,6 +60,6 @@
     </div>
         <% } } %>
 
-<%@ include file="Footer.jsp" %>
+
 </body>
 
