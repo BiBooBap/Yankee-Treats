@@ -47,7 +47,8 @@
 	<h2>Vetrina prodotti</h2>
 
 	<div class="container">
-		<% for (ProductBean bean : products) { %>
+		<% for (ProductBean bean : products) {
+			if (!bean.isB2B()) {%>
 		<div class="card">
 			<div class="card-img">
 				<img src="${pageContext.request.contextPath}/resources/images/product_<%=bean.getCode()%>.png" class="product-image" alt="<%=bean.getName()%>">
@@ -65,7 +66,7 @@
 				</button>
 			</div>
 		</div>
-		<% }  %>
+		<% } } %>
 	</div>
 
 	<%@ include file="resources/jsp_pages/Footer.jsp" %>
