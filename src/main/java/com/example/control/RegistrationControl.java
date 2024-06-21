@@ -4,10 +4,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.example.model.RegistrationBean;
 
 import java.io.IOException;
 import com.example.model.RegistrationModelDS;
+import com.example.model.UtilDS;
+
 public class RegistrationControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -34,6 +38,10 @@ public class RegistrationControl extends HttpServlet {
         boolean inserimentoRiuscito = registrationModelDS.insertUser(registrazioneBean);
 
         if (inserimentoRiuscito) {
+            HttpSession session = request.getSession();
+            session.setAttribute("userEmail", email);
+            session.setAttribute("userType", UtilDS.getUserTypebyEmail(email));
+            session.setAttribute("userName", UtilDS.getNamebyEmail(email));
             response.sendRedirect(request.getContextPath()+"/ProductView.jsp?userEmail=" + email);
         } else {
             response.sendRedirect("error.jsp");

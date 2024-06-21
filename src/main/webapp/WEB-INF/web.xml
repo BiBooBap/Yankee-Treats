@@ -98,6 +98,7 @@
     <servlet-name>InsertProductAdmin</servlet-name>
     <url-pattern>/InsertProduct</url-pattern>
   </servlet-mapping>
+<!--
   <filter>
     <filter-name>ErrorHandlingFilter</filter-name>
     <filter-class>com.example.control.ErrorHandlingFilter</filter-class>
@@ -122,4 +123,5 @@
     <exception-type>java.lang.Exception</exception-type>
     <location>/resources/jsp_pages/errors/500.jsp</location>
   </error-page>
+  -->
 </web-app>

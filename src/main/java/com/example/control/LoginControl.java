@@ -45,7 +45,7 @@ public class LoginControl extends HttpServlet {
             if (fromCart) {
                 response.sendRedirect(request.getContextPath() + "/Checkout.jsp");
             } else if(fromB2B && userType.equals("venditore")) {
-                response.sendRedirect("resources/jsp_pages/B2b.jsp");
+                response.sendRedirect(request.getContextPath()+"resources/jsp_pages/B2b.jsp");
             } else
                 response.sendRedirect(request.getContextPath() + "/ProductView.jsp");
             }
