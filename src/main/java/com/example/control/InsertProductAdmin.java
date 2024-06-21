@@ -32,14 +32,15 @@ public class InsertProductAdmin extends HttpServlet {
         boolean bundle = Boolean.parseBoolean(request.getParameter("productBundle"));
         boolean b2b = Boolean.parseBoolean(request.getParameter("productB2B"));
 
-        ProductDAO.insertProduct(name, description, price, quantity, bestseller, dolce, salato, bevanda,
-                trend, novita, offerta, bundle, b2b);
+        ProductDAO.insertProduct(name, description, price, quantity, bestseller ? 1 : 0, dolce ? 1 : 0, salato ? 1 : 0, bevanda ? 1 : 0,
+                trend ? 1 : 0, novita ? 1 : 0, offerta ? 1 : 0, bundle ? 1 : 0, b2b ? 1 : 0);
+
 
         int next_code=UtilDS.getNextCode();
         next_code=next_code+1;
         InputStream fileContent = request.getInputStream();
         String fileName = "product_" +next_code + ".png";
-        String savePath = request.getContextPath()+"/resources/images/" + fileName;
+        String savePath = "/Users/giuseppedisomma/Yankee-Treats/src/main/webapp/resources/images/" + fileName;
 
         try (OutputStream outputStream = new FileOutputStream(new File(savePath))) {
             int read;
@@ -53,6 +54,7 @@ public class InsertProductAdmin extends HttpServlet {
         } finally {
             fileContent.close();
         }
+        System.out.println("Saving file to: " + savePath);
         response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/InsertProduct.jsp");
     }
 }

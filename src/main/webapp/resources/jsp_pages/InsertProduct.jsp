@@ -108,39 +108,39 @@
                 <label>Caratteristiche:</label>
                 <div class="checkbox-group">
                     <div>
-                        <input type="checkbox" id="bestseller" name="bestseller">
+                        <input type="checkbox" id="bestseller" name="bestseller" value="true">
                         <label for="bestseller">Bestseller</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="dolce" name="dolce">
+                        <input type="checkbox" id="dolce" name="dolce" value="true">
                         <label for="dolce">Dolce</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="salato" name="salato">
+                        <input type="checkbox" id="salato" name="salato" value="true">
                         <label for="salato">Salato</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="bevanda" name="bevanda">
+                        <input type="checkbox" id="bevanda" name="bevanda" value="true">
                         <label for="bevanda">Bevanda</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="trend" name="trend">
+                        <input type="checkbox" id="trend" name="trend" value="true">
                         <label for="trend">Trend</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="novita" name="novita">
+                        <input type="checkbox" id="novita" name="novita" value="true">
                         <label for="novita">Novità</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="offerta" name="offerta">
+                        <input type="checkbox" id="offerta" name="offerta" value="true">
                         <label for="offerta">Offerta</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="bundle" name="bundle">
+                        <input type="checkbox" id="bundle" name="bundle" value="true">
                         <label for="bundle">Bundle</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="b2b" name="b2b">
+                        <input type="checkbox" id="b2b" name="b2b" value="true">
                         <label for="b2b">B2B</label>
                     </div>
                     <div class="form-group">

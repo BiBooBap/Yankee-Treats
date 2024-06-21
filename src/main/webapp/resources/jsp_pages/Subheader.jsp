@@ -75,7 +75,7 @@
             </a>
         </li>
         <li>
-            <% if (userLogged && user_typ != null && user_typ.equals("venditore")) { %>
+            <% if (userLogged && user_typ != null && (user_typ.equals("venditore") || user_typ.equals("admin"))) { %>
             <a href="resources/jsp_pages/B2b.jsp" class="link">
                     <% } else if (!userLogged) { %>
                 <a href="resources/jsp_pages/Login.jsp?fromB2B=true" class="link">

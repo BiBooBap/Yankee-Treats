@@ -24,8 +24,8 @@ public class ProductDAO {
     }
 
     public static void insertProduct(String name, String description, int price, int quantity,
-                                     boolean bestseller, boolean dolce, boolean salato, boolean bevanda,
-                                     boolean trend, boolean novita, boolean offerta, boolean bundle, boolean b2b) {
+                                     int bestseller, int dolce, int salato, int bevanda,
+                                     int trend, int novita, int offerta, int bundle, int b2b) {
 
         String query = "INSERT INTO " + TABLE_NAME + " (name, description, price, quantity, bestseller, dolce, salato, bevanda, trend, novita, offerta, bundle, B2B) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = ds.getConnection();
@@ -35,15 +35,15 @@ public class ProductDAO {
             stmt.setString(2, description);
             stmt.setInt(3, price);
             stmt.setInt(4, quantity);
-            stmt.setBoolean(5, bestseller);
-            stmt.setBoolean(6, dolce);
-            stmt.setBoolean(7, salato);
-            stmt.setBoolean(8, bevanda);
-            stmt.setBoolean(9, trend);
-            stmt.setBoolean(10, novita);
-            stmt.setBoolean(11, offerta);
-            stmt.setBoolean(12, bundle);
-            stmt.setBoolean(13, b2b);
+            stmt.setInt(5, bestseller);  // Converti int in int
+            stmt.setInt(6, dolce);       // Converti int in int
+            stmt.setInt(7, salato);      // Converti int in int
+            stmt.setInt(8, bevanda);     // Converti int in int
+            stmt.setInt(9, trend);       // Converti int in int
+            stmt.setInt(10, novita);     // Converti int in int
+            stmt.setInt(11, offerta);    // Converti int in int
+            stmt.setInt(12, bundle);     // Converti int in int
+            stmt.setInt(13, b2b);
 
             stmt.executeUpdate();
 
