@@ -19,71 +19,66 @@
 
 
 <div id="subheader">
+
+
+    <a href="#" id="drop">Prodotti</a>
+
+
     <ul>
         <li>
-            <a href="ProductView.jsp" class="link">
-                <span class="link--top">Tutti i prodotti &#128269;</span>
-                <span class="link--bottom">Tutti i prodotti &#128269;</span>
+            <a href="ProductView.jsp">
+                &#128269; Tutti i prodotti &#128269;
             </a>
         </li>
         <li>
-            <a href="product?sort=offerta" class="link">
-                <span class="link--top">Offerte &#128293;</span>
-                <span class="link--bottom">Offerte &#128293;</span>
+            <a href="product?sort=offerta">
+                &#128293; Offerte &#128293;
             </a>
         </li>
         <li>
-            <a href="product?sort=novita" class="link">
-                <span class="link--top">Novit&agrave; &#10024;</span>
-                <span class="link--bottom">Novit&agrave; &#10024;</span>
+            <a href="product?sort=novita">
+                &#10024; Novit&agrave; &#10024;
             </a>
         </li>
         <li>
-            <a href="product?sort=trend" class="link">
-                <span class="link--top">Trend &#127852;</span>
-                <span class="link--bottom">Trend &#127852;</span>
+            <a href="product?sort=trend">
+                &#127852; Trend &#127852;
             </a>
         </li>
         <li>
-            <a href="product?sort=bundle" class="link">
-                <span class="link--top">Bundle &#127873;</span>
-                <span class="link--bottom">Bundle &#127873;</span>
+            <a href="product?sort=bundle">
+                &#127873; Bundle &#127873;
             </a>
         </li>
         <li>
-            <a href="product?sort=bestseller" class="link">
-                <span class="link--top">Bestsellers &#127881;</span>
-                <span class="link--bottom">Bestsellers &#127881;</span>
+            <a href="product?sort=bestseller">
+                &#127881; Bestsellers &#127881;
             </a>
         </li>
         <li>
-            <a href="product?sort=bevanda" class="link">
-                <span class="link--top">Bevande &#127862;</span>
-                <span class="link--bottom">Bevande &#127862;</span>
+            <a href="product?sort=bevanda">
+                &#127862; Bevande &#127862;
             </a>
         </li>
         <li>
-            <a href="product?sort=dolce" class="link">
-                <span class="link--top">Dolci &#127849;</span>
-                <span class="link--bottom">Dolci &#127849;</span>
+            <a href="product?sort=dolce">
+                &#127849; Dolci &#127849;
             </a>
         </li>
         <li>
-            <a href="product?sort=salato" class="link">
-                <span class="link--top">Salati &#127839;</span>
-                <span class="link--bottom">Salati &#127839;</span>
+            <a href="product?sort=salato">
+                &#127839; Salati &#127839;
             </a>
         </li>
         <li>
             <% if (userLogged && user_typ != null && (user_typ.equals("venditore") || user_typ.equals("admin"))) { %>
-            <a href="resources/jsp_pages/B2b.jsp" class="link">
+            <a href="resources/jsp_pages/B2b.jsp">
                     <% } else if (!userLogged) { %>
-                <a href="resources/jsp_pages/Login.jsp?fromB2B=true" class="link">
+                <a href="resources/jsp_pages/Login.jsp?fromB2B=true">
                         <% } else { %>
-                    <a href="resources/jsp_pages/errors/403.jsp" class="link">
+                    <a href="resources/jsp_pages/errors/403.jsp">
                         <% } %>
-                        <span class="link--top">B2B &#128666;</span>
-                        <span class="link--bottom">B2B &#128666;</span>
+                        &#128666; B2B &#128666;
                     </a>
         </li>
     </ul>
@@ -91,18 +86,33 @@
 </div>
 
 <script>
-    window.onscroll = function() {myFunction()};
+    let drop = document.getElementById("drop");
+    let body = document.getElementsByTagName("body")[0];
+    let ul = document.getElementById("subheader").getElementsByTagName("ul")[0];
+    let subheader = document.getElementById("subheader");
 
-    let header = document.getElementById("subheader");
-    let sticky = header.offsetTop;
+    let flag = false;
 
-    function myFunction() {
-        if (window.scrollY > sticky) {
-            header.classList.add("sticky");
-        } else {
-            header.classList.remove("sticky");
-        }
+    drop.addEventListener("click", fullscreenFilters);
+
+    function fullscreenFilters() {
+        ul.style.display = "flex";
+        body.style.overflow = "hidden";
+        flag = true;
     }
+
+    window.addEventListener("resize", function () {
+        if (window.innerWidth >= 1251 && flag === false) {
+            body.style.overflow = "auto";
+
+        } else if (window.innerWidth < 1251 && flag === true) {
+            body.style.overflow = "hidden";
+        }
+        else {
+            body.style.overflow = "auto";
+        }
+    });
+
 
     function showErrorMessage() {
 

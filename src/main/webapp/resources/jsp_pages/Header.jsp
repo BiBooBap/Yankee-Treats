@@ -43,7 +43,7 @@
         <% if (username != null && !username.isEmpty()) { %>
         <div class="welcome-message">Benvenuto, <%= username %></div>
         <div class="dropdown">
-            <button class="dropbtn"><i class="fa-solid fa-circle-user" style="font-size: 30px;"></i></button>
+            <button class="dropbtn"><i class="fa-solid fa-circle-user"></i></button>
             <div class="dropdown-content">
                 <a href="${pageContext.request.contextPath}/resources/jsp_pages/MiddleUserData.jsp">Dati personali</a>
                 <% if (user_ty.equals("admin")) { %>
@@ -53,9 +53,9 @@
             </div>
         </div>
         <% } else { %>
-        <a href="${pageContext.request.contextPath}/resources/jsp_pages/Login.jsp"><i class="fa-solid fa-circle-user" style="font-size: 30px;"></i></a>
+        <a href="${pageContext.request.contextPath}/resources/jsp_pages/Login.jsp"><i class="fa-solid fa-circle-user"></i></a>
         <% } %>
-        <a href="${pageContext.request.contextPath}/resources/jsp_pages/Cart.jsp"><i class="fa-solid fa-cart-shopping" style="font-size: 30px;"></i></a>
+        <a href="${pageContext.request.contextPath}/resources/jsp_pages/Cart.jsp"><i class="fa-solid fa-cart-shopping"></i></a>
         <span class="totalQuantity"><%= cart.getTotalItemCount() %></span>
     </span>
 </div>
