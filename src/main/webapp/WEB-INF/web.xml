@@ -98,7 +98,22 @@
     <servlet-name>InsertProductAdmin</servlet-name>
     <url-pattern>/InsertProduct</url-pattern>
   </servlet-mapping>
-<!--
+  <servlet>
+    <servlet-name>CreatePaymentIntent</servlet-name>
+    <servlet-class>com.example.control.CreatePaymentIntent</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreatePaymentIntent</servlet-name>
+    <url-pattern>/CreatePaymentIntent</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ConfirmPayment</servlet-name>
+    <servlet-class>com.example.control.ConfirmPayment</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ConfirmPayment</servlet-name>
+    <url-pattern>/ConfirmPayment</url-pattern>
+  </servlet-mapping>
   <filter>
     <filter-name>ErrorHandlingFilter</filter-name>
     <filter-class>com.example.control.ErrorHandlingFilter</filter-class>
@@ -123,5 +138,4 @@
     <exception-type>java.lang.Exception</exception-type>
     <location>/resources/jsp_pages/errors/500.jsp</location>
   </error-page>
-  -->
 </web-app>

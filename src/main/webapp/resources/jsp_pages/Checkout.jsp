@@ -1,24 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, com.example.model.*, com.example.control.*"%>
-
 <%
-    Cart cart = (Cart) request.getSession().getAttribute("cart");
-    if (cart == null) {
-        cart = new Cart();
-        request.getSession().setAttribute("cart", cart);
-    }
-
-    String user = (String) request.getSession().getAttribute("userEmail");
-    boolean userLoggedIn = user != null && !user.isEmpty();
+    String userE = (String) request.getSession().getAttribute("userEmail");
+    boolean userLoggedIn = userE != null && !userE.isEmpty();
 %>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
-    <!-- Aggiungi qui eventuali stili CSS -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -48,13 +37,6 @@
             border-radius: 4px;
         }
 
-        .form-group select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
         .btn {
             background-color: #4CAF50;
             color: white;
@@ -72,8 +54,8 @@
 <body>
 <div class="container">
     <h2>Checkout</h2>
-    <form action="ProcessCheckout" method="post">
-            <% if (!userLoggedIn) { %>
+    <form action="ConfirmPayment" method="post">
+        <% if (!userLoggedIn) { %>
         <div class="form-group">
             <label for="firstName">Nome</label>
             <input type="text" id="firstName" name="firstName" required>
@@ -94,7 +76,7 @@
             <label for="phoneNumber">Numero di telefono</label>
             <input type="tel" id="phoneNumber" name="phoneNumber" required>
         </div>
-            <% } %>
+        <% } %>
         <h3>Indirizzo di fatturazione</h3>
         <div class="form-group">
             <label for="billingAddressStreet">Via</label>
@@ -129,11 +111,24 @@
             <label for="deliveryAddressZIP">CAP</label>
             <input type="text" id="deliveryAddressZIP" name="deliveryAddressZIP" required>
         </div>
+        <input type="hidden" id="paymentIntentId" name="payment_intent_id">
         <button type="submit" class="btn">Procedi con il pagamento</button>
     </form>
-
 </div>
+<script>
+    // AJAX call to create PaymentIntent and set the hidden field
+    fetch('CreatePaymentIntent', {
+        method: 'POST'
+    })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('paymentIntentId').value = data.paymentIntentId;
+        })
+        .catch(error => console.error('Error:', error));
+</script>
 </body>
 </html>
+
+
 
 
