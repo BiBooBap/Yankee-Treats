@@ -99,20 +99,12 @@
     <url-pattern>/InsertProduct</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>CreatePaymentIntent</servlet-name>
-    <servlet-class>com.example.control.CreatePaymentIntent</servlet-class>
+    <servlet-name>CheckoutServlet</servlet-name>
+    <servlet-class>com.example.control.CheckoutServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>CreatePaymentIntent</servlet-name>
-    <url-pattern>/CreatePaymentIntent</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>ConfirmPayment</servlet-name>
-    <servlet-class>com.example.control.ConfirmPayment</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ConfirmPayment</servlet-name>
-    <url-pattern>/ConfirmPayment</url-pattern>
+    <servlet-name>CheckoutServlet</servlet-name>
+    <url-pattern>/checkout</url-pattern>
   </servlet-mapping>
   <filter>
     <filter-name>ErrorHandlingFilter</filter-name>

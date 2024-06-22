@@ -4,7 +4,9 @@
 <%
     String userE = (String) request.getSession().getAttribute("userEmail");
     boolean userLoggedIn = userE != null && !userE.isEmpty();
+
 %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,9 +57,10 @@
     </style>
 </head>
 <body>
+
 <div class="container">
     <h2>Checkout</h2>
-    <form action="${pageContext.request.contextPath}/ConfirmPayment" method="post">
+    <form action="${pageContext.request.contextPath}/checkout" method="post">
         <% if (!userLoggedIn) { %>
         <div class="form-group">
             <label for="firstName">Nome</label>
@@ -115,24 +118,27 @@
             <input type="text" id="deliveryAddressZIP" name="deliveryAddressZIP" required>
         </div>
         <input type="hidden" id="paymentIntentId" name="payment_intent_id">
+        <h3> Dati di pagamento</h3>
+        <div id="payment-form">
+            <input type="text" id="card-number" placeholder="Numero carta">
+            <input type="text" id="expiry" placeholder="Scadenza MM/AA">
+            <input type="text" id="cvc" placeholder="CVC">
+            <button id="pay-button">Paga</button>
+        </div>
         <button type="submit" class="btn">Procedi con il pagamento</button>
     </form>
 </div>
+
+<script src="https://js.stripe.com/v3/"></script>
 <script>
-    // AJAX call to create PaymentIntent and set the hidden field
-    fetch('${pageContext.request.contextPath}/CreatePaymentIntent', {
-        method: 'POST'
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            document.getElementById('paymentIntentId').value = data.clientSecret;
-        })
-        .catch(error => console.error('Fetch error:', error));
+        var sessionId = "<%= request.getParameter("sessionId") %>";
+        var stripe = Stripe('pk_live_51PUSgWRtccnKjfP4hgvMCBJpSxJntuNgMixOVMOTEl0ruFBu20Sik6vY3UiC7CE7nkiGqzdDFGzGmbhNSznYqumk00cJlukrTh'); // Imposta la tua chiave pubblica di Stripe
+        stripe.redirectToCheckout({
+        sessionId: sessionId
+    }).then(function (result) {
+        // Gestisci eventuali errori durante il redirect
+        console.log(result.error.message);
+    });
 </script>
 </body>
 </html>
