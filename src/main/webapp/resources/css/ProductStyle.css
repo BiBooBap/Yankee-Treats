@@ -261,11 +261,7 @@ a {
     }
 }
 
-.body-container{
-    transition: transform 1s;
-}
-
-.badge {
+.new {
     position: absolute;
     top: 1px;
     right: 1px;
@@ -278,6 +274,25 @@ a {
     justify-content: center;
     border-radius: 50%;
     font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    pointer-events: none; /* Assicura che il badge non risponda agli eventi del mouse */
+}
+
+.offer {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    background: #fdb500;
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 11px; /* Ridotto il font-size per far stare il testo nel badge */
     font-weight: bold;
     text-transform: uppercase;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);

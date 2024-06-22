@@ -1,3 +1,6 @@
+<%@ page language="java"%>
+<%@ page import="java.util.*, com.example.model.*, com.example.control.*"%>
+
 <%
     String userE = (String) request.getSession().getAttribute("userEmail");
     boolean userLoggedIn = userE != null && !userE.isEmpty();
@@ -54,7 +57,7 @@
 <body>
 <div class="container">
     <h2>Checkout</h2>
-    <form action="ConfirmPayment" method="post">
+    <form action="${pageContext.request.contextPath}/ConfirmPayment" method="post">
         <% if (!userLoggedIn) { %>
         <div class="form-group">
             <label for="firstName">Nome</label>
@@ -117,14 +120,19 @@
 </div>
 <script>
     // AJAX call to create PaymentIntent and set the hidden field
-    fetch('CreatePaymentIntent', {
+    fetch('${pageContext.request.contextPath}/CreatePaymentIntent', {
         method: 'POST'
     })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('paymentIntentId').value = data.paymentIntentId;
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
         })
-        .catch(error => console.error('Error:', error));
+        .then(data => {
+            document.getElementById('paymentIntentId').value = data.clientSecret;
+        })
+        .catch(error => console.error('Fetch error:', error));
 </script>
 </body>
 </html>

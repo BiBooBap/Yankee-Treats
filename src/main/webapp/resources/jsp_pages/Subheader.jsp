@@ -21,7 +21,7 @@
 <div id="subheader">
 
 
-    <a href="#" id="drop">Prodotti</a>
+    <a href="#" id="drop">Filtra prodotti</a>
 
 
     <ul>

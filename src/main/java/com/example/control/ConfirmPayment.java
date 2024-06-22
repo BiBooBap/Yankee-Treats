@@ -8,6 +8,7 @@ import com.stripe.model.Charge;
 import com.stripe.model.PaymentIntent;
 import com.stripe.param.ChargeListParams;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -24,9 +25,11 @@ import java.util.Map;
 public class ConfirmPayment extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    private static final String STRIPE_SECRET_KEY = System.getenv("sk_test_9W1R4v0cz6AtC9PVwHFzywti");
+    private static final Dotenv dotenv = Dotenv.load();
+    private static final String STRIPE_SECRET_KEY = dotenv.get("STRIPE_SECRET_KEY");
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Received POST request in ConfirmPayment servlet.");
         Stripe.apiKey = STRIPE_SECRET_KEY;
 
         String paymentIntentId = request.getParameter("payment_intent_id");

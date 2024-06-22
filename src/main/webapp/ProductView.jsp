@@ -53,7 +53,10 @@
 			<div class="card-img">
 				<img src="${pageContext.request.contextPath}/resources/images/product_<%=bean.getCode()%>.png" class="product-image" alt="<%=bean.getName()%>">
 				<% if(bean.isNovita()) { %>
-				<div class="badge new">Nuovo!</div>
+				<div class="new">Nuovo!</div>
+				<% } %>
+				<% if (bean.isOfferta()) { %>
+				<div class="offer">Offerta!</div>
 				<% } %>
 			</div>
 			<div class="card-title"><%=bean.getName()%></div>

@@ -1,12 +1,10 @@
 package com.example.control;
 
 import com.example.model.Cart;
-import com.example.model.CartItem;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
-import com.stripe.param.PaymentIntentCreateParams;
-
+import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,9 +21,11 @@ import java.util.Map;
 public class CreatePaymentIntent extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    private static final String STRIPE_SECRET_KEY = System.getenv("sk_test_9W1R4v0cz6AtC9PVwHFzywti");
+    private static final Dotenv dotenv = Dotenv.load();
+    private static final String STRIPE_SECRET_KEY = dotenv.get("STRIPE_SECRET_KEY");
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Set Stripe API key
         Stripe.apiKey = STRIPE_SECRET_KEY;
 
         HttpSession session = request.getSession();
@@ -36,7 +36,6 @@ public class CreatePaymentIntent extends HttpServlet {
             return;
         }
 
-        // Calculate total amount in cents
         int amount = (int) (cart.getCartTotalPrice() * 100);
 
         try {
@@ -50,7 +49,6 @@ public class CreatePaymentIntent extends HttpServlet {
             Map<String, Object> paymentDetails = new HashMap<>();
             paymentDetails.put("clientSecret", paymentIntent.getClientSecret());
 
-            // Save payment details in session
             session.setAttribute("paymentDetails", paymentDetails);
 
             response.setContentType("application/json");
@@ -64,5 +62,8 @@ public class CreatePaymentIntent extends HttpServlet {
         }
     }
 }
+
+
+
 
 
