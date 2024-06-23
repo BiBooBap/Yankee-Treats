@@ -1,5 +1,5 @@
-<%@ page language="java"%>
-<%@ page import="java.util.*, com.example.model.*, com.example.control.*"%>
+<%@ page language="java" %>
+<%@ page import="java.util.*, com.example.model.*, com.example.control.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -61,9 +61,6 @@
             <li>ID Pagamento: ${paymentDetails.paymentIntentId}</li>
             <li>Importo: ${paymentDetails.amount} ${paymentDetails.currency}</li>
             <li>Creato il: ${paymentDetails.created}</li>
-            <c:if test="${paymentDetails.receiptUrl != null}">
-                <li>Ricevuta: <a href="${paymentDetails.receiptUrl}">Visualizza ricevuta</a></li>
-            </c:if>
         </ul>
     </div>
 
@@ -89,4 +86,6 @@
 </div>
 </body>
 </html>
+
+
 

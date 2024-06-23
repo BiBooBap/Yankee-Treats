@@ -4,21 +4,15 @@ import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
-import com.example.model.Cart;
-import com.example.model.CartItem;
-import io.github.cdimascio.dotenv.Dotenv;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentService {
 
-    private static final long serialVersionUID = 1L;
+    private static final String STRIPE_SECRET_KEY = System.getenv("STRIPE_SECRET_KEY");
 
-    private static final Dotenv dotenv = Dotenv.load();
-    private static final String STRIPE_SECRET_KEY = dotenv.get("STRIPE_SECRET_KEY");
-
-    public PaymentService(String apiKey) {
+    public PaymentService() {
         Stripe.apiKey = STRIPE_SECRET_KEY;
     }
 
@@ -26,8 +20,8 @@ public class PaymentService {
         List<SessionCreateParams.LineItem> lineItems = new ArrayList<>();
         for (CartItem item : cart.getCart()) {
             SessionCreateParams.LineItem.PriceData priceData = SessionCreateParams.LineItem.PriceData.builder()
-                    .setCurrency("usd") // Sostituisci con la tua valuta
-                    .setUnitAmount((long) (item.getProduct().getPrice() * 100)) // Converti il prezzo in centesimi
+                    .setCurrency("eur")
+                    .setUnitAmount((long) (item.getProduct().getPrice() * 100))
                     .setProductData(SessionCreateParams.LineItem.PriceData.ProductData.builder()
                             .setName(item.getName())
                             .build())
@@ -53,6 +47,8 @@ public class PaymentService {
         return session.getId();
     }
 }
+
+
 
 
 

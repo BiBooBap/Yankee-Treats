@@ -4,7 +4,6 @@
 <%
     String userE = (String) request.getSession().getAttribute("userEmail");
     boolean userLoggedIn = userE != null && !userE.isEmpty();
-
 %>
 
 <!DOCTYPE html>
@@ -119,29 +118,32 @@
         </div>
         <input type="hidden" id="paymentIntentId" name="payment_intent_id">
         <h3> Dati di pagamento</h3>
-        <div id="payment-form">
+        <div id="payment-form" class="form-group">
             <input type="text" id="card-number" placeholder="Numero carta">
             <input type="text" id="expiry" placeholder="Scadenza MM/AA">
             <input type="text" id="cvc" placeholder="CVC">
-            <button id="pay-button">Paga</button>
         </div>
-        <button type="submit" class="btn">Procedi con il pagamento</button>
+        <button type="submit" id="pay-button" class="btn">Procedi con il pagamento</button>
     </form>
 </div>
 
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-        var sessionId = "<%= request.getParameter("sessionId") %>";
-        var stripe = Stripe('pk_live_51PUSgWRtccnKjfP4hgvMCBJpSxJntuNgMixOVMOTEl0ruFBu20Sik6vY3UiC7CE7nkiGqzdDFGzGmbhNSznYqumk00cJlukrTh'); // Imposta la tua chiave pubblica di Stripe
+    var sessionId = "<%= request.getParameter("sessionId") %>";
+    if (sessionId) {
+        var stripe = Stripe('pk_test_51PUSgWRtccnKjfP4TCkyOTZXhk2D3RB6Kobyk9VBWKvglahKhx9v92b9OtAObf749UciykRFpeqZzVrv3HrlP9DT00tx8yaXUI'); // Usa la tua chiave pubblica di Stripe per ambiente di test
         stripe.redirectToCheckout({
-        sessionId: sessionId
-    }).then(function (result) {
-        // Gestisci eventuali errori durante il redirect
-        console.log(result.error.message);
-    });
+            sessionId: sessionId
+        }).then(function (result) {
+            if (result.error) {
+                console.log(result.error.message);
+            }
+        });
+    }
 </script>
 </body>
 </html>
+
 
 
 

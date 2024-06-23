@@ -131,3 +131,26 @@ CREATE TABLE payment_method (
                               FOREIGN KEY (user_code) REFERENCES users(code)
 );
 
+
+DROP TABLE IF EXISTS ordine;
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE order (
+                        id_order int NOT NULL AUTO_INCREMENT,
+                        state varchar(100) NOT NULL,
+                        date_order date NOT NULL,
+                        email varchar(100) NOT NULL,
+                        total_import double NOT NULL,
+                        credit_card varchar(16) NOT NULL,
+                        address varchar(100) NOT NULL,
+                        cap varchar(100) NOT NULL,
+                        PRIMARY KEY (id_ordine),
+                        KEY email (email),
+                        KEY credit_card (credit_card),
+                        KEY address (address,cap),
+                        CONSTRAINT order_ibfk_1 FOREIGN KEY (email) REFERENCES users (email) ON UPDATE CASCADE,
+                        CONSTRAINT order_ibfk_2 FOREIGN KEY (credit_card) REFERENCES payment_method (card_number),
+                        CONSTRAINT order_ibfk_3 FOREIGN KEY (address, cap) REFERENCES delivery_addresses (street, zip)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;

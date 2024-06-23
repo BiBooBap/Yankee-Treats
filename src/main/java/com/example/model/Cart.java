@@ -65,6 +65,10 @@ public class Cart {
 		return (cart.isEmpty());
 	}
 
+	public int size() {
+		return cart.size();
+	}
+
 	public ArrayList<CartItem> getCart() {
 		return cart;
 	}

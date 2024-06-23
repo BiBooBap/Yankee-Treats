@@ -161,4 +161,36 @@ public class ProductModelDM implements ProductModel {
 		return products;
 	}
 
+	public synchronized void doUpdateQnt(int id, int qnt) throws SQLException {
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		String updateSQL = "UPDATE " + ProductModelDM.TABLE_NAME
+				+ " SET QUANTITY = ? "
+				+ " WHERE CODE = ? ";
+
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			connection.setAutoCommit(false);
+			preparedStatement = connection.prepareStatement(updateSQL);
+			preparedStatement.setInt(1, qnt);
+			preparedStatement.setInt(2, id);
+
+
+
+			preparedStatement.executeUpdate();
+
+			connection.commit();
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+	}
+
 }

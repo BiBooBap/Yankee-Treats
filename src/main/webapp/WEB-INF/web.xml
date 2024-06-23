@@ -106,6 +106,14 @@
     <servlet-name>CheckoutServlet</servlet-name>
     <url-pattern>/checkout</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>OrderServlet</servlet-name>
+    <servlet-class>com.example.control.OrderServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrderServlet</servlet-name>
+    <url-pattern>/order</url-pattern>
+  </servlet-mapping>
   <filter>
     <filter-name>ErrorHandlingFilter</filter-name>
     <filter-class>com.example.control.ErrorHandlingFilter</filter-class>
