@@ -9,7 +9,7 @@
     }
 
     String fromCheckout = request.getParameter("fromCheckout");
-
+    String guest=request.getParameter("guest");
 %>
 
 
@@ -175,6 +175,12 @@
 <% if ("true".equals(fromCheckout)) { %>
 <form action="Checkout.jsp" method="get">
     <button type="submit" class="btn btn-secondary">Torna al checkout</button>
+</form>
+<% } %>
+
+<% if ("true".equals(guest)) { %>
+<form action="Checkout.jsp" method="get">
+    <button type="submit" class="btn btn-secondary">Procedi con il checkout</button>
 </form>
 <% } %>
 

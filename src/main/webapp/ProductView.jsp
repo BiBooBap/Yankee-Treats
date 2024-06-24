@@ -18,13 +18,13 @@
 		return;
 	}
 
-	String user_type=request.getParameter("userType");
+	String user_type= (String) request.getSession().getAttribute("userType");
 	if (user_type != null && !user_type.isEmpty()) {
 		session.setAttribute("userType", user_type);
 	} else {
-		user_type = (String) session.getAttribute("userType");
+		user_type = "guest";
+		session.setAttribute("userType", user_type);
 	}
-
 %>
 
 <!DOCTYPE html>

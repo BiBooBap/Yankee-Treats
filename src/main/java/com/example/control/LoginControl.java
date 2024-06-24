@@ -29,13 +29,14 @@ public class LoginControl extends HttpServlet {
         boolean fromB2B = Boolean.parseBoolean(request.getParameter("fromB2B"));
 
         String userType = UtilDS.getUserTypebyEmail(email);
-        String name= UtilDS.getNamebyEmail(email);
         if (loginSuccess) {
             HttpSession session = request.getSession();
             session.setAttribute("userCode", UtilDS.getUserCodebyEmail(email));
             session.setAttribute("userEmail", email);
-            session.setAttribute("userType", userType);
-            session.setAttribute("userName", name);
+            session.setAttribute("userType", UtilDS.getUserTypebyEmail(email));
+            session.setAttribute("userName", UtilDS.getNamebyEmail(email));
+
+            System.out.println("nel login " +userType);
 
             Cart cart = (Cart) session.getAttribute("cart");
             if (cart == null) {

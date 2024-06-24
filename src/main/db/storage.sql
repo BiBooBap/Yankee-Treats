@@ -90,7 +90,7 @@ CREATE TABLE users (
                        date_of_birth DATE,
                        email VARCHAR(100) NOT NULL,
                        password VARCHAR(255) NOT NULL,
-                       user_type ENUM('venditore', 'privato','admin') NOT NULL,
+                       user_type ENUM('venditore', 'privato','admin','guest') NOT NULL,
                        partita_iva VARCHAR(30),
                        CF VARCHAR(30)
 );

@@ -1,4 +1,5 @@
 <%@ page language="java"%>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -27,7 +28,7 @@
     </div>
     <% if (request.getParameter("fromCart") != null && request.getParameter("fromCart").equals("true")) { %>
     <div class="checkout-no-account">
-        <a href="${pageContext.request.contextPath}/resources/jsp_pages/Checkout.jsp">Premi qui per ordinare senza creare un account</a>
+        <a href="${pageContext.request.contextPath}/resources/jsp_pages/UserData.jsp?guest=true">Premi qui per ordinare senza creare un account</a>
     </div>
     <% } %>
 </div>
