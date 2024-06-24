@@ -110,7 +110,11 @@
                 <tr>
                     <th></th>
                     <th>Via</th>
+<<<<<<< HEAD
                     <th>Citt&agrave;</th>
+=======
+                    <th>Citta</th>
+>>>>>>> 13e3b11 (Fixing some buttons)
                     <th>Provincia</th>
                     <th>CAP</th>
                 </tr>
@@ -134,7 +138,11 @@
                 <tr>
                     <th></th>
                     <th>Via</th>
+<<<<<<< HEAD
                     <th>Citt&agrave;</th>
+=======
+                    <th>Citta</th>
+>>>>>>> 13e3b11 (Fixing some buttons)
                     <th>Provincia</th>
                     <th>CAP</th>
                     <th>Paese</th>
@@ -178,6 +186,7 @@
 
             <div class="btn-container">
                 <button type="submit" class="btn">Conferma Ordine</button>
+                <a href="UserData.jsp?fromCheckout=true" class="btn btn-secondary">Inserisci Informazioni Personali</a>
             </div>
         </form>
     </div>
