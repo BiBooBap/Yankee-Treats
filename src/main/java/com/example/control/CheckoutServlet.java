@@ -1,131 +1,79 @@
 package com.example.control;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 
-import com.example.model.*;
-
-@WebServlet("/checkout")
 public class CheckoutServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        ProductModelDM daoProd = new ProductModelDM();
-        OrderDAO daoOrd = new OrderDAO();
-        CartItem daoComp = new CartItem();
-        IndirizzoSpedizioneDao daoSped = new IndirizzoSpedizioneDao();
-        MetodoPagamentoDao daoPag = new MetodoPagamentoDao();
-
-        LoginBean user = (LoginBean) request.getSession().getAttribute("currentSessionUser");
-        OrderBean ordine = new OrderBean();
-        ProductBean comp = new ProductBean();
-        IndirizzoSpedizioneBean sped = new IndirizzoSpedizioneBean();
-        MetodoPagamentoBean pag = new MetodoPagamentoBean();
-
-        Cart cart = (Cart) request.getSession().getAttribute("cart");
-        Double prezzoTot = cart.getCartTotalPrice();
-
-        Date now = new Date();
-        String pattern = "yyyy-MM-dd";
-        SimpleDateFormat formatter = new SimpleDateFormat(pattern);
-        String mysqlDateString = formatter.format(now);
-
-        String nome = request.getParameter("nome");
-        String cognome = request.getParameter("cognome");
-        String telefono = request.getParameter("tel");
-        String città = request.getParameter("città");
-        String ind = request.getParameter("ind");
-        String cap = request.getParameter("cap");
-        String prov = request.getParameter("prov");
-
-        String tit = request.getParameter("tit");
-        String numC = request.getParameter("numC");
-        String scad = request.getParameter("scad");
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int paymentCardId;
+        int deliveryAddressId;
+        int billingAddressId;
+        double totalCost;
 
         try {
-
-            if(daoSped.doRetrieveByKey(ind,cap)==null){
-                sped.setNome(nome);
-                sped.setCognome(cognome);
-                sped.setIndirizzo(ind);
-                sped.setTelefono(telefono);
-                sped.setCap(cap);
-                sped.setProvincia(prov);
-                sped.setCittà(città);
-                daoSped.doSave(sped);
-            }
-
-            if(daoPag.doRetrieveByKey(numC)==null){
-                pag.setTitolare(tit);
-                pag.setNumero(numC);
-                pag.setScadenza(scad);
-                daoPag.doSave(pag);
-            }
+            paymentCardId = Integer.parseInt(request.getParameter("selectedPaymentMethodId"));
+            deliveryAddressId = Integer.parseInt(request.getParameter("selectedDeliveryAddressId"));
+            billingAddressId = Integer.parseInt(request.getParameter("selectedAddressId"));
+            totalCost = (double) request.getSession().getAttribute("cartTotal");
 
 
-            ordine.setEmail(user.getEmail());
-            ordine.setAddress(ind);
-            ordine.setCap(cap);
-            ordine.setCreditCard(numC);
-            ordine.setDate(mysqlDateString);
-            ordine.setState("Confermato");
-            ordine.setTotalImport(prezzoTot);
-            daoOrd.doSave(ordine);
-
-            ArrayList<OrderBean> ordini = daoOrd.doRetrieveByEmail(user.getEmail());
-            int newId = ordini.get(ordini.size() - 1).getOrderId();
-
-
-            for (CartItem item : cart.getCart()) {
-                int quantityCart = item.getQuantityCart();
-                ProductBean product = item.getProduct();
-                int newQuantity = product.getQuantity() - quantityCart;
-
-                daoProd.doUpdateQnt(product.getCode(), newQuantity);
-
-                comp.setIdOrdine(newId);
-                comp.setIdProdotto(product.getCode());
-                comp.setPrezzoTotale(item.getTotalPrice());
-                comp.setQuantità(quantityCart);
-                daoComp.doSave(comp);
-            }
-
-
-
-        }catch(SQLException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/error.html");
             return;
-
         }
 
-        request.getSession().removeAttribute("cart");
+        int userCode = (int) request.getSession().getAttribute("userCode");
 
-        response.sendRedirect(request.getContextPath() + "/Home.jsp");
+        try {
+            saveOrder(userCode, paymentCardId, deliveryAddressId, billingAddressId, totalCost);
+            response.sendRedirect(request.getContextPath()+"/resources/jsp_pages/OrderComplete.jsp");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
+            response.sendRedirect(request.getContextPath() + "/error.html");
+        } catch (NamingException e) {
+            throw new ServletException(e);
+        }
     }
 
+    private void saveOrder(int userCode, int paymentCardId, int deliveryAddressId, int billingAddressId, double totalCost)
+            throws SQLException, NamingException {
+        Context initCtx = new InitialContext();
+        Context envCtx = (Context) initCtx.lookup("java:comp/env");
+        DataSource ds = (DataSource) envCtx.lookup("jdbc/storage");
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try (Connection conn = ds.getConnection()) {
 
-        doPost(request, response);
+            String sql = "INSERT INTO orders (user_code, payment_card_id, delivery_address_id, billing_address_id, total_cost) VALUES (?, ?, ?, ?, ?)";
+
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, userCode);
+                stmt.setInt(2, paymentCardId);
+                stmt.setInt(3, deliveryAddressId);
+                stmt.setInt(4, billingAddressId);
+                stmt.setDouble(5, totalCost);
+                stmt.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw e;
+            }
+        }
     }
-
 }
-
-
-
-
-
-
-

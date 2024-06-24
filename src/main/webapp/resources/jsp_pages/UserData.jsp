@@ -7,6 +7,9 @@
         cart = new Cart();
         request.getSession().setAttribute("cart", cart);
     }
+
+    String fromCheckout = request.getParameter("fromCheckout");
+
 %>
 
 
@@ -68,6 +71,10 @@
             font-size: 16px;
         }
 
+        .btn-secondary {
+            background-color: #008CBA;
+        }
+
         .btn:hover {
             background-color: #45a049;
         }
@@ -89,7 +96,7 @@
 
     <div class="section">
         <h2>Indirizzo di Consegna</h2>
-        <form action="${pageContext.request.contextPath}/Delivery" method="post">
+        <form action="${pageContext.request.contextPath}/Delivery?fromCheckout=${param.fromCheckout}" method="post">
             <div class="form-group">
                 <label for="deliveryAddressCountry">Nazione</label>
                 <input type="text" id="deliveryAddressCountry" name="deliveryAddressCountry" required>
@@ -116,7 +123,7 @@
 
     <div class="section">
         <h2>Metodo di Pagamento</h2>
-        <form action="${pageContext.request.contextPath}/Payment" method="post">
+        <form action="${pageContext.request.contextPath}/Payment?fromCheckout=${param.fromCheckout}" method="post">
             <div class="form-group">
                 <label for="cardholder_name">Nome Titolare della Carta</label>
                 <input type="text" id="cardholder_name" name="cardholder_name" maxlength="100" required>
@@ -143,7 +150,7 @@
 
     <div class="section">
         <h2>Indirizzo di Fatturazione</h2>
-        <form action="${pageContext.request.contextPath}/Billing" method="post">
+        <form action="${pageContext.request.contextPath}/Billing?fromCheckout=${param.fromCheckout}" method="post">
             <div class="form-group">
                 <label for="billingAddressStreet">Via e numero civico</label>
                 <input type="text" id="billingAddressStreet" name="billingAddressStreet" required>
@@ -165,6 +172,11 @@
     </div>
 
 </div>
+<% if ("true".equals(fromCheckout)) { %>
+<form action="Checkout.jsp" method="get">
+    <button type="submit" class="btn btn-secondary">Torna al checkout</button>
+</form>
+<% } %>
 
 </body>
 </html>

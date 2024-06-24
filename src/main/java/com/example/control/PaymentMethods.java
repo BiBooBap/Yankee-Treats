@@ -25,14 +25,18 @@ public class PaymentMethods extends HttpServlet {
         String cvv=request.getParameter("cvv");
 
         String userEmail = (String) request.getSession().getAttribute("userEmail");
-
+        String fromCheckout= request.getParameter("fromCheckout");
         if (userEmail != null && !userEmail.isEmpty()) {
             int userCode = UtilDS.getUserCodebyEmail(userEmail);
 
             if (userCode != 0) {
                 try {
                     savePaymentMethod(userCode, cardholder_name, card_number, expiry_month, expiry_year, cvv);
-                    response.sendRedirect("success.html");
+                    String redirectURL = request.getContextPath() + "/resources/jsp_pages/UserData.jsp";
+                    if (fromCheckout != null && !fromCheckout.isEmpty()) {
+                        redirectURL += "?fromCheckout=" + fromCheckout;
+                    }
+                    response.sendRedirect(redirectURL);
                 } catch (SQLException e) {
                     e.printStackTrace();
                     response.sendRedirect("error.html");

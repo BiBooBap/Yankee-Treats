@@ -32,6 +32,7 @@ public class LoginControl extends HttpServlet {
         String name= UtilDS.getNamebyEmail(email);
         if (loginSuccess) {
             HttpSession session = request.getSession();
+            session.setAttribute("userCode", UtilDS.getUserCodebyEmail(email));
             session.setAttribute("userEmail", email);
             session.setAttribute("userType", userType);
             session.setAttribute("userName", name);

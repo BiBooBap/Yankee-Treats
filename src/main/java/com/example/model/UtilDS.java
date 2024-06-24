@@ -209,4 +209,96 @@ public class UtilDS     {
         return -1;
     }
 
+
+    public static ArrayList<ArrayList<String>> showBillingAddress(int userCode) {
+        ArrayList<ArrayList<String>> billingAddresses = new ArrayList<>();
+        String query = "SELECT * FROM billing_addresses WHERE user_code = ?";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, userCode);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ArrayList<String> row = new ArrayList<>();
+                    row.add(String.valueOf(rs.getInt("address_id")));
+                    row.add(String.valueOf(rs.getInt("user_code")));
+                    row.add(rs.getString("street"));
+                    row.add(rs.getString("city"));
+                    row.add(rs.getString("province"));
+                    row.add(rs.getString("zip"));
+                    billingAddresses.add(row);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Error retrieving billing addresses: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Unexpected Error retrieving billing addresses: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return billingAddresses;
+    }
+
+    public static ArrayList<ArrayList<String>> showDeliveryAddress(int userCode) {
+        ArrayList<ArrayList<String>> deliveryAddresses = new ArrayList<>();
+        String query = "SELECT * FROM delivery_addresses WHERE user_code = ?";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, userCode);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ArrayList<String> row = new ArrayList<>();
+                    row.add(String.valueOf(rs.getInt("address_id"))); // address_id
+                    row.add(String.valueOf(rs.getInt("user_code")));  // user_code
+                    row.add(rs.getString("country"));                // country
+                    row.add(rs.getString("zip"));                    // zip
+                    row.add(rs.getString("city"));                   // city
+                    row.add(rs.getString("street"));                 // street
+                    row.add(rs.getString("province"));               // province
+                    deliveryAddresses.add(row);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Error retrieving delivery addresses: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Unexpected Error retrieving delivery addresses: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return deliveryAddresses;
+    }
+
+    public static ArrayList<ArrayList<String>> showPaymentMethods(int userCode) {
+        ArrayList<ArrayList<String>> paymentMethods = new ArrayList<>();
+        String query = "SELECT * FROM payment_method WHERE user_code = ?";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, userCode);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ArrayList<String> row = new ArrayList<>();
+                    row.add(String.valueOf(rs.getInt("card_id")));           // card_id
+                    row.add(String.valueOf(rs.getInt("user_code")));         // user_code
+                    row.add(rs.getString("card_number"));                   // card_number
+                    row.add(String.valueOf(rs.getInt("expiry_month")));      // expiry_month
+                    row.add(String.valueOf(rs.getInt("expiry_year")));       // expiry_year
+                    row.add(rs.getString("cvv"));                           // cvv
+                    row.add(rs.getString("cardholder_name"));               // cardholder_name
+                    paymentMethods.add(row);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Error retrieving payment methods: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Unexpected Error retrieving payment methods: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return paymentMethods;
+    }
+
+
+
 }

@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -28,12 +29,16 @@ public class BillingAddress extends HttpServlet {
         String userEmail = (String) request.getSession().getAttribute("userEmail");
 
             int userCode = UtilDS.getUserCodebyEmail(userEmail);
-
+            String fromCheckout= request.getParameter("fromCheckout");
             if (userCode != 0) {
                 try {
                     saveBillingAddress(userCode, billingAddressStreet, billingAddressCity, billingAddressProvince,
                             billingAddressZIP);
-                    response.sendRedirect("success.html");
+                    String redirectURL = request.getContextPath() + "/resources/jsp_pages/UserData.jsp";
+                    if (fromCheckout != null && !fromCheckout.isEmpty()) {
+                        redirectURL += "?fromCheckout=" + fromCheckout;
+                    }
+                    response.sendRedirect(redirectURL);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (NamingException e) {
@@ -70,5 +75,7 @@ public class BillingAddress extends HttpServlet {
         statement.close();
         connection.close();
     }
+
+
 }
 

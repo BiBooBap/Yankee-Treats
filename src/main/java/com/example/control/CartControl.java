@@ -13,7 +13,6 @@ import java.sql.SQLException;
 @WebServlet("/cart")
 public class CartControl extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("CartControl servlet reached with action: " + request.getParameter("action"));
 
         ProductModelDM productModel = new ProductModelDM();
 

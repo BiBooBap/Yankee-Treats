@@ -28,14 +28,18 @@ public class DeliveryAddress extends HttpServlet {
         String deliveryAddressCountry = request.getParameter("deliveryAddressCountry");
 
         String userEmail = (String) request.getSession().getAttribute("userEmail");
-
+        String fromCheckout= request.getParameter("fromCheckout");
         if (userEmail != null && !userEmail.isEmpty()) {
             int userCode = UtilDS.getUserCodebyEmail(userEmail);
 
             if (userCode != 0) {
                 try {
                     saveDeliveryAddress(userCode, deliveryAddressCountry, deliveryAddressZIP, deliveryAddressCity, deliveryAddressStreet, deliveryAddressProvince);
-                    response.sendRedirect("success.html");
+                    String redirectURL = request.getContextPath() + "/resources/jsp_pages/UserData.jsp";
+                    if (fromCheckout != null && !fromCheckout.isEmpty()) {
+                        redirectURL += "?fromCheckout=" + fromCheckout;
+                    }
+                    response.sendRedirect(redirectURL);
                 } catch (SQLException e) {
                     e.printStackTrace();
                     response.sendRedirect("error.html");

@@ -104,7 +104,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>CheckoutServlet</servlet-name>
-    <url-pattern>/checkout</url-pattern>
+    <url-pattern>/Checkout</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>OrderServlet</servlet-name>
@@ -114,6 +114,7 @@
     <servlet-name>OrderServlet</servlet-name>
     <url-pattern>/order</url-pattern>
   </servlet-mapping>
+  <!---
   <filter>
     <filter-name>ErrorHandlingFilter</filter-name>
     <filter-class>com.example.control.ErrorHandlingFilter</filter-class>
@@ -138,4 +139,5 @@
     <exception-type>java.lang.Exception</exception-type>
     <location>/resources/jsp_pages/errors/500.jsp</location>
   </error-page>
+  !-->
 </web-app>

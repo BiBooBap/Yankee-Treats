@@ -1,9 +1,26 @@
 <%@ page language="java"%>
 <%@ page import="java.util.*, com.example.model.*, com.example.control.*"%>
+<%@ page import="java.sql.SQLException" %>
+<%@ page import="javax.naming.NamingException" %>
 
 <%
     String userE = (String) request.getSession().getAttribute("userEmail");
     boolean userLoggedIn = userE != null && !userE.isEmpty();
+
+    int userCode = (int) request.getSession().getAttribute("userCode");
+
+    Cart cart = (Cart) request.getSession().getAttribute("cart");
+    if (cart == null) {
+        cart = new Cart();
+        request.getSession().setAttribute("cart", cart);
+    }
+
+    ArrayList<ArrayList<String>> billingAddresses = UtilDS.showBillingAddress(userCode);
+    ArrayList<ArrayList<String>> deliveryAddresses = UtilDS.showDeliveryAddress(userCode);
+    ArrayList<ArrayList<String>> paymentMethods = UtilDS.showPaymentMethods(userCode);
+
+    double cartTotal = cart.getCartTotalPrice();
+    request.getSession().setAttribute("cartTotal",cartTotal);
 %>
 
 <!DOCTYPE html>
@@ -15,136 +32,155 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
         .container {
-            width: 50%;
-            margin: auto;
+            width: 80%;
+            margin: 20px auto;
         }
 
-        .form-group {
+        .section {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: #333;
             margin-bottom: 20px;
         }
 
-        .form-group label {
-            display: block;
-            font-weight: bold;
+        .address, .billing-info, .payment-methods {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
         }
 
-        .form-group input[type="text"],
-        .form-group input[type="email"],
-        .form-group input[type="tel"],
-        .form-group input[type="date"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        .section-title {
+            margin-bottom: 10px;
+        }
+
+        .hidden {
+            display: none;
         }
 
         .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
             background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
+            text-decoration: none;
         }
 
-        .btn:hover {
-            background-color: #45a049;
+        .btn-secondary {
+            background-color: #008CBA;
+        }
+
+        .btn-container {
+            margin-top: 20px;
         }
     </style>
+    <script>
+        function validateForm() {
+            var billingSelected = document.querySelector('input[name="selectedAddressId"]:checked');
+            var deliverySelected = document.querySelector('input[name="selectedDeliveryAddressId"]:checked');
+            var paymentSelected = document.querySelector('input[name="selectedPaymentMethodId"]:checked');
+
+            if (!billingSelected || !deliverySelected || !paymentSelected) {
+                alert("Seleziona almeno un'opzione per ogni sezione.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
-
 <div class="container">
-    <h2>Checkout</h2>
-    <form action="${pageContext.request.contextPath}/checkout" method="post">
-        <% if (!userLoggedIn) { %>
-        <div class="form-group">
-            <label for="firstName">Nome</label>
-            <input type="text" id="firstName" name="firstName" required>
-        </div>
-        <div class="form-group">
-            <label for="lastName">Cognome</label>
-            <input type="text" id="lastName" name="lastName" required>
-        </div>
-        <div class="form-group">
-            <label for="birthDate">Data di nascita</label>
-            <input type="date" id="birthDate" name="birthDate" required>
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-            <label for="phoneNumber">Numero di telefono</label>
-            <input type="tel" id="phoneNumber" name="phoneNumber" required>
-        </div>
-        <% } %>
-        <h3>Indirizzo di fatturazione</h3>
-        <div class="form-group">
-            <label for="billingAddressStreet">Via</label>
-            <input type="text" id="billingAddressStreet" name="billingAddressStreet" required>
-        </div>
-        <div class="form-group">
-            <label for="billingAddressCity">Città</label>
-            <input type="text" id="billingAddressCity" name="billingAddressCity" required>
-        </div>
-        <div class="form-group">
-            <label for="billingAddressProvince">Provincia</label>
-            <input type="text" id="billingAddressProvince" name="billingAddressProvince" required>
-        </div>
-        <div class="form-group">
-            <label for="billingAddressZIP">CAP</label>
-            <input type="text" id="billingAddressZIP" name="billingAddressZIP" required>
-        </div>
-        <h3>Indirizzo di consegna</h3>
-        <div class="form-group">
-            <label for="deliveryAddressStreet">Via</label>
-            <input type="text" id="deliveryAddressStreet" name="deliveryAddressStreet" required>
-        </div>
-        <div class="form-group">
-            <label for="deliveryAddressCity">Città</label>
-            <input type="text" id="deliveryAddressCity" name="deliveryAddressCity" required>
-        </div>
-        <div class="form-group">
-            <label for="deliveryAddressProvince">Provincia</label>
-            <input type="text" id="deliveryAddressProvince" name="deliveryAddressProvince" required>
-        </div>
-        <div class="form-group">
-            <label for="deliveryAddressZIP">CAP</label>
-            <input type="text" id="deliveryAddressZIP" name="deliveryAddressZIP" required>
-        </div>
-        <input type="hidden" id="paymentIntentId" name="payment_intent_id">
-        <h3> Dati di pagamento</h3>
-        <div id="payment-form" class="form-group">
-            <input type="text" id="card-number" placeholder="Numero carta">
-            <input type="text" id="expiry" placeholder="Scadenza MM/AA">
-            <input type="text" id="cvc" placeholder="CVC">
-        </div>
-        <button type="submit" id="pay-button" class="btn">Procedi con il pagamento</button>
-    </form>
-</div>
+    <div class="section billing-info">
+        <h2 class="section-title">Informazioni di Fatturazione</h2>
+        <form id="checkoutForm" action="${pageContext.request.contextPath}/Checkout" method="post" onsubmit="return validateForm()">
 
-<script src="https://js.stripe.com/v3/"></script>
-<script>
-    var sessionId = "<%= request.getParameter("sessionId") %>";
-    if (sessionId) {
-        var stripe = Stripe('pk_test_51PUSgWRtccnKjfP4TCkyOTZXhk2D3RB6Kobyk9VBWKvglahKhx9v92b9OtAObf749UciykRFpeqZzVrv3HrlP9DT00tx8yaXUI'); // Usa la tua chiave pubblica di Stripe per ambiente di test
-        stripe.redirectToCheckout({
-            sessionId: sessionId
-        }).then(function (result) {
-            if (result.error) {
-                console.log(result.error.message);
-            }
-        });
-    }
-</script>
+            <h3>Indirizzo di Fatturazione</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Via</th>
+                    <th>Città</th>
+                    <th>Provincia</th>
+                    <th>CAP</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for (ArrayList<String> address : billingAddresses) { %>
+                <tr>
+                    <td><input type="radio" class="select-radio" name="selectedAddressId" value="<%= address.get(0) %>"></td>
+                    <td><%= address.get(2) %></td>
+                    <td><%= address.get(3) %></td>
+                    <td><%= address.get(4) %></td>
+                    <td><%= address.get(5) %></td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+
+            <h3>Indirizzo di Consegna</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Via</th>
+                    <th>Città</th>
+                    <th>Provincia</th>
+                    <th>CAP</th>
+                    <th>Paese</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for (ArrayList<String> address : deliveryAddresses) { %>
+                <tr>
+                    <td><input type="radio" class="select-radio" name="selectedDeliveryAddressId" value="<%= address.get(0) %>"></td>
+                    <td><%= address.get(5) %></td>
+                    <td><%= address.get(4) %></td>
+                    <td><%= address.get(6) %></td>
+                    <td><%= address.get(3) %></td>
+                    <td><%= address.get(2) %></td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+
+            <h3>Metodo di Pagamento</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Numero Carta</th>
+                    <th>Scadenza</th>
+                    <th>Nome Intestatario</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for (ArrayList<String> method : paymentMethods) { %>
+                <tr>
+                    <td><input type="radio" class="select-radio" name="selectedPaymentMethodId" value="<%= method.get(0) %>"></td>
+                    <td><%= method.get(2) %></td>
+                    <td><%= method.get(3) %>/<%= method.get(4) %></td>
+                    <td><%= method.get(6) %></td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+
+            <div class="btn-container">
+                <button type="submit" class="btn">Conferma Ordine</button>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>
-
-
-
-
-
