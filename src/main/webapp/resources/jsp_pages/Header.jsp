@@ -37,7 +37,7 @@
 <html>
 <body>
 <div id="header">
-    <img id="logo" src="${pageContext.request.contextPath}/resources/images/logo.png" alt=""/>
+    <a href="${pageContext.request.contextPath}/product"><img id="logo" src="${pageContext.request.contextPath}/resources/images/logo.png" alt=""/></a>
 
     <span id="icons">
         <% if (username != null && !username.isEmpty()) { %>
