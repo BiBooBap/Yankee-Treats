@@ -2,10 +2,6 @@
     box-sizing: border-box;
 }
 
-
-
-
-
 #header {
     font-family: "Varela Round", sans-serif;
     font-weight: 400;
@@ -24,7 +20,7 @@
     text-align: center;
     padding: 12px 12px 12px 0;
     text-decoration: none;
-    font-size: 38px;
+    font-size: 32px;
     line-height: 25px;
     border-radius: 4px;
     position: relative;
@@ -32,11 +28,12 @@
 }
 
 .fa-cart-shopping{
-    margin-left: 15px;
+    margin-left: 20px;
     color: black !important;
 }
 
 .fa-circle-user{
+    margin-left: 20px;
     color: black !important;
 }
 
@@ -152,16 +149,15 @@
     display: none;
 }
 
-
-
-
-
-
 @media screen and (min-width: 400px) and (max-width: 1250px) {
     #subheader #drop {
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    #icons {
+        font-size: 28px;
     }
 
     #subheader ul {
@@ -183,10 +179,6 @@
     }
 }
 
-
-
-
-
 .dropdown {
     position: relative;
     display: inline-block;
@@ -202,6 +194,8 @@
     z-index: 300; !important;
     flex-direction: column;
     right: 0;
+    font-size: 22px;
+    font-weight: 300;
     padding: 12px 0; /* Aggiungi padding per migliorare la visualizzazione */
 }
 

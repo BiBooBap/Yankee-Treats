@@ -28,21 +28,6 @@
 
 <div class="cart" id="cart"> <!-- LASCIARE SIA CLASS CHE ID = CART -->
     <div class="listCart">
-        <c:if test="${not empty param.error}">
-            <div class="message">
-                <c:choose>
-                    <c:when test="${param.error == 'empty_cart'}">
-                        <span class="error">Il carrello è vuoto. Aggiungi articoli al carrello prima di procedere al checkout.</span>
-                    </c:when>
-                    <c:when test="${param.error == 'checkout_error'}">
-                        <span class="error">Si è verificato un errore durante il checkout. Riprova più tardi.</span>
-                    </c:when>
-                    <c:otherwise>
-                        <span class="error">Si è verificato un errore sconosciuto.</span>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-        </c:if>
         <% for (CartItem item : cart.getCart()) { %>
         <div class="item">
             <div class="content">

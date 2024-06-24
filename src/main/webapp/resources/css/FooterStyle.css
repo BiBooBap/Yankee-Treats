@@ -1,0 +1,78 @@
+body {
+    font-family: "Varela Round", sans-serif;
+    font-weight: 400;
+}
+
+#footer {
+    text-align: center;
+    background: radial-gradient(circle, rgba(254,232,152,1) 0%, rgba(255,190,79,1) 100%);
+    color: #0c457d;
+    padding: 3em 1em 2em 1em;
+    font-family: 'Open Sans', sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-icons a {
+    color: #0c457d;
+    margin-right: 15px;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #d9534f !important;
+}
+
+#footer ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#footer a {
+    color: #0c457d;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links {
+    margin-left: 10px;
+    padding: 0;
+    margin-top: 8px;
+    display: inline-block;
+    position: relative;
+}
+
+.footer-links:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 0;
+    bottom: -1px;
+    height: 1px;
+    margin: -2px 0;
+    left: 0;
+    background-color: #0c457d;
+    transition: all 0.2s ease-in 0s;
+}
+
+.footer-links:hover:after {
+    width: 100%;
+}
+
+.footer-links:hover {
+    color: #d9534f;
+}
+
+.footer-links-container, .footer-copy, .social-icons {
+    margin-bottom: 2em;
+}
+
+.footer-copy {
+    font-size: 0.9em;
+}
+
+* {
+    box-sizing: border-box;
+}
+

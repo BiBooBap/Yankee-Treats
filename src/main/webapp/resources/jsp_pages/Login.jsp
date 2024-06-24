@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/Login.css" type="text/css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/LoginStyle.css" type="text/css"/>
 </head>
 <body>
 
