@@ -23,9 +23,9 @@ public class ProductDAO {
         }
     }
 
-    public static void insertProduct(String name, String description, int price, int quantity,
-                                     int bestseller, int dolce, int salato, int bevanda,
-                                     int trend, int novita, int offerta, int bundle, int b2b) {
+    public static boolean insertProduct(String name, String description, int price, int quantity,
+                                        int bestseller, int dolce, int salato, int bevanda,
+                                        int trend, int novita, int offerta, int bundle, int b2b) {
 
         String query = "INSERT INTO " + TABLE_NAME + " (name, description, price, quantity, bestseller, dolce, salato, bevanda, trend, novita, offerta, bundle, B2B) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = ds.getConnection();
@@ -35,20 +35,173 @@ public class ProductDAO {
             stmt.setString(2, description);
             stmt.setInt(3, price);
             stmt.setInt(4, quantity);
-            stmt.setInt(5, bestseller);  // Converti int in int
-            stmt.setInt(6, dolce);       // Converti int in int
-            stmt.setInt(7, salato);      // Converti int in int
-            stmt.setInt(8, bevanda);     // Converti int in int
-            stmt.setInt(9, trend);       // Converti int in int
-            stmt.setInt(10, novita);     // Converti int in int
-            stmt.setInt(11, offerta);    // Converti int in int
-            stmt.setInt(12, bundle);     // Converti int in int
+            stmt.setInt(5, bestseller);
+            stmt.setInt(6, dolce);
+            stmt.setInt(7, salato);
+            stmt.setInt(8, bevanda);
+            stmt.setInt(9, trend);
+            stmt.setInt(10, novita);
+            stmt.setInt(11, offerta);
+            stmt.setInt(12, bundle);
             stmt.setInt(13, b2b);
 
-            stmt.executeUpdate();
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
 
         } catch (SQLException e) {
             System.out.println("Error:" + e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean doDelete(int code) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        int result = 0;
+
+        String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE CODE = ?";
+
+        try {
+            connection = DriverManagerConnectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(deleteSQL);
+            preparedStatement.setInt(1, code);
+
+            result = preparedStatement.executeUpdate();
+
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                DriverManagerConnectionPool.releaseConnection(connection);
+            }
+        }
+        return (result != 0);
+    }
+
+    public static synchronized boolean doUpdateQnt(int id, int qnt) throws SQLException {
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        String updateSQL = "UPDATE " + TABLE_NAME
+                + " SET QUANTITY = ? "
+                + " WHERE CODE = ? ";
+
+        try {
+            connection = DriverManagerConnectionPool.getConnection();
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(updateSQL);
+            preparedStatement.setInt(1, qnt);
+            preparedStatement.setInt(2, id);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            connection.commit();
+
+            return rowsAffected > 0;
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                if (connection != null)
+                    connection.close();
+            }
+        }
+    }
+
+    public static synchronized boolean doUpdateName(int id, String name) throws SQLException {
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        String updateSQL = "UPDATE " + TABLE_NAME
+                + " SET NAME = ? "
+                + " WHERE CODE = ? ";
+
+        try {
+            connection = DriverManagerConnectionPool.getConnection();
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(updateSQL);
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, id);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            connection.commit();
+
+            return rowsAffected > 0;
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                if (connection != null)
+                    connection.close();
+            }
+        }
+    }
+
+    public static synchronized boolean doUpdatePrice(int id, int price) throws SQLException {
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        String updateSQL = "UPDATE " + TABLE_NAME
+                + " SET PRICE = ? "
+                + " WHERE CODE = ? ";
+
+        try {
+            connection = DriverManagerConnectionPool.getConnection();
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(updateSQL);
+            preparedStatement.setInt(1, price);
+            preparedStatement.setInt(2, id);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            connection.commit();
+
+            return rowsAffected > 0;
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                if (connection != null)
+                    connection.close();
+            }
+        }
+    }
+
+    public static synchronized boolean doUpdateDesc(int id, String description) throws SQLException {
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        String updateSQL = "UPDATE " + TABLE_NAME
+                + " SET DESCRIPTION = ? "
+                + " WHERE CODE = ? ";
+
+        try {
+            connection = DriverManagerConnectionPool.getConnection();
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(updateSQL);
+            preparedStatement.setString(1, description);
+            preparedStatement.setInt(2, id);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            connection.commit();
+
+            return rowsAffected > 0;
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                if (connection != null)
+                    connection.close();
+            }
         }
     }
 }
+
