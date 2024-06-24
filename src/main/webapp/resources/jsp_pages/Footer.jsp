@@ -14,10 +14,13 @@
 <body>
 
 <div id="footer">
+    <br>
     <div class="social-icons">
         <a href="#"><i class="fa-brands fa-facebook fa-2x"></i></a>
         <a href="#"><i class="fa-brands fa-square-instagram fa-2x"></i></a>
     </div>
+
+    <br>
 
     <div class="footer-links-container">
         <ul>
@@ -26,6 +29,8 @@
             <li><a href="#" class="footer-links">Termini & Condizioni</a></li>
         </ul>
     </div>
+
+    <br><br>
 
     <div class="footer-copy">
         <i>Yankee Treats &copy; 2024 - Tutti i Diritti Riservati</i>

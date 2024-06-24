@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: "Varela Round", sans-serif;
     font-weight: 400;
@@ -13,10 +17,9 @@ body {
     overflow: hidden;
 }
 
-.social-icons a {
-    color: #0c457d;
+.social-icons .fa-facebook {
     margin-right: 15px;
-    transition: color 0.3s ease;
+    margin-left: 12px;
 }
 
 .social-icons a:hover {
@@ -69,10 +72,6 @@ body {
 }
 
 .footer-copy {
+    color: black;
     font-size: 0.9em;
 }
-
-* {
-    box-sizing: border-box;
-}
-
