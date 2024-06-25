@@ -114,6 +114,14 @@
     <servlet-name>GuestControl</servlet-name>
     <url-pattern>/Guest</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>DownloadInvoiceServlet</servlet-name>
+    <servlet-class>com.example.control.DownloadInvoiceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DownloadInvoiceServlet</servlet-name>
+    <url-pattern>/Download</url-pattern>
+  </servlet-mapping>
   <!---
   <filter>
     <filter-name>ErrorHandlingFilter</filter-name>
