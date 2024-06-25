@@ -54,4 +54,13 @@ public class CartItem {
             quantityCart -= 1;
         }
     }
+
+    public String toString() {
+        return "CartItem{" +
+                "product=" + product +
+                ", quantityCart=" + quantityCart +
+                ", totalPrice=" + getTotalPrice() +
+                '}';
+    }
+
 }

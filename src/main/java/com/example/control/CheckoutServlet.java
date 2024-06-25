@@ -77,6 +77,7 @@ public class CheckoutServlet extends HttpServlet {
                 createInvoicePDF(order_id, cart, getServletContext());
                 sendInvoicePDF((String) request.getSession().getAttribute("userEmail"), order_id, getServletContext());
                 response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/OrderComplete.jsp");
+                saveorderItems(order_id, cart);
             } else {
                 response.sendRedirect(request.getContextPath() + "/error.html");
             }
@@ -252,7 +253,7 @@ public class CheckoutServlet extends HttpServlet {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
             message.setSubject("Fattura del tuo ordine Yankee Treats");
 
-            // Crea il corpo del messaggio
+
             MimeBodyPart messageBodyPart = new MimeBodyPart();
             messageBodyPart.setText("Gentile Cliente,\n\n"
                     + "Grazie per il tuo ordine su Yankee Treats! In allegato trovi la fattura del tuo acquisto.\n\n"
@@ -281,6 +282,31 @@ public class CheckoutServlet extends HttpServlet {
         }
     }
 
+    public void saveorderItems(int orderId, Cart cart) throws NamingException {
+        Context initCtx = new InitialContext();
+        Context envCtx = (Context) initCtx.lookup("java:comp/env");
+
+        DataSource ds = (DataSource) envCtx.lookup("jdbc/storage");
+
+        try (Connection conn = ds.getConnection()) {
+            String sql = "INSERT INTO order_items (order_id, product_code, quantity) VALUES (?, ?, ?)";
+
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                for (CartItem item : cart.getCart()) {
+                    stmt.setInt(1, orderId);
+                    stmt.setInt(2, item.getId());
+                    stmt.setInt(3, item.getQuantityCart());
+                    stmt.addBatch();
+                }
+                stmt.executeBatch();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw e;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
 

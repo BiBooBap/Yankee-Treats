@@ -46,7 +46,11 @@
             <button class="dropbtn"><i class="fa-solid fa-circle-user"></i></button>
             <div class="dropdown-content">
                 <a href="${pageContext.request.contextPath}/resources/jsp_pages/MiddleUserData.jsp">Dati personali</a>
-                <a href="${pageContext.request.contextPath}/order?action=orders">Storico ordini</a>
+                <% if (user_ty.equals("venditore")||user_ty.equals("privato")) { %>
+                <a href="${pageContext.request.contextPath}/resources/jsp_pages/OrderHistory.jsp">Storico ordini</a>
+                <% }else {%>
+                <a href="${pageContext.request.contextPath}/resources/jsp_pages/AdminHistory.jsp">Storico ordini</a>
+                <% }%>
                 <% if (user_ty.equals("admin")) { %>
                 <a href="${pageContext.request.contextPath}/resources/jsp_pages/InsertProduct.jsp">Gestisci prodotti</a>
                 <% } %>

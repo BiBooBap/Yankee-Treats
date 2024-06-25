@@ -76,4 +76,14 @@ public class Cart {
 	public void clearCart(){
 		cart.removeAll(cart);
 	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Cart{");
+		for (CartItem item : cart) {
+			sb.append("\n\t").append(item.toString());
+		}
+		sb.append("\n}");
+		return sb.toString();
+	}
 }
