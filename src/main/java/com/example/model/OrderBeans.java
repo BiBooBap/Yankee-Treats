@@ -5,6 +5,7 @@ import com.example.model.PaymentMethod;
 import com.example.model.BillingAddress;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class OrderBeans {
     private int orderId;
@@ -16,6 +17,16 @@ public class OrderBeans {
 
     private BillingAddress billingAddress;
     private DeliveryAddress deliveryAddress;
+
+    private List<OrderItem> orderItems;
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
 
     public int getOrderId() {
         return orderId;

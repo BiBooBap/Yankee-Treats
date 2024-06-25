@@ -122,6 +122,14 @@
     <servlet-name>DownloadInvoiceServlet</servlet-name>
     <url-pattern>/Download</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>ShowOrderServlet</servlet-name>
+    <servlet-class>com.example.control.ShowOrderServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowOrderServlet</servlet-name>
+    <url-pattern>/ShowOrder</url-pattern>
+  </servlet-mapping>
   <!---
   <filter>
     <filter-name>ErrorHandlingFilter</filter-name>

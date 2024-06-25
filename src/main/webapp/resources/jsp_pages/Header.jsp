@@ -47,7 +47,7 @@
             <div class="dropdown-content">
                 <a href="${pageContext.request.contextPath}/resources/jsp_pages/MiddleUserData.jsp">Dati personali</a>
                 <% if (user_ty.equals("venditore")||user_ty.equals("privato")) { %>
-                <a href="${pageContext.request.contextPath}/resources/jsp_pages/OrderHistory.jsp">Storico ordini</a>
+                <a href="${pageContext.request.contextPath}/ShowOrder">Storico ordini</a>
                 <% }else {%>
                 <a href="${pageContext.request.contextPath}/resources/jsp_pages/AdminHistory.jsp">Storico ordini</a>
                 <% }%>

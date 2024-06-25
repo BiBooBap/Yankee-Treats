@@ -38,4 +38,5 @@ public class BillingAddress {
     public void setZip(String zip) {
         this.zip = zip;
     }
+
 }
