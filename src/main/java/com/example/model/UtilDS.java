@@ -93,7 +93,7 @@ public class UtilDS     {
             Connection conn = ds.getConnection();
             int userCode = UtilDS.getUserCodebyEmail(userEmail);
 
-            String query = "SELECT * FROM delivery_addresses WHERE user_code = ?";
+            String query = "SELECT * FROM delivery_addresses WHERE user_code = ? AND active=1";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, userCode);
             ResultSet rs = pstmt.executeQuery();
@@ -129,7 +129,7 @@ public class UtilDS     {
             Connection conn = ds.getConnection();
             int userCode = UtilDS.getUserCodebyEmail(userEmail);
 
-            String query = "SELECT * FROM billing_addresses WHERE user_code = ?";
+            String query = "SELECT * FROM billing_addresses WHERE user_code = ? AND active=1";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, userCode);
             ResultSet rs = pstmt.executeQuery();
@@ -165,7 +165,7 @@ public class UtilDS     {
             Connection conn = ds.getConnection();
             int userCode = UtilDS.getUserCodebyEmail(userEmail);
 
-            String query = "SELECT * FROM payment_method WHERE user_code = ?";
+            String query = "SELECT * FROM payment_method WHERE user_code = ? AND active=1";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, userCode);
             ResultSet rs = pstmt.executeQuery();
@@ -212,7 +212,7 @@ public class UtilDS     {
 
     public static ArrayList<ArrayList<String>> showBillingAddress(int userCode) {
         ArrayList<ArrayList<String>> billingAddresses = new ArrayList<>();
-        String query = "SELECT * FROM billing_addresses WHERE user_code = ?";
+        String query = "SELECT * FROM billing_addresses WHERE user_code = ? AND active=1";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -241,7 +241,7 @@ public class UtilDS     {
 
     public static ArrayList<ArrayList<String>> showDeliveryAddress(int userCode) {
         ArrayList<ArrayList<String>> deliveryAddresses = new ArrayList<>();
-        String query = "SELECT * FROM delivery_addresses WHERE user_code = ?";
+        String query = "SELECT * FROM delivery_addresses WHERE user_code = ? AND active=1";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -249,13 +249,13 @@ public class UtilDS     {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     ArrayList<String> row = new ArrayList<>();
-                    row.add(String.valueOf(rs.getInt("address_id"))); // address_id
-                    row.add(String.valueOf(rs.getInt("user_code")));  // user_code
-                    row.add(rs.getString("country"));                // country
-                    row.add(rs.getString("zip"));                    // zip
-                    row.add(rs.getString("city"));                   // city
-                    row.add(rs.getString("street"));                 // street
-                    row.add(rs.getString("province"));               // province
+                    row.add(String.valueOf(rs.getInt("address_id")));
+                    row.add(String.valueOf(rs.getInt("user_code")));
+                    row.add(rs.getString("country"));
+                    row.add(rs.getString("zip"));
+                    row.add(rs.getString("city"));
+                    row.add(rs.getString("street"));
+                    row.add(rs.getString("province"));
                     deliveryAddresses.add(row);
                 }
             }
@@ -271,7 +271,7 @@ public class UtilDS     {
 
     public static ArrayList<ArrayList<String>> showPaymentMethods(int userCode) {
         ArrayList<ArrayList<String>> paymentMethods = new ArrayList<>();
-        String query = "SELECT * FROM payment_method WHERE user_code = ?";
+        String query = "SELECT * FROM payment_method WHERE user_code = ? AND active=1";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {

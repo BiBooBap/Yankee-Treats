@@ -44,7 +44,7 @@ public class DeleteServlet extends HttpServlet {
                 throw new RuntimeException(e);
             }
 
-            String query = "DELETE FROM delivery_addresses WHERE user_code = ? AND address_id = ?";
+            String query = "UPDATE delivery_addresses SET active = 0 WHERE user_code = ? AND address_id = ?";
 
                 try (Connection conn = ds.getConnection();
                      PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -78,7 +78,7 @@ public class DeleteServlet extends HttpServlet {
                 throw new RuntimeException(e);
             }
 
-            String query = "DELETE FROM billing_addresses WHERE user_code = ? AND address_id = ?";
+            String query = "UPDATE billing_addresses SET active = 0 WHERE user_code = ?  AND address_id = ?";
 
             try (Connection conn = ds.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -113,7 +113,7 @@ public class DeleteServlet extends HttpServlet {
                 throw new RuntimeException(e);
             }
 
-            String query = "DELETE FROM payment_method WHERE user_code = ? AND card_id = ?";
+            String query = "UPDATE payment_method SET active = 0 WHERE user_code = ?  AND card_id = ?";
 
             try (Connection conn = ds.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(query)) {

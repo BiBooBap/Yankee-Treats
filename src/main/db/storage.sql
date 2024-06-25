@@ -18,7 +18,8 @@ CREATE TABLE product (
                          novita		TINYINT(1),
                          offerta		TINYINT(1),
                          bundle		TINYINT(1),
-                         B2B        TINYINT(1)
+                         B2B        TINYINT(1),
+                         active 	TINYINT(1)
 );
 
 
@@ -108,6 +109,7 @@ CREATE TABLE billing_addresses (
                                    city VARCHAR(100),
                                    province VARCHAR(100),
                                    zip VARCHAR(20),
+                                   active 	TINYINT(1) DEFAULT 1,
                                    FOREIGN KEY (user_code) REFERENCES users(code)
 );
 
@@ -119,6 +121,7 @@ CREATE TABLE delivery_addresses (
                                     city VARCHAR(100),
                                     street VARCHAR(255),
                                     province VARCHAR(100),
+                                    active 	TINYINT(1) DEFAULT 1,
                                     FOREIGN KEY (user_code) REFERENCES users(code)
 );
 
@@ -130,6 +133,7 @@ CREATE TABLE payment_method (
                                 expiry_year YEAR,
                                 cvv VARCHAR(3),
                                 cardholder_name VARCHAR(100),
+                                active 	TINYINT(1) DEFAULT 1,
                                 FOREIGN KEY (user_code) REFERENCES users(code)
 );
 
