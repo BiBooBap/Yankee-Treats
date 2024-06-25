@@ -24,8 +24,8 @@ public class ProductDAO {
     }
 
     public static boolean insertProduct(String name, String description, int price, int quantity,
-                                        int bestseller, int dolce, int salato, int bevanda,
-                                        int trend, int novita, int offerta, int bundle, int b2b) {
+                                        byte bestseller, byte dolce, byte salato, byte bevanda,
+                                        byte trend, byte novita, byte offerta, byte bundle, byte b2b) {
 
         String query = "INSERT INTO " + TABLE_NAME + " (name, description, price, quantity, bestseller, dolce, salato, bevanda, trend, novita, offerta, bundle, B2B) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = ds.getConnection();
@@ -35,15 +35,15 @@ public class ProductDAO {
             stmt.setString(2, description);
             stmt.setInt(3, price);
             stmt.setInt(4, quantity);
-            stmt.setInt(5, bestseller);
-            stmt.setInt(6, dolce);
-            stmt.setInt(7, salato);
-            stmt.setInt(8, bevanda);
-            stmt.setInt(9, trend);
-            stmt.setInt(10, novita);
-            stmt.setInt(11, offerta);
-            stmt.setInt(12, bundle);
-            stmt.setInt(13, b2b);
+            stmt.setByte(5, bestseller);
+            stmt.setByte(6, dolce);
+            stmt.setByte(7, salato);
+            stmt.setByte(8, bevanda);
+            stmt.setByte(9, trend);
+            stmt.setByte(10, novita);
+            stmt.setByte(11, offerta);
+            stmt.setByte(12, bundle);
+            stmt.setByte(13, b2b);
 
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;

@@ -4,6 +4,7 @@
 <%
     List<ProductBean> products = (List<ProductBean>) request.getSession().getAttribute("products");
     request.getSession().setAttribute("products", products);
+
     String message = (String) request.getSession().getAttribute("message");
     request.getSession().removeAttribute("message");
 %>
@@ -224,6 +225,26 @@
             border-radius: 3px; /* Rounded corners */
             margin-left: 5px; /* Add spacing for better readability */
         }
+
+        .btn-home {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .btn-home:hover {
+            background-color: #45a049;
+        }
+
+        .btn-home:active {
+            background-color: #3e8e41;
+        }
     </style>
 </head>
 <body>
@@ -231,6 +252,75 @@
     <% if (message != null) { %>
         <div id="messageBox"><%= message %></div>
     <% } %>
+    <div class="section">
+        <a href="${pageContext.request.contextPath}/product" class="btn-home">Torna alla Home</a>
+        <h2>Inserisci prodotto</h2>
+        <form action="${pageContext.request.contextPath}/InsertProduct?action=addP" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="productName">Nome Prodotto</label>
+                <input type="text" id="productName" name="productName" required>
+            </div>
+            <div class="form-group">
+                <label for="productDescription">Descrizione</label>
+                <textarea id="productDescription" name="productDescription" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="productPrice">Prezzo</label>
+                <input type="number" id="productPrice" name="productPrice" required>
+            </div>
+            <div class="form-group">
+                <label for="productQuantity">Quantità</label>
+                <input type="number" id="productQuantity" name="productQuantity" required>
+            </div>
+
+            <div class="form-group">
+                <label>Caratteristiche:</label>
+                <div class="checkbox-group">
+                    <div>
+                        <input type="checkbox" id="productBestseller" name="productBestseller" value="1">
+                        <label for="productBestseller">Bestseller</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="productDolce" name="productDolce" value="1">
+                        <label for="productDolce">Dolce</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="productSalato" name="productSalato" value="1">
+                        <label for="productSalato">Salato</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="productBevanda" name="productBevanda" value="1">
+                        <label for="productBevanda">Bevanda</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="productTrend" name="productTrend" value="1">
+                        <label for="productTrend">Trend</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="productNovita" name="productNovita" value="1">
+                        <label for="productNovita">Novità</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="productOfferta" name="productOfferta" value="1">
+                        <label for="productOfferta">Offerta</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="productBundle" name="productBundle" value="1">
+                        <label for="productBundle">Bundle</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="productB2B" name="productB2B" value="1">
+                        <label for="productB2B">B2B</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="productImage">Immagine del Prodotto (PNG)</label>
+                <input type="file" id="productImage" name="productImage" accept=".png" required>
+            </div>
+            <button type="submit" class="btn">Inserisci Prodotto</button>
+        </form>
+    </div>
     <div class="display">
         <h2> Prodotti presenti in magazzino </h2>
         <% for (ProductBean bean : products) { %>
@@ -293,75 +383,6 @@
             </div>
         </div>
         <% } %>
-
-        <div class="section">
-            <h2>Inserisci prodotto</h2>
-            <form action="${pageContext.request.contextPath}/InsertProduct?action=addP" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="productName">Nome Prodotto</label>
-                    <input type="text" id="productName" name="productName" required>
-                </div>
-                <div class="form-group">
-                    <label for="productDescription">Descrizione</label>
-                    <textarea id="productDescription" name="productDescription" rows="4" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="productPrice">Prezzo</label>
-                    <input type="number" id="productPrice" name="productPrice" required>
-                </div>
-                <div class="form-group">
-                    <label for="productQuantity">Quantità</label>
-                    <input type="number" id="productQuantity" name="productQuantity" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Caratteristiche:</label>
-                    <div class="checkbox-group">
-                        <div>
-                            <input type="checkbox" id="bestseller" name="bestseller" value="true">
-                            <label for="bestseller">Bestseller</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="dolce" name="dolce" value="true">
-                            <label for="dolce">Dolce</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="salato" name="salato" value="true">
-                            <label for="salato">Salato</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="bevanda" name="bevanda" value="true">
-                            <label for="bevanda">Bevanda</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="trend" name="trend" value="true">
-                            <label for="trend">Trend</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="novita" name="novita" value="true">
-                            <label for="novita">Novità</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="offerta" name="offerta" value="true">
-                            <label for="offerta">Offerta</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="bundle" name="bundle" value="true">
-                            <label for="bundle">Bundle</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="b2b" name="b2b" value="true">
-                            <label for="b2b">B2B</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="productImage">Immagine del Prodotto (PNG)</label>
-                    <input type="file" id="productImage" name="productImage" accept=".png" required>
-                </div>
-                <button type="submit" class="btn">Inserisci Prodotto</button>
-            </form>
-        </div>
     </div>
 </div>
 <script>

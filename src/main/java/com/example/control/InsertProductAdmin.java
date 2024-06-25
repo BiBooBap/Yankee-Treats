@@ -3,7 +3,8 @@ package com.example.control;
 import com.example.model.ProductDAO;
 import com.example.model.ProductModelDM;
 import com.example.model.UtilDS;
-
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -16,7 +17,13 @@ import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import java.util.List;
 
+@WebServlet("/InsertProduct")
+@MultipartConfig
 public class InsertProductAdmin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -25,55 +32,74 @@ public class InsertProductAdmin extends HttpServlet {
         try {
             if (action != null) {
                 if (action.equalsIgnoreCase("addP")) {
+
                     String name = request.getParameter("productName");
                     String description = request.getParameter("productDescription");
                     int price = Integer.parseInt(request.getParameter("productPrice"));
                     int quantity = Integer.parseInt(request.getParameter("productQuantity"));
-                    boolean bestseller = Boolean.parseBoolean(request.getParameter("productBestseller"));
-                    boolean dolce = Boolean.parseBoolean(request.getParameter("productDolce"));
-                    boolean salato = Boolean.parseBoolean(request.getParameter("productSalato"));
-                    boolean bevanda = Boolean.parseBoolean(request.getParameter("productBevanda"));
-                    boolean trend = Boolean.parseBoolean(request.getParameter("productTrend"));
-                    boolean novita = Boolean.parseBoolean(request.getParameter("productNovita"));
-                    boolean offerta = Boolean.parseBoolean(request.getParameter("productOfferta"));
-                    boolean bundle = Boolean.parseBoolean(request.getParameter("productBundle"));
-                    boolean b2b = Boolean.parseBoolean(request.getParameter("productB2B"));
+                    byte bestseller = (byte) (request.getParameter("productBestseller") != null ? 1 : 0);
+                    byte dolce = (byte) (request.getParameter("productDolce") != null ? 1 : 0);
+                    byte salato = (byte) (request.getParameter("productSalato") != null ? 1 : 0);
+                    byte bevanda = (byte) (request.getParameter("productBevanda") != null ? 1 : 0);
+                    byte trend = (byte) (request.getParameter("productTrend") != null ? 1 : 0);
+                    byte novita = (byte) (request.getParameter("productNovita") != null ? 1 : 0);
+                    byte offerta = (byte) (request.getParameter("productOfferta") != null ? 1 : 0);
+                    byte bundle = (byte) (request.getParameter("productBundle") != null ? 1 : 0);
+                    byte b2b = (byte) (request.getParameter("productB2B") != null ? 1 : 0);
 
-                    if(ProductDAO.insertProduct(name, description, price, quantity, bestseller ? 1 : 0, dolce ? 1 : 0, salato ? 1 : 0, bevanda ? 1 : 0,
-                            trend ? 1 : 0, novita ? 1 : 0, offerta ? 1 : 0, bundle ? 1 : 0, b2b ? 1 : 0)) {
-                        message = "Operazione riuscita con successo!";
+                    boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+                    FileItem fileItem = null;
+
+                    if (isMultipart) {
+                        DiskFileItemFactory factory = new DiskFileItemFactory();
+                        ServletFileUpload upload = new ServletFileUpload(factory);
+
+                        try {
+                            List<FileItem> items = upload.parseRequest(request);
+
+                            for (FileItem item : items) {
+                                if (!item.isFormField() && item.getFieldName().equals("productImage")) {
+                                    fileItem = item;
+                                }
+                            }
+
+                            if (ProductDAO.insertProduct(name, description, price, quantity, bestseller, dolce, salato, bevanda,
+                                    trend, novita, offerta, bundle, b2b)) {
+
+                                if (fileItem != null && !fileItem.getName().isEmpty()) {
+                                    int next_code = UtilDS.getNextCode();
+                                    String fileName = "product_" + next_code + ".png";
+                                    String uploadPath = getServletContext().getRealPath("/resources/images");
+                                    File uploadDir = new File(uploadPath);
+                                    if (!uploadDir.exists()) uploadDir.mkdirs();
+
+                                    File file = new File(uploadPath + File.separator + fileName);
+                                    fileItem.write(file);
+
+                                    // Ensure the file is actually saved
+                                    if (file.exists()) {
+                                        System.out.println("File uploaded to: " + file.getAbsolutePath());
+                                    } else {
+                                        System.err.println("File was not saved.");
+                                    }
+                                }
+
+                                message = "Operazione riuscita con successo!";
+                            } else {
+                                message = "Operazione fallita!";
+                            }
+                        } catch (Exception e) {
+                            message = "Si è verificato un errore durante l'elaborazione della richiesta.";
+                            e.printStackTrace();
+                        }
                     } else {
-                        message = "Operazione fallita!";
+                        message = "La richiesta non è multipart.";
                     }
-
-                    int next_code=UtilDS.getNextCode();
-                    next_code=next_code+1;
-                    InputStream fileContent = request.getInputStream();
-                    String fileName = "product_" +next_code + ".png";
-                    String savePath = "/Users/giuseppedisomma/Yankee-Treats/src/main/webapp/resources/images/" + fileName;
-
-                     try (OutputStream outputStream = new FileOutputStream(new File(savePath))) {
-                         int read;
-                         byte[] bytes = new byte[1024];
-                         while ((read = fileContent.read(bytes)) != -1) {
-                            outputStream.write(bytes, 0, read);
-                         }
-                     } catch (IOException e) {
-                        e.printStackTrace();
-                        return;
-                     } finally {
-                        fileContent.close();
-                     }
-                    System.out.println("Saving file to: " + savePath);
-            }
-                if (action.equalsIgnoreCase("deleteP")) {
-                    int id = Integer.parseInt(request.getParameter("id"));
-                    if (ProductDAO.doDelete(id)) {
-                        message = "Operazione riuscita con successo!";
-                    } else {
-                        message = "Operazione fallita!";
-                    }
+                } else {
+                    message = "Azione non valida.";
                 }
+
+
                 if (action.equalsIgnoreCase("updateqP")) {
                     int id = Integer.parseInt(request.getParameter("id"));
                     int newQ = Integer.parseInt(request.getParameter("newQ"));
@@ -83,6 +109,7 @@ public class InsertProductAdmin extends HttpServlet {
                         message = "Operazione fallita!";
                     }
                 }
+
                 if (action.equalsIgnoreCase("updatenP")) {
                     int id = Integer.parseInt(request.getParameter("id"));
                     String newN = request.getParameter("newN");
@@ -92,6 +119,7 @@ public class InsertProductAdmin extends HttpServlet {
                         message = "Operazione fallita!";
                     }
                 }
+
                 if (action.equalsIgnoreCase("updatedP")) {
                     int id = Integer.parseInt(request.getParameter("id"));
                     String newD = request.getParameter("newD");
@@ -101,10 +129,20 @@ public class InsertProductAdmin extends HttpServlet {
                         message = "Operazione fallita!";
                     }
                 }
+
                 if (action.equalsIgnoreCase("updatepP")) {
                     int id = Integer.parseInt(request.getParameter("id"));
                     int newP = Integer.parseInt(request.getParameter("newP"));
                     if (ProductDAO.doUpdatePrice(id, newP)) {
+                        message = "Operazione riuscita con successo!";
+                    } else {
+                        message = "Operazione fallita!";
+                    }
+                }
+
+                if (action.equalsIgnoreCase("deleteP")) {
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    if (ProductDAO.doDelete(id)) {
                         message = "Operazione riuscita con successo!";
                     } else {
                         message = "Operazione fallita!";
