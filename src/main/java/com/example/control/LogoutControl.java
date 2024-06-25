@@ -14,7 +14,7 @@ public class LogoutControl extends HttpServlet {
         if (session != null) {
             session.invalidate();
         }
-        response.sendRedirect(request.getContextPath() + "/ProductView.jsp"); // Reindirizza alla pagina di login o alla home
+        response.sendRedirect(request.getContextPath() + "/ProductView.jsp");
     }
 }
 

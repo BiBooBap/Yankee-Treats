@@ -140,7 +140,4 @@
     <location>/resources/jsp_pages/errors/500.jsp</location>
   </error-page>
   !-->
-  <listener>
-    <listener-class>com.example.control.SessionInvalidator</listener-class>
-  </listener>
 </web-app>

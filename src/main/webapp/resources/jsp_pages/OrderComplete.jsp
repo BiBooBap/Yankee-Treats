@@ -55,8 +55,13 @@
 <body>
 <div class="container">
     <h1>Ordine Completato con Successo!</h1>
+    <% if (!request.getSession().getAttribute("userType").equals("guest")){%>
     <p>Grazie per il tuo acquisto. Il tuo ordine è stato completato con successo. Puoi visionare tutti i tuoi ordine nella sezione dedicata</p>
     <a href="${pageContext.request.contextPath}/ProductView.jsp" class="btn">Torna alla Homepage</a>
+    <% } else { %>
+    <p>Grazie per il tuo acquisto. Il tuo ordine è stato completato con successo. Puoi visionare tutti i tuoi ordine nella sezione dedicata</p>
+    <a href="${pageContext.request.contextPath}/logout" class="btn">Torna alla Homepage</a>
+    <% } %>
 </div>
 </body>
 </html>
