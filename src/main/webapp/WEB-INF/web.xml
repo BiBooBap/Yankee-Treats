@@ -107,12 +107,12 @@
     <url-pattern>/Checkout</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>OrderServlet</servlet-name>
-    <servlet-class>com.example.control.OrderServlet</servlet-class>
+    <servlet-name>GuestControl</servlet-name>
+    <servlet-class>com.example.control.GuestControl</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>OrderServlet</servlet-name>
-    <url-pattern>/order</url-pattern>
+    <servlet-name>GuestControl</servlet-name>
+    <url-pattern>/Guest</url-pattern>
   </servlet-mapping>
   <!---
   <filter>
@@ -140,4 +140,7 @@
     <location>/resources/jsp_pages/errors/500.jsp</location>
   </error-page>
   !-->
+  <listener>
+    <listener-class>com.example.control.SessionInvalidator</listener-class>
+  </listener>
 </web-app>

@@ -14,7 +14,7 @@
 
 <div class="container">
     <h2>Registrazione</h2>
-    <form action="ValidateOTP.jsp" method="post">
+    <form action="ValidateOTP.jsp" method="post" onsubmit="return validateForm()">
         <input type="text" name="nome" placeholder="Nome" required>
         <input type="text" name="cognome" placeholder="Cognome" required>
         <input type="date" name="data_di_nascita" placeholder="Data di nascita" required>
@@ -41,6 +41,7 @@
 </div>
 
 <script>
+
     function checkPasswordMatch() {
         var password = document.getElementById("password").value;
         var confirmPassword = document.getElementById("conferma-password").value;
@@ -96,6 +97,25 @@
             submitBtn.disabled = false;
         }
     }
+    function validateForm() {
+        var userType = document.querySelector('select[name="tipo_utente"]').value;
+        var partitaIva = document.querySelector('input[name="partita_iva"]').value.trim();
+        var codiceFiscale = document.querySelector('input[name="codice_fiscale"]').value.trim();
+        if (userType === 'venditore' && partitaIva === '') {
+            alert("Inserisci la Partita IVA per il tipo Venditore.");
+            return false;
+        } else if (userType === 'privato' && codiceFiscale === '') {
+            alert("Inserisci il Codice Fiscale per il tipo Privato.");
+            return false;
+        }
+        return true;
+    }
+
+    document.querySelector("#registrationForm").addEventListener("submit", function(event) {
+        if (!validateForm()) {
+            event.preventDefault(); // Blocca l'invio del form se la validazione non è passata
+        }
+    });
 </script>
 
 

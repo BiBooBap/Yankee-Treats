@@ -5,7 +5,6 @@
 	String userMail = request.getParameter("userEmail");
 	if (userMail != null && !userMail.isEmpty()) {
 		session.setAttribute("userEmail", userMail);
-
 	} else {
 		userMail = (String) session.getAttribute("userEmail");
 	}

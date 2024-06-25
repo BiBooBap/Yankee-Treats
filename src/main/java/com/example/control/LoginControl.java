@@ -36,8 +36,6 @@ public class LoginControl extends HttpServlet {
             session.setAttribute("userType", UtilDS.getUserTypebyEmail(email));
             session.setAttribute("userName", UtilDS.getNamebyEmail(email));
 
-            System.out.println("nel login " +userType);
-
             Cart cart = (Cart) session.getAttribute("cart");
             if (cart == null) {
                 cart = new Cart();
@@ -47,7 +45,7 @@ public class LoginControl extends HttpServlet {
             if (fromCart) {
                 response.sendRedirect(request.getContextPath() + "/Checkout.jsp");
             } else if(fromB2B && userType.equals("venditore")) {
-                response.sendRedirect(request.getContextPath()+"resources/jsp_pages/B2b.jsp");
+                response.sendRedirect(request.getContextPath()+"/resources/jsp_pages/B2b.jsp");
             } else
                 response.sendRedirect(request.getContextPath() + "/ProductView.jsp");
             }

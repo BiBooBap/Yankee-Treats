@@ -5,9 +5,21 @@
 
 <%
     String userE = (String) request.getSession().getAttribute("userEmail");
+    String userType= (String) request.getSession().getAttribute("userType");
     boolean userLoggedIn = userE != null && !userE.isEmpty();
 
-    int userCode = (int) request.getSession().getAttribute("userCode");
+    int userCode;
+    ArrayList<ArrayList<String>> billingAddresses = null;
+    ArrayList<ArrayList<String>> deliveryAddresses= null;
+    ArrayList<ArrayList<String>> paymentMethods= null;
+
+    if(userLoggedIn) {
+        userCode = UtilDS.getUserCodebyEmail(userE);
+        request.getSession().setAttribute("userCode",userCode);
+        billingAddresses = UtilDS.showBillingAddress(userCode);
+        deliveryAddresses = UtilDS.showDeliveryAddress(userCode);
+        paymentMethods = UtilDS.showPaymentMethods(userCode);
+    }
 
     Cart cart = (Cart) request.getSession().getAttribute("cart");
     if (cart == null) {
@@ -15,9 +27,6 @@
         request.getSession().setAttribute("cart", cart);
     }
 
-    ArrayList<ArrayList<String>> billingAddresses = UtilDS.showBillingAddress(userCode);
-    ArrayList<ArrayList<String>> deliveryAddresses = UtilDS.showDeliveryAddress(userCode);
-    ArrayList<ArrayList<String>> paymentMethods = UtilDS.showPaymentMethods(userCode);
 
     double cartTotal = cart.getCartTotalPrice();
     request.getSession().setAttribute("cartTotal",cartTotal);
@@ -83,6 +92,63 @@
         .btn-container {
             margin-top: 20px;
         }
+
+        .guest-area {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .section-title {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .guest-form {
+            max-width: 400px;
+            margin: auto;
+        }
+
+        .guest-form label {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .guest-form input[type="email"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+        }
+
+        .guest-form input[type="email"]:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .guest-form .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .guest-form .btn:hover {
+            background-color: #45a049;
+        }
     </style>
     <script>
         function validateForm() {
@@ -99,12 +165,26 @@
     </script>
 </head>
 <body>
+
+<% if (!userLoggedIn) { %>
+<div class="container">
+    <div class="guest-area">
+        <h2 class="section-title">Informazioni Obbligatorie</h2>
+        <form id="guestForm" action="${pageContext.request.contextPath}/Guest" method="post" class="guest-form">
+            <label for="email">Inserisci la tua email:</label>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <button type="submit" class="btn btn-primary">Conferma</button>
+        </form>
+    </div>
+</div>
+<% }else{%>
 <div class="container">
     <div class="section billing-info">
-        <h2 class="section-title">Informazioni di Fatturazione</h2>
-        <form id="checkoutForm" action="${pageContext.request.contextPath}/Checkout" method="post" onsubmit="return validateForm()">
+        <h2 class="section-title">Informazioni Personali</h2>
 
+        <form id="checkoutForm" action="${pageContext.request.contextPath}/Checkout" method="post" onsubmit="return validateForm()">
             <h3>Indirizzo di Fatturazione</h3>
+            <%if (billingAddresses!=null&&!billingAddresses.isEmpty()) {%>
             <table>
                 <thead>
                 <tr>
@@ -127,8 +207,11 @@
                 <% } %>
                 </tbody>
             </table>
-
+            <% } else{%>
+            <p>Nessun indirizzo di fatturazione disponibile. Usare il bottone a fondo pagina per inserirne uno.</p>
+            <%}%>
             <h3>Indirizzo di Consegna</h3>
+            <%if (deliveryAddresses!=null&&!deliveryAddresses.isEmpty()) {%>
             <table>
                 <thead>
                 <tr>
@@ -153,8 +236,11 @@
                 <% } %>
                 </tbody>
             </table>
-
+            <% } else{%>
+            <p>Nessun indirizzo di spedizione disponibile. Usare il bottone a fondo pagina per inserirne uno.</p>
+            <%}%>
             <h3>Metodo di Pagamento</h3>
+            <%if (paymentMethods!=null&&!paymentMethods.isEmpty()) {%>
             <table>
                 <thead>
                 <tr>
@@ -175,7 +261,9 @@
                 <% } %>
                 </tbody>
             </table>
-
+            <% } else{%>
+            <p>Nessun metodo di pagamento disponibile. Usare il bottone a fondo pagina per inserirne</p>
+            <%}%>
             <div class="btn-container">
                 <button type="submit" class="btn">Conferma Ordine</button>
                 <a href="UserData.jsp?fromCheckout=true" class="btn btn-secondary">Inserisci Informazioni Personali</a>
@@ -183,5 +271,6 @@
         </form>
     </div>
 </div>
+<% } %>
 </body>
 </html>
