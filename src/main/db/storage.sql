@@ -85,15 +85,17 @@ VALUES
 
 CREATE TABLE users (
                        code INT PRIMARY KEY AUTO_INCREMENT,
-                       name VARCHAR(50) NOT NULL,
-                       surname VARCHAR(50) NOT NULL,
+                       name VARCHAR(50),
+                       surname VARCHAR(50),
                        date_of_birth DATE,
                        email VARCHAR(100) NOT NULL,
-                       password VARCHAR(255) NOT NULL,
-                       user_type ENUM('venditore', 'privato','admin','guest') NOT NULL,
+                       password VARCHAR(255),
+                       user_type ENUM('venditore', 'privato', 'admin', 'guest') NOT NULL,
                        partita_iva VARCHAR(30),
-                       CF VARCHAR(30)
+                       CF VARCHAR(30),
+                       UNIQUE KEY (email)
 );
+
 
 INSERT INTO users (name, surname, date_of_birth, email, password, user_type, partita_iva, CF)
 VALUES ('Null', 'Null', '01-01-01', 'yankeetreats.confirm@gmail.com', 'YankeeTreats2024', 'admin', NULL, NULL);
@@ -143,4 +145,13 @@ CREATE TABLE orders (
                         FOREIGN KEY (payment_card_id) REFERENCES payment_method(card_id),
                         FOREIGN KEY (delivery_address_id) REFERENCES delivery_addresses(address_id),
                         FOREIGN KEY (billing_address_id) REFERENCES billing_addresses(address_id)
+);
+
+CREATE TABLE order_items (
+                             order_item_id INT PRIMARY KEY AUTO_INCREMENT,
+                             order_id INT,
+                             product_code INT,
+                             quantity INT,
+                             FOREIGN KEY (order_id) REFERENCES orders(order_id),
+                             FOREIGN KEY (product_code) REFERENCES product(code)
 );
