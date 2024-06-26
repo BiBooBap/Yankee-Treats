@@ -42,7 +42,7 @@
     <a href="${pageContext.request.contextPath}/product"><img id="logo" src="${pageContext.request.contextPath}/resources/images/logo.png" alt=""/></a>
 
     <div class="input-wrapper">
-        <input type="text" placeholder="Oggi ho voglia di.." name="text" class="input"></input>
+        <input type="text" placeholder="Oggi ho voglia di.." name="text" class="searchbar"></input>
         <button type="submit" class="search-button">&#128270;</button>
     </div>
 
@@ -95,9 +95,8 @@
     let currentEmojiIndex = 0;
 
     let searchButton = document.querySelector(".search-button");
-    let inputbar = document.querySelector(".input");
+    let inputbar = document.querySelector(".searchbar");
     inputbar.addEventListener("focus", function() {
-        inputbar.placeholder = "";
         searchButton.style.border = "2px solid #0563df";
         searchButton.style.backgroundColor = "#83a4d2";
 
@@ -107,7 +106,6 @@
         emojiInterval = setInterval(changeEmoji, 1000);
     });
     inputbar.addEventListener("blur", function() {
-        inputbar.placeholder = "Oggi ho voglia di..";
         searchButton.style.border = "none";
         searchButton.style.backgroundColor = "rgba(128, 128, 128, 0.13)";
         searchButton.innerHTML = "&#128270;";
