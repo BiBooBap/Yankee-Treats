@@ -144,8 +144,10 @@ public class CheckoutServlet extends HttpServlet {
 
                 // Dettagli cliente
                 contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
-                contentStream.showText("Cliente: " + orderDetails.getUserName());
-                contentStream.newLineAtOffset(0, -15);
+                if(orderDetails.getUserName()!=null) {
+                    contentStream.showText("Cliente: " + orderDetails.getUserName());
+                    contentStream.newLineAtOffset(0, -15);
+                }
                 contentStream.showText("Email: " + orderDetails.getUserEmail());
                 contentStream.newLineAtOffset(0, -20);
 
