@@ -1,5 +1,8 @@
+
+
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     background-color: #f5f5f5;
     margin: 0;
     padding: 0;
@@ -45,7 +48,6 @@ body {
 }
 
 .productimage {
-    flex: 0 0 100px;
     margin-left: 20px;
     margin-right: 20px;
     max-width: 200px;
@@ -56,7 +58,8 @@ body {
 .price {
     flex: 1;
     color: #555;
-    text-align: right;
+    text-align: center;
+    font-weight: bold;
 }
 
 .quantity {
@@ -67,18 +70,7 @@ body {
 }
 
 .quantity button {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin: 0 5px;
-    border-radius: 3px;
-    transition: background-color 0.3s;
-}
-
-.quantity button:hover {
-    background-color: #c0392b;
+    padding: 8px 12.5px;
 }
 
 .quantity .value {
@@ -90,13 +82,13 @@ body {
 
 a {
     text-decoration: none;
-    color: #3498db;
+    color: white;
     margin-left: 10px;
     transition: color 0.3s;
 }
 
 a:hover {
-    color: #2980b9;
+    color: black;
 }
 
 .buttons {
@@ -144,3 +136,47 @@ a:hover {
     }
 }
 
+button {
+    padding: 12.5px 30px;
+    border: 0;
+    border-radius: 100px;
+    background-color: #2ba8fb;
+    color: #ffffff;
+    font-weight: Bold;
+    font-size: 14px;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    cursor: pointer;
+}
+
+.remove {
+    background-color: #e74c3c;
+    margin-top: 14px;
+}
+
+.remove:hover {
+    background-color: #c0392b;
+}
+
+.add {
+    background-color: #2ecc71;
+    margin-top: 14px;
+}
+
+.add:hover {
+    background-color: #27ae60;
+}
+
+button:hover {
+    background-color: #6fc5ff;
+    box-shadow: 0 0 20px #6fc5ff50;
+    transform: scale(1.1);
+}
+
+button:active {
+    background-color: #3d94cf;
+    transition: all 0.25s;
+    -webkit-transition: all 0.25s;
+    box-shadow: none;
+    transform: scale(0.98);
+}

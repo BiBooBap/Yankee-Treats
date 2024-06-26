@@ -43,8 +43,7 @@
 	<br>
 
 	<h1 class="animated-header">
-		<span>I</span>
-		<span>P</span><span>r</span><span>o</span><span>d</span><span>o</span><span>t</span><span>t</span><span>i</span>
+		<span>V</span><span>e</span><span>t</span><span>r</span><span>i</span><span>n</span><span>a</span>
 	</h1>
 
 	<div class="container">

@@ -39,6 +39,10 @@
 <div id="header">
     <a href="${pageContext.request.contextPath}/product"><img id="logo" src="${pageContext.request.contextPath}/resources/images/logo.png" alt=""/></a>
 
+    <div class="input-wrapper">
+        <input type="text" placeholder="Cerca il tuo snack.. &#128270;" name="text" class="input">
+    </div>
+
     <span id="icons">
         <% if (username != null && !username.isEmpty()) { %>
         <div class="welcome-message">Benvenuto, <%= username %></div>

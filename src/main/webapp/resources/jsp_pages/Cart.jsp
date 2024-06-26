@@ -26,6 +26,8 @@
 </head>
 <body>
 
+
+
 <div class="cart" id="cart"> <!-- LASCIARE SIA CLASS CHE ID = CART -->
     <div class="listCart">
         <% for (CartItem item : cart.getCart()) { %>
@@ -35,22 +37,29 @@
                 <img src="${pageContext.request.contextPath}/resources/images/product_<%= item.getId() %>.png" class="productimage" alt="">
                 <div class="price"><%= item.getTotalPrice() %><span>&euro;</span></div>
                 <div class="quantity">
-                    <form action="${pageContext.request.contextPath}/cart" method="get" style="display:inline;">
+                    <form action="${pageContext.request.contextPath}/cart" method="get">
+                        <%
+                        if (item.getQuantityCart() == 1) { %>
+                            <input type="hidden" name="action" value="deleteC">
+                            <input type="hidden" name="id" value="<%=item.getId()%>">
+                            <button type="submit" class="remove">-</button>
+                        <% } else { %>
                         <input type="hidden" name="action" value="decrementC">
                         <input type="hidden" name="id" value="<%=item.getId()%>">
-                        <button type="submit">-</button>
+                        <button type="submit" class="remove">-</button>
+                        <% } %>
                     </form>
                     <span class="value"><%= item.getQuantityCart() %></span>
-                    <form action="${pageContext.request.contextPath}/cart" method="get" style="display:inline;">
+                    <form action="${pageContext.request.contextPath}/cart" method="get">
                         <input type="hidden" name="action" value="incrementC">
                         <input type="hidden" name="id" value="<%=item.getId()%>">
-                        <button type="submit">+</button>
+                        <button type="submit" class="add">+</button>
                     </form>
                 </div>
-                <form action="${pageContext.request.contextPath}/cart" method="get" style="display:inline;">
+                <form action="${pageContext.request.contextPath}/cart" method="get">
                     <input type="hidden" name="action" value="deleteC">
                     <input type="hidden" name="id" value="<%=item.getId()%>">
-                    <button type="submit">Rimuovi</button>
+                    <button type="submit" class="remove">Rimuovi</button>
                 </form>
             </div>
         </div>
@@ -59,14 +68,23 @@
 
     <div class="buttons">
         <div class="total">Totale: <%= cart.getCartTotalPrice() %> &euro;</div>
-        <a href="${pageContext.request.contextPath}/ProductView.jsp"><div class="close">CHIUDI</div></a>
-        <div class="checkout">
-            <% if (userLoggedIn) { %>
-            <a href="${pageContext.request.contextPath}/resources/jsp_pages/Checkout.jsp">CHECKOUT</a>
-            <% } else { %>
-            <a href="${pageContext.request.contextPath}/resources/jsp_pages/Login.jsp?fromCart=true">CHECKOUT</a>
-            <% } %>
-        </div>
+
+
+        <a href="${pageContext.request.contextPath}/ProductView.jsp"><button>
+            CHIUDI
+        </button></a>
+
+
+        <% if (userLoggedIn)
+        { %>
+        <a href="${pageContext.request.contextPath}/resources/jsp_pages/Checkout.jsp">
+                <% }
+                else
+                { %>
+                    <a href="${pageContext.request.contextPath}/resources/jsp_pages/Login.jsp?fromCart=true">
+                <% } %><button>
+                    CHECKOUT
+        </button></a>
     </div>
 </div>
 
