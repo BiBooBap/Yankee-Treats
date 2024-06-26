@@ -172,11 +172,43 @@
         <h2 class="section-title">Informazioni Obbligatorie</h2>
         <form id="guestForm" action="${pageContext.request.contextPath}/Guest" method="post" class="guest-form">
             <label for="email">Inserisci la tua email:</label>
-            <input type="email" id="email" name="email" placeholder="Email" required>
-            <button type="submit" class="btn btn-primary">Conferma</button>
+            <input type="email" id="email" name="email" placeholder="Email" required onkeyup="checkEmail()">
+            <div id="email-error" class="error-message" style="display: none;"></div>
+            <button type="submit" id="submit-btn" class="btn btn-primary">Conferma</button>
         </form>
     </div>
 </div>
+
+<script>
+    function checkEmail() {
+        var email = document.getElementById("email").value;
+        var errorDiv = document.getElementById("email-error");
+        var submitBtn = document.getElementById("submit-btn");
+
+        if (email) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "${pageContext.request.contextPath}/Check", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.exists) {
+                        errorDiv.style.display = "block";
+                        errorDiv.textContent = "Email gia registrata. Effettua il login o usa un'altra email.";
+                        submitBtn.disabled = true;
+                    } else {
+                        errorDiv.style.display = "none";
+                        submitBtn.disabled = false;
+                    }
+                }
+            };
+            xhr.send("email=" + encodeURIComponent(email));
+        } else {
+            errorDiv.style.display = "none";
+            submitBtn.disabled = false;
+        }
+    }
+</script>
 <% }else{%>
 <div class="container">
     <div class="section billing-info">
