@@ -15,6 +15,9 @@ public class DownloadInvoiceServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Integer orderId = (Integer) session.getAttribute("lastOrder");
 
+        if(orderId==null)
+            orderId= Integer.valueOf(request.getParameter("orderId"));
+
         if (orderId == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Nessun ordine trovato");
             return;

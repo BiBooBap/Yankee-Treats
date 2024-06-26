@@ -29,8 +29,15 @@ public class RegistrationModelDS {
 
     public boolean insertUser(RegistrationBean registrazioneBean) {
         try (Connection connection = ds.getConnection()) {
-            String insertSQL = "INSERT INTO " + RegistrationModelDS.TABLE_NAME
-                    + " (name, surname, date_of_birth, email, password, user_type, partita_iva, CF) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String insertSQL;
+            if ("venditore".equals(registrazioneBean.getTipoUtente())) {
+                insertSQL = "INSERT INTO " + RegistrationModelDS.TABLE_NAME
+                        + " (name, surname, date_of_birth, email, password, user_type, partita_iva, CF) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            } else {
+                insertSQL = "INSERT INTO " + RegistrationModelDS.TABLE_NAME
+                        + " (name, surname, date_of_birth, email, password, user_type) VALUES (?, ?, ?, ?, ?, ?)";
+            }
+
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
                 preparedStatement.setString(1, registrazioneBean.getNome());
                 preparedStatement.setString(2, registrazioneBean.getCognome());
@@ -38,8 +45,11 @@ public class RegistrationModelDS {
                 preparedStatement.setString(4, registrazioneBean.getEmail());
                 preparedStatement.setString(5, registrazioneBean.getPassword());
                 preparedStatement.setString(6, registrazioneBean.getTipoUtente());
-                preparedStatement.setString(7, registrazioneBean.getPartitaIVA());
-                preparedStatement.setString(8, registrazioneBean.getCodiceFiscale());
+
+                if ("venditore".equals(registrazioneBean.getTipoUtente())) {
+                    preparedStatement.setString(7, registrazioneBean.getPartitaIVA());
+                    preparedStatement.setString(8, registrazioneBean.getCodiceFiscale());
+                }
 
                 int rowsAffected = preparedStatement.executeUpdate();
 
@@ -63,8 +73,7 @@ public class RegistrationModelDS {
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, email);
             try (ResultSet rs = stmt.executeQuery()) {
-                boolean exists = rs.next();
-                return exists;
+                return rs.next();
             }
         } catch (SQLException e) {
             System.out.println("Error validating user: " + e.getMessage());

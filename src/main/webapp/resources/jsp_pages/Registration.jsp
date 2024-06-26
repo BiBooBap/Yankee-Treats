@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrazione</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/Registration.css" type="text/css"/>
-
 </head>
 <body>
 
@@ -30,10 +29,8 @@
             <option value="venditore">Venditore</option>
             <option value="privato">Privato</option>
         </select>
-        <div id="partita_iva" style="display: none;">
+        <div id="venditore_fields" style="display: none;">
             <input type="text" name="partita_iva" placeholder="Partita IVA">
-        </div>
-        <div id="codice_fiscale" style="display: none;">
             <input type="text" name="codice_fiscale" placeholder="Codice Fiscale">
         </div>
         <input type="submit" id="submit-btn" value="Registrati">
@@ -41,7 +38,6 @@
 </div>
 
 <script>
-
     function checkPasswordMatch() {
         var password = document.getElementById("password").value;
         var confirmPassword = document.getElementById("conferma-password").value;
@@ -58,14 +54,9 @@
 
     document.querySelector('select[name="tipo_utente"]').addEventListener('change', function() {
         if (this.value === 'venditore') {
-            document.getElementById('partita_iva').style.display = 'block';
-            document.getElementById('codice_fiscale').style.display = 'none';
-        } else if (this.value === 'privato') {
-            document.getElementById('partita_iva').style.display = 'none';
-            document.getElementById('codice_fiscale').style.display = 'block';
+            document.getElementById('venditore_fields').style.display = 'block';
         } else {
-            document.getElementById('partita_iva').style.display = 'none';
-            document.getElementById('codice_fiscale').style.display = 'none';
+            document.getElementById('venditore_fields').style.display = 'none';
         }
     });
 
@@ -97,27 +88,26 @@
             submitBtn.disabled = false;
         }
     }
+
     function validateForm() {
         var userType = document.querySelector('select[name="tipo_utente"]').value;
-        var partitaIva = document.querySelector('input[name="partita_iva"]').value.trim();
-        var codiceFiscale = document.querySelector('input[name="codice_fiscale"]').value.trim();
-        if (userType === 'venditore' && partitaIva === '') {
-            alert("Inserisci la Partita IVA per il tipo Venditore.");
-            return false;
-        } else if (userType === 'privato' && codiceFiscale === '') {
-            alert("Inserisci il Codice Fiscale per il tipo Privato.");
-            return false;
+        if (userType === 'venditore') {
+            var partitaIva = document.querySelector('input[name="partita_iva"]').value.trim();
+            var codiceFiscale = document.querySelector('input[name="codice_fiscale"]').value.trim();
+            if (partitaIva === '' || codiceFiscale === '') {
+                alert("Inserisci sia la Partita IVA che il Codice Fiscale per il tipo Venditore.");
+                return false;
+            }
         }
         return true;
     }
 
-    document.querySelector("#registrationForm").addEventListener("submit", function(event) {
+    document.querySelector("form").addEventListener("submit", function(event) {
         if (!validateForm()) {
             event.preventDefault();
         }
     });
 </script>
-
 
 </body>
 </html>

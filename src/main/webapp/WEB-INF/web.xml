@@ -135,6 +135,14 @@
     <servlet-name>ShowOrderServlet</servlet-name>
     <url-pattern>/ShowOrder</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>ShowOrderAdmin</servlet-name>
+    <servlet-class>com.example.control.ShowOrderAdmin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowOrderAdmin</servlet-name>
+    <url-pattern>/ShowOrderAdmin</url-pattern>
+  </servlet-mapping>
   <!---
   <filter>
     <filter-name>ErrorHandlingFilter</filter-name>

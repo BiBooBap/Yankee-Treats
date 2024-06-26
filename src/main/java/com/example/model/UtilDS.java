@@ -356,6 +356,61 @@ public class UtilDS     {
         return orders;
     }
 
+    public static ArrayList<OrderBeans> showAllOrders() {
+        ArrayList<OrderBeans> orders = new ArrayList<>();
+        String query = "SELECT o.order_id, o.user_code, o.total_cost, o.order_date,\n" +
+                "       u.name as user_name, u.email as user_email,\n" +
+                "       p.card_number, p.cardholder_name,\n" +
+                "       d.country, d.zip as delivery_zip, d.city as delivery_city, d.street as delivery_street, d.province as delivery_province,\n" +
+                "       b.street as billing_street, b.city as billing_city, b.province as billing_province, b.zip as billing_zip\n" +
+                "FROM orders o\n" +
+                "LEFT JOIN payment_method p ON o.payment_card_id = p.card_id\n" +
+                "LEFT JOIN delivery_addresses d ON o.delivery_address_id = d.address_id\n" +
+                "LEFT JOIN billing_addresses b ON o.billing_address_id = b.address_id\n" +
+                "LEFT JOIN users u ON o.user_code = u.code\n" +
+                "ORDER BY o.order_date DESC";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                OrderBeans order = new OrderBeans();
+                order.setOrderId(rs.getInt("order_id"));
+                order.setUserCode(rs.getInt("user_code"));  // Aggiunto il codice utente
+                order.setUserName(rs.getString("user_name"));
+                order.setUserEmail(rs.getString("user_email"));
+                order.setTotalCost(rs.getDouble("total_cost"));
+                order.setOrderDate(rs.getTimestamp("order_date"));
+
+                PaymentMethod paymentMethod = new PaymentMethod();
+                paymentMethod.setCardNumber(rs.getString("card_number"));
+                paymentMethod.setCardholderName(rs.getString("cardholder_name"));
+                order.setPaymentMethod(paymentMethod);
+
+                DeliveryAddress deliveryAddress = new DeliveryAddress();
+                deliveryAddress.setStreet(rs.getString("delivery_street"));
+                deliveryAddress.setCity(rs.getString("delivery_city"));
+                deliveryAddress.setZip(rs.getString("delivery_zip"));
+                deliveryAddress.setCountry(rs.getString("country"));
+                deliveryAddress.setProvince(rs.getString("delivery_province"));
+                order.setDeliveryAddress(deliveryAddress);
+
+                BillingAddress billingAddress = new BillingAddress();
+                billingAddress.setStreet(rs.getString("billing_street"));
+                billingAddress.setCity(rs.getString("billing_city"));
+                billingAddress.setZip(rs.getString("billing_zip"));
+                billingAddress.setProvince(rs.getString("billing_province"));
+                order.setBillingAddress(billingAddress);
+
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Error retrieving all orders: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return orders;
+    }
 
 
 

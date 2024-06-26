@@ -58,9 +58,11 @@
         <button class="dropbtn"><i class="fa-solid fa-circle-user"></i></button>
         <div class="dropdown-content">
             <a href="${pageContext.request.contextPath}/resources/jsp_pages/MiddleUserData.jsp">Dati personali</a>
-            <a href="${pageContext.request.contextPath}/<%= isAdmin ? "resources/jsp_pages/AdminHistory.jsp" : "ShowOrder" %>">Storico ordini</a>
-            <% if (isAdmin) { %>
+            <% if (!isAdmin) { %>
+            <a href="${pageContext.request.contextPath}/ShowOrder">Storico ordini</a>
+            <% }else{ %>
             <a href="${pageContext.request.contextPath}/resources/jsp_pages/InsertProduct.jsp">Gestisci prodotti</a>
+            <a href="${pageContext.request.contextPath}/ShowOrderAdmin">Storico ordini</a>
             <% } %>
             <a href="${pageContext.request.contextPath}/logout">Logout</a>
         </div>
