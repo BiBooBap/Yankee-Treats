@@ -44,12 +44,13 @@ public class LoginControl extends HttpServlet {
 
             if (fromCart) {
                 response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/Checkout.jsp");
-            } else if(fromB2B && userType.equals("venditore")) {
+            } else if(fromB2B && (userType.equals("venditore") || userType.equals("admin"))) {
                 response.sendRedirect(request.getContextPath()+"/resources/jsp_pages/B2b.jsp");
             } else
                 response.sendRedirect(request.getContextPath() + "/ProductView.jsp");
             }
-             else response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/Login.jsp?error=invalidCredentials");
+             else
+                 response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/Login.jsp?error=invalidCredentials&fromB2B=" + fromB2B + "&fromCart=" + fromCart);
 
     }
 }

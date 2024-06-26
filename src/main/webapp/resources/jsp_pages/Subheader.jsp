@@ -71,15 +71,23 @@
             </a>
         </li>
         <li>
-            <% if (userLogged && user_typ != null && (user_typ.equals("venditore") || user_typ.equals("admin"))) { %>
-            <a href="resources/jsp_pages/B2b.jsp">
+            <script>
+                function checkUserTypeForB2B() {
+                    <% if (userLogged && user_typ != null && user_typ.equals("privato")) { %>
+                    alert("Spiacenti, l'accesso B2B e' riservato ai venditori e agli amministratori.");
+                    return false;
                     <% } else if (!userLogged) { %>
-                <a href="resources/jsp_pages/Login.jsp?fromB2B=true">
-                        <% } else { %>
-                    <a href="resources/jsp_pages/errors/403.jsp">
-                        <% } %>
-                        &#128666; B2B &#128666;
-                    </a>
+                    window.location.href = "resources/jsp_pages/Login.jsp?fromB2B=true";
+                    return false;
+                    <% } %>
+                    return true;
+                }
+            </script>
+
+            <a href="<% if (userLogged && user_typ != null && (user_typ.equals("venditore") || user_typ.equals("admin"))) { %>resources/jsp_pages/B2b.jsp<% } else { %>#<% } %>"
+               onclick="return checkUserTypeForB2B();">
+                &#128666; B2B &#128666;
+            </a>
         </li>
     </ul>
 

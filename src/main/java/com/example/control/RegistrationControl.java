@@ -23,6 +23,8 @@ public class RegistrationControl extends HttpServlet {
         String tipoUtente = request.getParameter("tipo_utente");
         String partitaIVA = request.getParameter("partita_iva");
         String codiceFiscale = request.getParameter("codice_fiscale");
+        boolean fromCart = Boolean.parseBoolean(request.getParameter("fromCart"));
+        boolean fromB2B = Boolean.parseBoolean(request.getParameter("fromB2B"));
 
         RegistrationBean registrazioneBean = new RegistrationBean();
         registrazioneBean.setNome(nome);
@@ -42,7 +44,11 @@ public class RegistrationControl extends HttpServlet {
             session.setAttribute("userEmail", email);
             session.setAttribute("userType", UtilDS.getUserTypebyEmail(email));
             session.setAttribute("userName", UtilDS.getNamebyEmail(email));
-            response.sendRedirect(request.getContextPath()+"/ProductView.jsp?userEmail=" + email);
+            if(fromCart)
+                response.sendRedirect(request.getContextPath()+"/resources/jsp_pages/Checkout.jsp");
+            else if(fromB2B && tipoUtente.equals("venditore"))
+                response.sendRedirect(request.getContextPath()+"/resources/jsp_pages/B2b.jsp");
+            else response.sendRedirect(request.getContextPath()+"/ProductView.jsp?userEmail=" + email);
         } else {
             response.sendRedirect("error.jsp");
         }

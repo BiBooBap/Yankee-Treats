@@ -15,6 +15,8 @@
     String user = (String) request.getSession().getAttribute("userEmail");
     String user_ty =(String) request.getSession().getAttribute("userType");
     boolean userLoggedIn = user != null && !user.isEmpty();
+    boolean isAdmin = (user_ty != null && user_ty.equals("admin"));
+    boolean isVenditoreOrPrivato = (user_ty != null && (user_ty.equals("venditore") || user_ty.equals("privato")));
 
     String username= (String) request.getSession().getAttribute("userName");
 
@@ -44,30 +46,32 @@
     </div>
 
     <span id="icons">
-        <% if (username != null && !username.isEmpty()) { %>
-        <div class="welcome-message">Benvenuto, <%= username %></div>
-        <div class="dropdown">
-            <button class="dropbtn"><i class="fa-solid fa-circle-user"></i></button>
-            <div class="dropdown-content">
-                <a href="${pageContext.request.contextPath}/resources/jsp_pages/MiddleUserData.jsp">Dati personali</a>
-                <% if (user_ty.equals("venditore")||user_ty.equals("privato")) { %>
-                <a href="${pageContext.request.contextPath}/ShowOrder">Storico ordini</a>
-                <% }else {%>
-                <a href="${pageContext.request.contextPath}/resources/jsp_pages/AdminHistory.jsp">Storico ordini</a>
-                <% }%>
-                <% if (user_ty.equals("admin")) { %>
-                <a href="${pageContext.request.contextPath}/resources/jsp_pages/InsertProduct.jsp">Gestisci prodotti</a>
-                <% } %>
-                <a href="${pageContext.request.contextPath}/logout">Logout</a>
-            </div>
+    <% if (isAdmin) { %>
+    <div class="welcome-message">Benvenuto, admin</div>
+    <% } else if (userLoggedIn) { %>
+    <div class="welcome-message">Benvenuto, <%= username %></div>
+    <% } %>
+
+    <% if (userLoggedIn) { %>
+    <div class="dropdown">
+        <button class="dropbtn"><i class="fa-solid fa-circle-user"></i></button>
+        <div class="dropdown-content">
+            <a href="${pageContext.request.contextPath}/resources/jsp_pages/MiddleUserData.jsp">Dati personali</a>
+            <a href="${pageContext.request.contextPath}/<%= isAdmin ? "resources/jsp_pages/AdminHistory.jsp" : "ShowOrder" %>">Storico ordini</a>
+            <% if (isAdmin) { %>
+            <a href="${pageContext.request.contextPath}/resources/jsp_pages/InsertProduct.jsp">Gestisci prodotti</a>
+            <% } %>
+            <a href="${pageContext.request.contextPath}/logout">Logout</a>
         </div>
-        <% } else { %>
-        <a href="${pageContext.request.contextPath}/resources/jsp_pages/Login.jsp"><i class="fa-solid fa-circle-user"></i></a>
-        <% } %>
-        <a href="${pageContext.request.contextPath}/resources/jsp_pages/Cart.jsp"><i class="fa-solid fa-cart-shopping"></i></a>
-        <span class="totalQuantity"><%= cart.getTotalItemCount() %></span>
+    </div>
+    <% } else { %>
+    <a href="${pageContext.request.contextPath}/resources/jsp_pages/Login.jsp"><i class="fa-solid fa-circle-user"></i></a>
+    <% } %>
+
+    <a href="${pageContext.request.contextPath}/resources/jsp_pages/Cart.jsp"><i class="fa-solid fa-cart-shopping"></i></a>
+    <span class="totalQuantity"><%= cart.getTotalItemCount() %></span>
     </span>
-</div>
+    </div>
 
 <script>
     window.onscroll = function() { myFunction() };

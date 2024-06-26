@@ -14,7 +14,7 @@
 
 <div class="container">
     <h2>Registrazione</h2>
-    <form action="ValidateOTP.jsp" method="post" onsubmit="return validateForm()">
+    <form action="ValidateOTP.jsp?fromB2B=${param.fromB2B}&fromCart=${param.fromCart}" method="post" onsubmit="return validateForm()">
         <input type="text" name="nome" placeholder="Nome" required>
         <input type="text" name="cognome" placeholder="Cognome" required>
         <input type="date" name="data_di_nascita" placeholder="Data di nascita" required>
@@ -113,7 +113,7 @@
 
     document.querySelector("#registrationForm").addEventListener("submit", function(event) {
         if (!validateForm()) {
-            event.preventDefault(); // Blocca l'invio del form se la validazione non è passata
+            event.preventDefault();
         }
     });
 </script>

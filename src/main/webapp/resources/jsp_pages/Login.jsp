@@ -12,6 +12,12 @@
 
 <%@ include file="Header.jsp" %>
 
+<script type="text/javascript">
+    <% if ("invalidCredentials".equals(request.getParameter("error"))) { %>
+    alert("Credenziali non valide. Riprova.");
+    <% } %>
+</script>
+
 <div class="container">
     <h2>Login</h2>
     <form action="${pageContext.request.contextPath}/login" method="post">
@@ -24,7 +30,7 @@
 
 
     <div class="register-button">
-        <a href="${pageContext.request.contextPath}/resources/jsp_pages/Registration.jsp">Non hai un account? Registrati qui</a>
+        <a href="${pageContext.request.contextPath}/resources/jsp_pages/Registration.jsp?fromB2B=${param.fromB2B}&fromCart=${param.fromCart}">Non hai un account? Registrati qui</a>
     </div>
     <% if (request.getParameter("fromCart") != null && request.getParameter("fromCart").equals("true")) { %>
     <div class="checkout-no-account">
