@@ -10,9 +10,10 @@
     }
 
     List<ProductBean> products = (List<ProductBean>) request.getSession().getAttribute("products");
+    request.getSession().setAttribute("products", products);
 
     if(products == null) {
-        response.sendRedirect(request.getContextPath() + "/product");
+        response.sendRedirect(request.getContextPath() + "/B2b.jsp");
         return;
     }
 
@@ -54,7 +55,7 @@
         <div class="card-footer">
             <div class="card-price"><%=bean.getPrice()%><span>&euro;</span></div>
             <button class="card-btn">
-                <a href="cart?action=addC&id=<%=bean.getCode()%>"> <i class="fa-solid fa-cart-circle-plus fa-lg"></i></a>
+                <a href="${pageContext.request.contextPath}/cart?action=addB2B&id=<%=bean.getCode()%>"> <i class="fa-solid fa-cart-circle-plus fa-lg"></i></a>
             </button>
         </div>
     </div>

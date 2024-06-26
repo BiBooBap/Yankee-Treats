@@ -23,7 +23,6 @@
 
     <a href="#" id="drop">Filtra prodotti</a>
 
-
     <ul>
         <li>
             <a href="ProductView.jsp">
@@ -72,9 +71,9 @@
         </li>
         <li>
             <script>
-                function checkUserTypeForB2B() {
+                function checkUserTypeForB2B() {+
                     <% if (userLogged && user_typ != null && user_typ.equals("privato")) { %>
-                    alert("Spiacenti, l'accesso B2B e' riservato ai venditori e agli amministratori.");
+                    alert("Spiacenti, l'accesso alla pagina B2B e' riservato ai venditori.");
                     return false;
                     <% } else if (!userLogged) { %>
                     window.location.href = "resources/jsp_pages/Login.jsp?fromB2B=true";

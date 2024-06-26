@@ -28,12 +28,12 @@ public class CartControl extends HttpServlet {
                 int productId = Integer.parseInt(request.getParameter("id"));
                 cart.addProduct(productModel.doRetrieveByKey(productId));
                 response.sendRedirect("ProductView.jsp");
-                return; // Ensure no further processing occurs after redirect
+                return;
             } else if (action != null && action.equalsIgnoreCase("deleteC")) {
                 int productId = Integer.parseInt(request.getParameter("id"));
                 cart.deleteProduct(productModel.doRetrieveByKey(productId));
                 response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/Cart.jsp");
-                return; // Ensure no further processing occurs after redirect
+                return;
             } else if (action != null && action.equalsIgnoreCase("incrementC")) {
                 int productId = Integer.parseInt(request.getParameter("id"));
                 CartItem item = cart.getCartItem(productId);
@@ -49,7 +49,12 @@ public class CartControl extends HttpServlet {
                     item.reduceQuantity();
                 }
                 response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/Cart.jsp");
-                return; // Ensure no further processing occurs after redirect
+                return;
+            } else if (action != null && action.equalsIgnoreCase("addB2B")) {
+                int productId = Integer.parseInt(request.getParameter("id"));
+                cart.addProduct(productModel.doRetrieveByKey(productId));
+                response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/B2b.jsp");
+                return;
             }
         } catch (SQLException e) {
             System.out.println("Error:" + e.getMessage());

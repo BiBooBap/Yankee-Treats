@@ -144,7 +144,7 @@ public class ProductModelDS implements ProductModel {
 		String selectSQL = "SELECT * FROM " + ProductModelDS.TABLE_NAME;
 
 		if (order != null && !order.equals("")) {
-			selectSQL += " WHERE " + order + " = 1 ";
+			selectSQL += " WHERE " + order + " = 1 OR B2B = 1";
 		}
 
 		try {

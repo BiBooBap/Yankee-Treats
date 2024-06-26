@@ -9,7 +9,7 @@
 
 <div class="body-container">
     <div class="text-container">
-        <span class="moving-text">Spedizione gratuita per gli ordini di 50 euro</span>
+        <span class="moving-text">Spedizione gratuita per gli ordini superiori a 50 euro</span>
         <!-- Aggiungi più frasi qui -->
     </div>
 </div>

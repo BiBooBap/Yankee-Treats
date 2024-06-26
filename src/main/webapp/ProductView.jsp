@@ -64,7 +64,7 @@
 				<p class="product-description"><%=bean.getDescription()%></p>
 				<p class="product-price">&#8364;<span class="price-value"></span></p>
 			</div>
-			<a href="cart?action=addC&id=<%=bean.getCode()%>"><button class="add-to-cart">Add to Cart</button></a>
+			<a href="cart?action=addC&id=<%=bean.getCode()%>"><button class="add-to-cart">Aggiungi</button></a>
 		</div>
 		<% } } %>
 	</div>
