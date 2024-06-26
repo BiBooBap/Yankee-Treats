@@ -9,94 +9,111 @@
     }
 
     String fromCheckout = request.getParameter("fromCheckout");
-    String guest=request.getParameter("guest");
+    String guest = request.getParameter("guest");
 %>
 
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dati Personali</title>
-
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: #ecf0f1;
+            --text-color: #34495e;
+            --border-color: #bdc3c7;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
             margin: 0;
             padding: 0;
         }
 
         .container {
-            width: 60%;
+            max-width: 800px;
             margin: 40px auto;
-            background-color: #fff;
             padding: 20px;
+            background-color: #ffffff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+        }
+
+        h1, h2 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
         }
 
         .form-group {
             margin-bottom: 20px;
         }
 
-        .form-group label {
+        label {
             display: block;
-            font-weight: bold;
             margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--secondary-color);
         }
 
-        .form-group input[type="text"],
-        .form-group input[type="email"],
-        .form-group input[type="tel"],
-        .form-group input[type="number"],
-        .form-group input[type="date"],
-        .form-group select {
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        select {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--border-color);
             border-radius: 4px;
-            box-sizing: border-box;
+            font-size: 16px;
         }
 
-
         .btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 12px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
-        }
-
-        .btn-secondary {
-            background-color: #008CBA;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
         }
 
         .btn:hover {
-            background-color: #45a049;
+            background-color: #2980b9;
         }
 
-        h2 {
-            color: #333;
-            margin-bottom: 20px;
+        .btn-secondary {
+            background-color: var(--secondary-color);
         }
 
-        .section {
-            margin-bottom: 40px;
+        .btn-secondary:hover {
+            background-color: #34495e;
         }
-
     </style>
 </head>
 <body>
 <div class="container">
+    <h1>Dati Personali</h1>
+    <form action="${pageContext.request.contextPath}/SaveAllUserData" method="post">
+        <input type="hidden" name="fromCheckout" value="${param.fromCheckout}">
 
-
-    <div class="section">
-        <h2>Indirizzo di Consegna</h2>
-        <form action="${pageContext.request.contextPath}/Delivery?fromCheckout=${param.fromCheckout}" method="post">
+        <div class="section">
+            <h2>Indirizzo di Consegna</h2>
             <div class="form-group">
                 <label for="deliveryAddressCountry">Nazione</label>
                 <input type="text" id="deliveryAddressCountry" name="deliveryAddressCountry" required>
@@ -117,40 +134,34 @@
                 <label for="deliveryAddressZIP">CAP</label>
                 <input type="text" id="deliveryAddressZIP" name="deliveryAddressZIP" required>
             </div>
-            <button type="submit" class="btn">Salva Indirizzo di Consegna</button>
-        </form>
-    </div>
+        </div>
 
-    <div class="section">
-        <h2>Metodo di Pagamento</h2>
-        <form action="${pageContext.request.contextPath}/Payment?fromCheckout=${param.fromCheckout}" method="post">
+        <div class="section">
+            <h2>Metodo di Pagamento</h2>
             <div class="form-group">
                 <label for="cardholder_name">Nome Titolare della Carta</label>
                 <input type="text" id="cardholder_name" name="cardholder_name" maxlength="100" required>
             </div>
             <div class="form-group">
                 <label for="card_number">Numero della Carta</label>
-                <input type="text" id="card_number" name="card_number" maxlength="20"  required>
+                <input type="text" id="card_number" name="card_number" maxlength="20" required>
             </div>
             <div class="form-group">
                 <label for="expiry_month">Mese di Scadenza (1-12)</label>
-                <input type="number" id="expiry_month" name="expiry_month" min="1" max="12"  required>
+                <input type="number" id="expiry_month" name="expiry_month" min="1" max="12" required>
             </div>
             <div class="form-group">
                 <label for="expiry_year">Anno di Scadenza (YYYY)</label>
-                <input type="number" id="expiry_year" name="expiry_year" min="2024"  required>
+                <input type="number" id="expiry_year" name="expiry_year" min="2024" required>
             </div>
             <div class="form-group">
                 <label for="cvv">CVV</label>
                 <input type="text" id="cvv" name="cvv" maxlength="3" required>
             </div>
-            <button type="submit" class="btn">Salva Metodo di Pagamento</button>
-        </form>
-    </div>
+        </div>
 
-    <div class="section">
-        <h2>Indirizzo di Fatturazione</h2>
-        <form action="${pageContext.request.contextPath}/Billing?fromCheckout=${param.fromCheckout}" method="post">
+        <div class="section">
+            <h2>Indirizzo di Fatturazione</h2>
             <div class="form-group">
                 <label for="billingAddressStreet">Via e numero civico</label>
                 <input type="text" id="billingAddressStreet" name="billingAddressStreet" required>
@@ -167,23 +178,23 @@
                 <label for="billingAddressZIP">CAP</label>
                 <input type="text" id="billingAddressZIP" name="billingAddressZIP" required>
             </div>
-            <button type="submit" class="btn">Salva Indirizzo di Fatturazione</button>
-        </form>
-    </div>
+        </div>
 
+        <button type="submit" class="btn">Salva Tutte le Informazioni</button>
+    </form>
+
+    <% if ("true".equals(fromCheckout)) { %>
+    <form action="Checkout.jsp" method="get" style="margin-top: 20px;">
+        <button type="submit" class="btn btn-secondary">Torna al checkout</button>
+    </form>
+    <% } %>
+
+    <% if ("true".equals(guest)) { %>
+    <form action="Checkout.jsp" method="get" style="margin-top: 20px;">
+        <button type="submit" class="btn btn-secondary">Procedi con il checkout</button>
+    </form>
+    <% } %>
 </div>
-<% if ("true".equals(fromCheckout)) { %>
-<form action="Checkout.jsp" method="get">
-    <button type="submit" class="btn btn-secondary">Torna al checkout</button>
-</form>
-<% } %>
-
-<% if ("true".equals(guest)) { %>
-<form action="Checkout.jsp" method="get">
-    <button type="submit" class="btn btn-secondary">Procedi con il checkout</button>
-</form>
-<% } %>
-
 </body>
 </html>
 
