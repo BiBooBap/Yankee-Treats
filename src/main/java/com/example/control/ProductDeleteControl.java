@@ -20,7 +20,7 @@ public class ProductDeleteControl extends HttpServlet {
 
             if (isDeactivated) {
                 if (fromInsertProduct) {
-                    redirectURL = request.getContextPath() + "/resources/jsp_pages/InsertProduct.jsp";
+                    redirectURL = request.getContextPath() + "/resources/jsp_pages/DBInterface.jsp";
                 } else if(request.getSession().getAttribute("sort")!=null){
                     redirectURL = request.getContextPath() + "/product?sort=" + request.getSession().getAttribute("sort");
                 }

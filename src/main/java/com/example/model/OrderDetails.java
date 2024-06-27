@@ -103,9 +103,7 @@ public class OrderDetails {
             System.out.println("Error:" + e.getMessage());
         }
     }
-
-    // Getters and setters for all fields
-
+    
     public static OrderDetails getOrderDetails(int orderId) throws SQLException {
         OrderDetails details = new OrderDetails();
         try (Connection conn = ds.getConnection()) {

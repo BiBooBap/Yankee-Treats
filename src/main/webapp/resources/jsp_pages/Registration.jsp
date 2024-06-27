@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrazione</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/Registration.css" type="text/css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/RegistrationStyle.css" type="text/css"/>
 </head>
 <body>
 
@@ -110,4 +110,4 @@
 </script>
 
 </body>
-</html
+</html>

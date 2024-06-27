@@ -18,7 +18,7 @@ public class ProductAddControl extends HttpServlet {
             boolean isActivated = ProductDAO.addActive(code);
 
             if (isActivated) {
-                    redirectURL = request.getContextPath() + "/resources/jsp_pages/InsertProduct.jsp";
+                    redirectURL = request.getContextPath() + "/resources/jsp_pages/DBInterface.jsp";
 
             } else {
                 redirectURL = request.getContextPath() + "/resources/jsp_pages/errors/500.jsp";

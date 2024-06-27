@@ -59,6 +59,14 @@
     <url-pattern>/SaveAllUserData</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>ResendOTPServlet</servlet-name>
+    <servlet-class>com.example.control.ResendOTPServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResendOTPServlet</servlet-name>
+    <url-pattern>/resendOTP</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>DeleteServlet</servlet-name>
     <servlet-class>com.example.control.DeleteServlet</servlet-class>
   </servlet>

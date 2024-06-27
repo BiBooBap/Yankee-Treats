@@ -153,7 +153,7 @@ public class InsertProductAdmin extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/InsertProduct.jsp");
+        response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/DBInterface.jsp");
         request.getSession().setAttribute("message", message);
     }
 }

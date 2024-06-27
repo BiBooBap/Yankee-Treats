@@ -83,7 +83,7 @@
             <% if (!isAdmin) { %>
             <a href="${pageContext.request.contextPath}/ShowOrder">Storico ordini</a>
             <% }else{ %>
-            <a href="${pageContext.request.contextPath}/resources/jsp_pages/InsertProduct.jsp">Gestisci prodotti</a>
+            <a href="${pageContext.request.contextPath}/resources/jsp_pages/DBInterface.jsp">Gestisci prodotti</a>
             <a href="${pageContext.request.contextPath}/ShowOrderAdmin">Storico ordini</a>
             <% } %>
             <a href="${pageContext.request.contextPath}/logout">Logout</a>
