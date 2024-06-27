@@ -57,6 +57,13 @@ public class CheckoutServlet extends HttpServlet {
             HttpSession session = request.getSession();
             cart = (Cart) session.getAttribute("cart");
 
+            for (CartItem item : cart.getCart()) {
+                if (item.getQuantityCart() > item.getProduct().getQuantity()) {
+                    response.sendRedirect(request.getContextPath() + "/error.html?message=NotEnoughStock");
+                    return;
+                }
+            }
+
             if (cart == null || cart.isEmpty()) {
                 response.sendRedirect(request.getContextPath() + "/error.html");
                 return;
@@ -287,20 +294,40 @@ public class CheckoutServlet extends HttpServlet {
     public void saveorderItems(int orderId, Cart cart) throws NamingException {
         Context initCtx = new InitialContext();
         Context envCtx = (Context) initCtx.lookup("java:comp/env");
-
         DataSource ds = (DataSource) envCtx.lookup("jdbc/storage");
 
         try (Connection conn = ds.getConnection()) {
             String sql = "INSERT INTO order_items (order_id, product_code, quantity) VALUES (?, ?, ?)";
+            String updateSql = "UPDATE product SET quantity = quantity - ? WHERE code = ?";
+            String deactivateSql = "UPDATE product SET active = 0 WHERE code = ? AND quantity = 0";
 
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            try (PreparedStatement stmt = conn.prepareStatement(sql);
+                 PreparedStatement updateStmt = conn.prepareStatement(updateSql);
+                 PreparedStatement deactivateStmt = conn.prepareStatement(deactivateSql)) {
+
                 for (CartItem item : cart.getCart()) {
+                    item.reduceQuantity();
                     stmt.setInt(1, orderId);
                     stmt.setInt(2, item.getId());
                     stmt.setInt(3, item.getQuantityCart());
                     stmt.addBatch();
+
+                    updateStmt.setInt(1, item.getQuantityCart());
+                    updateStmt.setInt(2, item.getId());
+                    updateStmt.addBatch();
+
+                    item.getProduct().decreaseQuantity(item.getQuantityCart());
+
+                    // Check if the product quantity is now 0 and deactivate if so
+                    if (item.getProduct().getQuantity() == 0) {
+                        deactivateStmt.setInt(1, item.getId());
+                        deactivateStmt.addBatch();
+                    }
                 }
+
                 stmt.executeBatch();
+                updateStmt.executeBatch();
+                deactivateStmt.executeBatch();
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw e;
