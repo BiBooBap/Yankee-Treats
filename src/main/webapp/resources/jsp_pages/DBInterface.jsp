@@ -133,24 +133,31 @@
             margin-bottom: 40px;
         }
 
+        .product-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+
         .product-item {
             display: flex;
             align-items: center;
             margin-bottom: 20px;
-            padding: 10px;
+            padding: 15px;
             border: 1px solid #ccc;
             border-radius: 8px;
-        }
-
-        .product-item img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            margin-right: 20px;
+            background-color: #fff;
         }
 
         .product-info {
             flex: 1;
+        }
+
+        .product-info {
+            flex: 1;
+            margin-right: 20px;
         }
 
         .product-info h3 {
