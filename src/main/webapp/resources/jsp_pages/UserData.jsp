@@ -104,12 +104,16 @@
         .btn-secondary:hover {
             background-color: #34495e;
         }
+
+        .form-buttons {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>Dati Personali</h1>
-    <form action="${pageContext.request.contextPath}/SaveAllUserData" method="post">
+    <form action="${pageContext.request.contextPath}/SaveAllUserData?action=SaveAll" method="post">
         <input type="hidden" name="fromCheckout" value="${param.fromCheckout}">
 
         <div class="section">
@@ -133,6 +137,9 @@
             <div class="form-group">
                 <label for="deliveryAddressZIP">CAP</label>
                 <input type="text" id="deliveryAddressZIP" name="deliveryAddressZIP" required>
+            </div>
+            <div class="form-buttons">
+                <button type="submit" class="btn" formaction="${pageContext.request.contextPath}/SaveAllUserData?action=saveDelivery">Salva Indirizzo di Consegna</button>
             </div>
         </div>
 
@@ -158,6 +165,9 @@
                 <label for="cvv">CVV</label>
                 <input type="text" id="cvv" name="cvv" maxlength="3" required>
             </div>
+            <div class="form-buttons">
+                <button type="submit" class="btn" formaction="${pageContext.request.contextPath}/SaveAllUserData?method=savePayment">Salva Metodo di Pagamento</button>
+            </div>
         </div>
 
         <div class="section">
@@ -178,6 +188,9 @@
                 <label for="billingAddressZIP">CAP</label>
                 <input type="text" id="billingAddressZIP" name="billingAddressZIP" required>
             </div>
+            <div class="form-buttons">
+                <button type="submit" class="btn" formaction="${pageContext.request.contextPath}/SaveAllUserData?method=saveBilling">Salva Indirizzo di Fatturazione</button>
+            </div>
         </div>
 
         <button type="submit" class="btn">Salva Tutte le Informazioni</button>
@@ -197,4 +210,5 @@
 </div>
 </body>
 </html>
+
 

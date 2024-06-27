@@ -18,53 +18,85 @@ import java.sql.SQLException;
 
 @WebServlet("/SaveAllUserData")
 public class SaveAllUserData extends HttpServlet {
+    private Connection conn;
+
+    @Override
+    public void init() throws ServletException {
+        try {
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/storage");
+            conn = ds.getConnection();
+        } catch (NamingException | SQLException e) {
+            throw new ServletException("Cannot initialize DB connection", e);
+        }
+    }
+
+    @Override
+    public void destroy() {
+        try {
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userEmail = (String) request.getSession().getAttribute("userEmail");
         String fromCheckout = request.getParameter("fromCheckout");
+        String action = request.getParameter("action");
 
         if (userEmail != null && !userEmail.isEmpty()) {
             int userCode = UtilDS.getUserCodebyEmail(userEmail);
 
-            if (userCode != 0) {
-                try {
-                    saveAllUserData(request, userCode);
-                    String redirectURL = request.getContextPath() + "/resources/jsp_pages/UserData.jsp";
-                    if (fromCheckout != null && !fromCheckout.isEmpty()) {
-                        redirectURL += "?fromCheckout=" + fromCheckout;
+            try {
+                if (userCode != 0) {
+                    if (action != null) {
+                        if (action.equalsIgnoreCase("SaveAll")) {
+                            saveAllUserData(request, userCode);
+                        } else if (action.equalsIgnoreCase("SaveDelivery")) {
+                            saveDeliveryAddress(request, userCode);
+                        } else if (action.equalsIgnoreCase("SavePayment")) {
+                            savePaymentMethod(request, userCode);
+                        } else if (action.equalsIgnoreCase("SaveBilling")) {
+                            saveBillingAddress(request, userCode);
+                        }
                     }
-                    response.sendRedirect(redirectURL);
-                } catch (SQLException | NamingException e) {
-                    e.printStackTrace();
-                    response.sendRedirect("error.html");
                 }
-            } else {
-                response.sendRedirect("error.html");
+            } catch (SQLException e) {
+                System.out.println("Error:" + e.getMessage());
             }
+
+            String redirectURL = request.getContextPath() + "/resources/jsp_pages/UserData.jsp";
+            if (fromCheckout != null && !fromCheckout.isEmpty()) {
+                redirectURL += "?fromCheckout=" + fromCheckout;
+            }
+            response.sendRedirect(redirectURL);
         }
     }
 
-    private void saveAllUserData(HttpServletRequest request, int userCode) throws SQLException, NamingException {
-        Context initCtx = new InitialContext();
-        Context envCtx = (Context) initCtx.lookup("java:comp/env");
-        DataSource ds = (DataSource) envCtx.lookup("jdbc/storage");
-
-        try (Connection conn = ds.getConnection()) {
+    private void saveAllUserData(HttpServletRequest request, int userCode) throws SQLException {
+        try {
             conn.setAutoCommit(false);
 
             try {
-                saveDeliveryAddress(conn, userCode, request);
-                savePaymentMethod(conn, userCode, request);
-                saveBillingAddress(conn, userCode, request);
+                saveDeliveryAddress(request, userCode);
+                savePaymentMethod(request, userCode);
+                saveBillingAddress(request, userCode);
 
                 conn.commit();
             } catch (SQLException e) {
                 conn.rollback();
                 throw e;
             }
+        } finally {
+            conn.setAutoCommit(true);
         }
     }
 
-    private void saveDeliveryAddress(Connection conn, int userCode, HttpServletRequest request) throws SQLException {
+    private void saveDeliveryAddress(HttpServletRequest request, int userCode) throws SQLException {
         String query = "INSERT INTO delivery_addresses (user_code, country, zip, city, street, province) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, userCode);
@@ -77,7 +109,7 @@ public class SaveAllUserData extends HttpServlet {
         }
     }
 
-    private void savePaymentMethod(Connection conn, int userCode, HttpServletRequest request) throws SQLException {
+    private void savePaymentMethod(HttpServletRequest request, int userCode) throws SQLException {
         String query = "INSERT INTO payment_method (user_code, cardholder_name, card_number, expiry_month, expiry_year, cvv) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, userCode);
@@ -90,7 +122,7 @@ public class SaveAllUserData extends HttpServlet {
         }
     }
 
-    private void saveBillingAddress(Connection conn, int userCode, HttpServletRequest request) throws SQLException {
+    private void saveBillingAddress(HttpServletRequest request, int userCode) throws SQLException {
         String query = "INSERT INTO billing_addresses (user_code, street, city, province, zip) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, userCode);
@@ -102,3 +134,4 @@ public class SaveAllUserData extends HttpServlet {
         }
     }
 }
+
