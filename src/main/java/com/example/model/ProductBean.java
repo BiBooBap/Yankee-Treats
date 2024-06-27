@@ -81,6 +81,14 @@ public class ProductBean implements Serializable {
 		this.quantity = quantity;
 	}
 
+	public void decreaseQuantity(int amount) {
+		if (this.quantity >= amount) {
+			this.quantity -= amount;
+		} else {
+			throw new IllegalArgumentException("Non ci sono abbastanza prodotti in magazzino");
+		}
+	}
+
 	public boolean isBestseller() {return bestseller;}
 
 	public boolean isDolce() {return dolce;}

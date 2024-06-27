@@ -42,9 +42,31 @@
     <a href="${pageContext.request.contextPath}/product"><img id="logo" src="${pageContext.request.contextPath}/resources/images/logo.png" alt=""/></a>
 
     <div class="input-wrapper">
-        <input type="text" placeholder="Oggi ho voglia di.." name="text" class="searchbar"></input>
-        <button type="submit" class="search-button">&#128270;</button>
+        <form id="searchForm">
+            <input type="text" placeholder="Oggi ho voglia di.." name="text" class="searchbar">
+            <button type="submit" class="search-button">&#128270;</button>
+        </form>
     </div>
+
+    <script>
+        document.getElementById("searchForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Evita il comportamento di default del form
+
+            var searchText = document.querySelector(".searchbar").value.trim(); // Recupera il testo di ricerca
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "url_del_server_che_gestisce_la_ricerca?text=" + encodeURIComponent(searchText), true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Gestisci la risposta qui
+                    var response = xhr.responseText;
+                    // Puoi aggiornare l'interfaccia utente con i risultati della ricerca
+                    console.log(response); // Esempio: logga la risposta in console
+                }
+            };
+            xhr.send();
+        });
+    </script>
 
     <span id="icons">
     <% if (isAdmin) { %>
