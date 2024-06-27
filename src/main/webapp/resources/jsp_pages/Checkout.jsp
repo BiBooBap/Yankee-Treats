@@ -292,6 +292,11 @@
         <div class="btn-container">
             <button type="submit" class="btn">Conferma Ordine</button>
         </div>
+
+        <div class="btn-container">
+            <a href="UserData.jsp?fromCheckout=true" class="btn btn-secondary">Inserisci Nuove Informazioni</a>
+        </div>
+
     </form>
     <% } %>
 </div>
