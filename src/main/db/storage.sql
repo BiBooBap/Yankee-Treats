@@ -19,7 +19,7 @@ CREATE TABLE product (
                          offerta		TINYINT(1),
                          bundle		TINYINT(1),
                          B2B        TINYINT(1),
-                         active 	TINYINT(1)
+                         active 	TINYINT(1) DEFAULT 1
 );
 
 

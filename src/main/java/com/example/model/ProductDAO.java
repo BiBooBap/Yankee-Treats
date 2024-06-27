@@ -60,15 +60,15 @@ public class ProductDAO {
 
         int result = 0;
 
-        String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE CODE = ?";
-
+        String updateSQL = "UPDATE " + TABLE_NAME +" SET active = 0 WHERE code = ?";
         try {
             connection = DriverManagerConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(deleteSQL);
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(updateSQL);
             preparedStatement.setInt(1, code);
 
             result = preparedStatement.executeUpdate();
-
+            connection.commit();
         } finally {
             try {
                 if (preparedStatement != null)

@@ -141,10 +141,10 @@ public class ProductModelDS implements ProductModel {
 
 		Collection<ProductBean> products = new LinkedList<ProductBean>();
 
-		String selectSQL = "SELECT * FROM " + ProductModelDS.TABLE_NAME;
+		String selectSQL = "SELECT * FROM " + ProductModelDS.TABLE_NAME + " WHERE active = 1";
 
 		if (order != null && !order.equals("")) {
-			selectSQL += " WHERE " + order + " = 1 OR B2B = 1";
+			selectSQL += " AND (" + order + " = 1 OR B2B = 1) AND active = 1";
 		}
 
 		try {

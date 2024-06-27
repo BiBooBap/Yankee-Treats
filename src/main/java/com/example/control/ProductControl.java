@@ -87,7 +87,7 @@ public class ProductControl extends HttpServlet {
 		
 		
 		String sort = request.getParameter("sort");
-
+		request.getSession().setAttribute("sort",sort);
 		try {
 			request.removeAttribute("products");
 			request.setAttribute("products", model.doRetrieveAll(sort));

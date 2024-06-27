@@ -258,6 +258,7 @@ a {
     overflow: hidden;
 }
 
+
 .add-to-cart:hover {
     background-color: #45a049;
     box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
@@ -282,4 +283,43 @@ a {
     margin-top: -150px;
     transition: 0s;
 }
+
+.delete {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.delete:hover {
+    background-color: darkred;
+    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+}
+
+.delete::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+.delete:active::before {
+    width: 300px;
+    height: 300px;
+    margin-left: -150px;
+    margin-top: -150px;
+    transition: 0s;
+}
+
 
