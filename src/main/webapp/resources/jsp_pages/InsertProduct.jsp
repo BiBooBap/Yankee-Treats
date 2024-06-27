@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, com.example.model.*, com.example.control.*"%>
+<%@ page import="java.sql.SQLException" %>
 
 <%
-    List<ProductBean> products = (List<ProductBean>) request.getSession().getAttribute("products");
-    request.getSession().setAttribute("products", products);
+    Collection<ProductBean> products = null;
+    try {
+        products = ProductModelDM.doRetrieveAll();
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
 
     String message = (String) request.getSession().getAttribute("message");
     request.getSession().removeAttribute("message");
@@ -339,8 +344,11 @@
                 <button class="btn btn-edit" onclick="toggleForm('nameForm_<%= bean.getCode() %>')">Modifica Nome</button>
                 <button class="btn btn-edit" onclick="toggleForm('descriptionForm_<%= bean.getCode() %>')">Modifica Descrizione</button>
                 <button class="btn btn-edit" onclick="toggleForm('priceForm_<%= bean.getCode() %>')">Modifica Prezzo</button>
+                <% if(bean.isActive()){%>
                 <a href="${pageContext.request.contextPath}/ProductDelete?code=<%=bean.getCode()%>&fromInsertProduct=true"> <button class="btn btn-delete">Elimina</button> </a>
-
+                <%} else {%>
+                <a href="${pageContext.request.contextPath}/ProductAdd?code=<%=bean.getCode()%>"> <button class="btn btn-quantity">Riaggiungi</button> </a>
+                <%}%>
                 <!-- Form per modificare la quantità -->
                 <form id="quantityForm_<%= bean.getCode() %>" class="popup-form" method="post" action="${pageContext.request.contextPath}/InsertProduct">
                     <input type="hidden" name="action" value="updateqP">

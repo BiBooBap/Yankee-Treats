@@ -135,6 +135,14 @@
     <servlet-name>ProductDeleteControl</servlet-name>
     <url-pattern>/ProductDelete</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>ProductAddControl</servlet-name>
+    <servlet-class>com.example.control.ProductAddControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProductAddControl</servlet-name>
+    <url-pattern>/ProductAdd</url-pattern>
+  </servlet-mapping>
   <!---
   <filter>
     <filter-name>ErrorHandlingFilter</filter-name>

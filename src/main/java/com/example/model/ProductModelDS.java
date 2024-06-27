@@ -184,13 +184,13 @@ public class ProductModelDS implements ProductModel {
 		return products;
 	}
 
-	public synchronized Collection<ProductBean> doRetrieveAll(String order) throws SQLException {
+	public static synchronized Collection<ProductBean> doRetrieveAll(String order) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		Collection<ProductBean> products = new LinkedList<ProductBean>();
 
-		String selectSQL = "SELECT * FROM " + ProductModelDS.TABLE_NAME + " WHERE active = 1";
+		String selectSQL = "SELECT * FROM " + ProductModelDS.TABLE_NAME;
 
 
 		try {
@@ -215,6 +215,7 @@ public class ProductModelDS implements ProductModel {
 				bean.setOfferta(rs.getBoolean("OFFERTA"));
 				bean.setBundle(rs.getBoolean("BUNDLE"));
 				bean.setB2B(rs.getBoolean("B2B"));
+				bean.setActive(rs.getBoolean("ACTIVE"));
 				products.add(bean);
 			}
 

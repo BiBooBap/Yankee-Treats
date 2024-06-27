@@ -203,5 +203,37 @@ public class ProductDAO {
             }
         }
     }
+
+    public static synchronized boolean addActive(int code) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        String updateSQL = "UPDATE " + TABLE_NAME
+                + " SET active = TRUE "
+                + " WHERE CODE = ? ";
+
+        try {
+            connection = DriverManagerConnectionPool.getConnection();
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(updateSQL);
+            preparedStatement.setInt(1, code);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            connection.commit();
+
+            return rowsAffected > 0;
+        } finally {
+            try {
+                if (preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                if (connection != null)
+                    connection.close();
+            }
+        }
+    }
+
+
+
 }
 
