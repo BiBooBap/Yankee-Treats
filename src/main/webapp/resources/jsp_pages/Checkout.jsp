@@ -204,7 +204,7 @@
                 <tr>
                     <th></th>
                     <th>Via</th>
-                    <th>Città</th>
+                    <th>Citt&agrave;</th>
                     <th>Provincia</th>
                     <th>CAP</th>
                 </tr>
@@ -235,7 +235,7 @@
                 <tr>
                     <th></th>
                     <th>Via</th>
-                    <th>Città</th>
+                    <th>Citt&agrave;</th>
                     <th>Provincia</th>
                     <th>CAP</th>
                     <th>Paese</th>

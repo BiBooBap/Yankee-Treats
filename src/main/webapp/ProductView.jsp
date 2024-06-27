@@ -65,10 +65,7 @@
 				<p class="product-description"><%=bean.getDescription()%></p>
 				<p class="product-price">&#8364;<span class="price-value"></span></p>
 			</div>
-			<a href="cart?action=addC&id=<%=bean.getCode()%>"><button class="add-to-cart">Aggiungi</button></a>
-			<%if (user_type.equals("admin")) {%>
-			<a href="ProductDelete?code=<%= bean.getCode() %>"><button class="delete">Rimuovi dallo store</button></a>
-			<% } %>
+			<a href="cart?action=addC&id=<%=bean.getCode()%>"><button class="add-to-cart">Aggiungi al Carrello</button></a>
 		</div>
 		<% } } %>
 	</div>

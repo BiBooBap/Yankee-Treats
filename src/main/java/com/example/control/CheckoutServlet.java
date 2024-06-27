@@ -85,6 +85,7 @@ public class CheckoutServlet extends HttpServlet {
                 sendInvoicePDF((String) request.getSession().getAttribute("userEmail"), order_id, getServletContext());
                 response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/OrderComplete.jsp");
                 saveorderItems(order_id, cart);
+                cart.clearCart();
             } else {
                 response.sendRedirect(request.getContextPath() + "/error.html");
             }

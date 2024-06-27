@@ -57,9 +57,6 @@
             <p class="product-price">&#8364;<span class="price-value"></span></p>
         </div>
         <a href="${pageContext.request.contextPath}/cart?action=addB2B&id=<%=bean.getCode()%>"><button class="add-to-cart">Aggiungi</button></a>
-        <%if (user_type.equals("admin")) {%>
-        <a href="${pageContext.request.contextPath}/ProductDelete?code=<%= bean.getCode() %>"><button class="delete">Rimuovi dallo store</button></a>
-        <% } %>
     </div>
     <% } } %>
 </div>
