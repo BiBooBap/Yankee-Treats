@@ -90,7 +90,7 @@ public class ProductControl extends HttpServlet {
 		request.getSession().setAttribute("sort",sort);
 		try {
 			request.removeAttribute("products");
-			request.setAttribute("products", model.doRetrieveAll(sort));
+			request.setAttribute("products", model.doRetrieveAllWithActive(sort));
 		} catch (SQLException e) {
 			System.out.println("Error:" + e.getMessage());
 		}

@@ -68,7 +68,7 @@ public class ProductModelDS implements ProductModel {
 
 		ProductBean bean = new ProductBean();
 
-		String selectSQL = "SELECT * FROM " + ProductModelDS.TABLE_NAME + " WHERE CODE = ?";
+		String selectSQL = "SELECT * FROM " + ProductModelDS.TABLE_NAME + " WHERE CODE = ? AND active=1";
 
 		try {
 			connection = ds.getConnection();
@@ -135,7 +135,7 @@ public class ProductModelDS implements ProductModel {
 	}
 
 	@Override
-	public synchronized Collection<ProductBean> doRetrieveAll(String order) throws SQLException {
+	public synchronized Collection<ProductBean> doRetrieveAllWithActive(String order) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -146,6 +146,52 @@ public class ProductModelDS implements ProductModel {
 		if (order != null && !order.equals("")) {
 			selectSQL += " AND (" + order + " = 1 OR B2B = 1) AND active = 1";
 		}
+
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				ProductBean bean = new ProductBean();
+				bean.setCode(rs.getInt("CODE"));
+				bean.setName(rs.getString("NAME"));
+				bean.setDescription(rs.getString("DESCRIPTION"));
+				bean.setPrice(rs.getInt("PRICE"));
+				bean.setQuantity(rs.getInt("QUANTITY"));
+				bean.setBestseller(rs.getBoolean("BESTSELLER"));
+				bean.setDolce(rs.getBoolean("DOLCE"));
+				bean.setSalato(rs.getBoolean("SALATO"));
+				bean.setBevanda(rs.getBoolean("BEVANDA"));
+				bean.setTrend(rs.getBoolean("TREND"));
+				bean.setNovita(rs.getBoolean("NOVITA"));
+				bean.setOfferta(rs.getBoolean("OFFERTA"));
+				bean.setBundle(rs.getBoolean("BUNDLE"));
+				bean.setB2B(rs.getBoolean("B2B"));
+				products.add(bean);
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		return products;
+	}
+
+	public synchronized Collection<ProductBean> doRetrieveAll(String order) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		Collection<ProductBean> products = new LinkedList<ProductBean>();
+
+		String selectSQL = "SELECT * FROM " + ProductModelDS.TABLE_NAME + " WHERE active = 1";
+
 
 		try {
 			connection = ds.getConnection();
