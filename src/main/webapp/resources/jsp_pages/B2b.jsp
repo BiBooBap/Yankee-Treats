@@ -45,22 +45,69 @@
 </section>
 
 <div class="container">
-        <% for (ProductBean bean : products) {
-            if (bean.isB2B()) {%>
-    <div class="card">
-        <div class="card-img"><img src="${pageContext.request.contextPath}/resources/images/product_<%=bean.getCode()%>.png" class="product-image" alt=""></div>
-        <div class="card-title"><%=bean.getName()%></div>
-        <div class="card-subtitle"><%=bean.getDescription()%></div>
-        <hr class="card-divider">
-        <div class="card-footer">
-            <div class="card-price"><%=bean.getPrice()%><span>&euro;</span></div>
-            <button class="card-btn">
-                <a href="${pageContext.request.contextPath}/cart?action=addB2B&id=<%=bean.getCode()%>"> <i class="fa-solid fa-cart-circle-plus fa-lg"></i></a>
-            </button>
+    <% for (ProductBean bean : products) {
+        if (bean.isB2B()) {%>
+    <div class="product-card" data-price="<%=bean.getPrice()%>">
+        <div class="card-img">
+            <img src="${pageContext.request.contextPath}/resources/images/product_<%=bean.getCode()%>.png" alt="<%=bean.getName()%>" class="product-image">
         </div>
+        <div class="product-info">
+            <h3 class="product-name"><%=bean.getName()%></h3>
+            <p class="product-description"><%=bean.getDescription()%></p>
+            <p class="product-price">&#8364;<span class="price-value"></span></p>
+        </div>
+        <a href="${pageContext.request.contextPath}/cart?action=addB2B&id=<%=bean.getCode()%>"><button class="add-to-cart">Aggiungi</button></a>
+        <%if (user_type.equals("admin")) {%>
+        <a href="${pageContext.request.contextPath}/ProductDelete?code=<%= bean.getCode() %>"><button class="delete">Rimuovi dallo store</button></a>
+        <% } %>
     </div>
-        <% } } %>
+    <% } } %>
+</div>
 
+<section id="testimonials">
+    <h2>Cosa dicono i nostri clienti</h2>
+    <div class="testimonial-card">
+        <p>""Collaborare con Yankee Treats &eacute; stata un'esperienza fantastica. La qualit&agrave; dei prodotti e l'efficienza del loro servizio clienti hanno superato ogni nostra aspettativa. I nostri clienti sono entusiasti della variet&agrave; e del gusto unico degli snack americani!"</p>
+        <span>- Marco Rossi, CEO di SnackMania</span>
+    </div>
+    <div class="testimonial-card">
+        <p>"I prezzi competitivi e le offerte speciali di Yankee Treats ci hanno permesso di aumentare significativamente i nostri margini di profitto. Inoltre, il loro servizio di supporto &eacute; sempre pronto ad assisterci in ogni fase dell'acquisto."</p>
+        <span>- Alessandra Bianchi, Responsabile Acquisti di Sweet&Snack</span>
+    </div>
+    <div class="testimonial-card">
+        <p>"La nostra collaborazione con Yankee Treats ha trasformato il nostro business. La selezione di snack e bibite &eacute; sempre fresca e di alta qualit&agrave;, e i tempi di consegna sono rapidissimi. Non possiamo che raccomandarli a tutti!"</p>
+        <span>- Luca Verdi, Direttore Vendite di American Goodies</span>
+    </div>
+    <div class="testimonial-card">
+        <p>"La gamma di prodotti offerta da Yankee Treats &egrave; incredibile. I nostri clienti adorano le novit&agrave; e la variet&agrave; disponibile. Inoltre, la loro piattaforma B2B &eacute; intuitiva e facile da usare."</p>
+        <span>- Giulia Neri, Proprietaria di Snack Corner</span>
+    </div>
+</section>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cards = document.querySelectorAll('.product-card');
+
+        cards.forEach(card => {
+            // Price animation
+            const priceElement = card.querySelector('.price-value');
+            const originalPrice = parseFloat(card.dataset.price);
+            let currentPrice = 0;
+
+            const animatePrice = () => {
+                if (currentPrice < originalPrice) {
+                    currentPrice += 0.01;
+                    priceElement.textContent = currentPrice.toFixed(2);
+                    requestAnimationFrame(animatePrice);
+                } else {
+                    priceElement.textContent = originalPrice.toFixed(2);
+                }
+            };
+
+            animatePrice();
+        });
+    });
+</script>
 </body>
+</html>
 

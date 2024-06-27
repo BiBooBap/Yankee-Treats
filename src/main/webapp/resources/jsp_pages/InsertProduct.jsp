@@ -169,7 +169,7 @@
             margin-right: 10px;
         }
 
-        .btn-quantity, .btn-delete, .btn-edit {
+        .btn-readd, .btn-delete, .btn-edit {
             padding: 5px 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -340,14 +340,14 @@
                         <% }  %>
             </div>
             <div class="product-actions">
-                <button class="btn btn-quantity" onclick="toggleForm('quantityForm_<%= bean.getCode() %>')">Modifica Quantità</button>
+                <button class="btn btn-edit" onclick="toggleForm('quantityForm_<%= bean.getCode() %>')">Modifica Quantità</button>
                 <button class="btn btn-edit" onclick="toggleForm('nameForm_<%= bean.getCode() %>')">Modifica Nome</button>
                 <button class="btn btn-edit" onclick="toggleForm('descriptionForm_<%= bean.getCode() %>')">Modifica Descrizione</button>
                 <button class="btn btn-edit" onclick="toggleForm('priceForm_<%= bean.getCode() %>')">Modifica Prezzo</button>
                 <% if(bean.isActive()){%>
                 <a href="${pageContext.request.contextPath}/ProductDelete?code=<%=bean.getCode()%>&fromInsertProduct=true"> <button class="btn btn-delete">Elimina</button> </a>
                 <%} else {%>
-                <a href="${pageContext.request.contextPath}/ProductAdd?code=<%=bean.getCode()%>"> <button class="btn btn-quantity">Riaggiungi</button> </a>
+                <a href="${pageContext.request.contextPath}/ProductAdd?code=<%=bean.getCode()%>"> <button class="btn btn-readd">Riaggiungi</button> </a>
                 <%}%>
                 <!-- Form per modificare la quantità -->
                 <form id="quantityForm_<%= bean.getCode() %>" class="popup-form" method="post" action="${pageContext.request.contextPath}/InsertProduct">
