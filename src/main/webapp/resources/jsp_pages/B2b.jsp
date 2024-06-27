@@ -64,7 +64,7 @@
 <section id="testimonials">
     <h2>Cosa dicono i nostri clienti</h2>
     <div class="testimonial-card">
-        <p>""Collaborare con Yankee Treats &eacute; stata un'esperienza fantastica. La qualit&agrave; dei prodotti e l'efficienza del loro servizio clienti hanno superato ogni nostra aspettativa. I nostri clienti sono entusiasti della variet&agrave; e del gusto unico degli snack americani!"</p>
+        <p>"Collaborare con Yankee Treats &eacute; stata un'esperienza fantastica. La qualit&agrave; dei prodotti e l'efficienza del loro servizio clienti hanno superato ogni nostra aspettativa. I nostri clienti sono entusiasti della variet&agrave; e del gusto unico degli snack americani!"</p>
         <span>- Marco Rossi, CEO di SnackMania</span>
     </div>
     <div class="testimonial-card">
