@@ -67,22 +67,6 @@
             </a>
         </li>
         <li>
-            <script>
-                function checkUserTypeForB2B() {
-                    <% if (!userLogged) { %>
-                    window.location.href = "${pageContext.request.contextPath}/resources/jsp_pages/Login.jsp?fromB2B=true";
-                    return false;
-                    <% } else if (user_typ != null && user_typ.equals("privato")) { %>
-                    alert("Spiacenti, l'accesso alla pagina B2B è riservato ai venditori.");
-                    return false;
-                    <% } else if (user_typ != null && (user_typ.equals("venditore") || user_typ.equals("admin"))) { %>
-                    window.location.href = "${pageContext.request.contextPath}/resources/jsp_pages/B2b.jsp";
-                    return false;
-                    <% } %>
-                    return true;
-                }
-            </script>
-
             <a href="#" onclick="return checkUserTypeForB2B();">
                 &#128666; B2B &#128666;
             </a>
@@ -94,7 +78,6 @@
     let drop = document.getElementById("drop");
     let body = document.getElementsByTagName("body")[0];
     let ul = document.getElementById("subheader").getElementsByTagName("ul")[0];
-    let subheader = document.getElementById("subheader");
 
     let flag = false;
 
@@ -117,10 +100,5 @@
             body.style.overflow = "auto";
         }
     });
-
-
-    function showErrorMessage() {
-
-    }
 </script>
 

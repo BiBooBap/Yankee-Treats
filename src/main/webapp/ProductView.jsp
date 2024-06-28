@@ -40,13 +40,25 @@
 	<%@ include file="resources/jsp_pages/Header.jsp" %>
 	<%@ include file="resources/jsp_pages/Subheader.jsp" %>
 
+
 	<br>
 
-	<h1 class="animated-header">
-		<span>V</span><span>e</span><span>t</span><span>r</span><span>i</span><span>n</span><span>a</span>
-	</h1>
+	<div class="text-header-container">
+		<div class="soda-text" id="sodaText">Vetrina</div>
+	</div>
+
+
+
+	<div class="input-wrapper">
+		<form id="searchForm" onsubmit="return false;">
+			<input type="text" placeholder="Oggi ho voglia di.." name="text" class="searchbar" id="searchbar">
+			<button type="submit" class="search-button">&#128270;</button>
+		</form>
+		<div id="searchResults"></div>
+	</div>
 
 	<div class="container">
+
 		<% for (ProductBean bean : products) {
 			if (!bean.isB2B()) {%>
 		<a href="${pageContext.request.contextPath}/resources/jsp_pages/ProductDetail.jsp?code=<%=bean.getCode()%>" class="product-card-link">
@@ -98,50 +110,100 @@
 		});
 	});
 
-	function updateProductView(products) {
-		console.log("Updating product view with:", products);
-		let container = document.querySelector('.container');
-		if (!container) {
-			console.error("Container not found");
-			return;
-		}
-		container.innerHTML = '';
 
-		if (products.length === 0) {
-			container.innerHTML = '<p>Nessun prodotto trovato.</p>';
-		} else {
-			products.forEach(product => {
-				if (!product.b2b) {
-					let productCard = createProductCard(product);
-					container.appendChild(productCard);
-				}
-			});
-		}
+	// Array di emoji snack
+	const snackEmojis = ['&#127871', '&#127851;', '&#127850;', '&#x1F968;', '&#127829;', '&#127839;', '&#x1F964;', '&#127846;', '&#127849;', '&#x1F95C;'];
+
+	let emojiInterval;
+	let currentEmojiIndex = 0;
+
+	let searchButton = document.querySelector(".search-button");
+	let inputbar = document.querySelector(".searchbar");
+	inputbar.addEventListener("focus", function() {
+		searchButton.style.border = "2px solid #0563df";
+		searchButton.style.backgroundColor = "#83a4d2";
+
+		// Cambia l'emoji immediatamente
+		changeEmoji();
+		// Imposta l'intervallo per cambiare l'emoji ogni secondo
+		emojiInterval = setInterval(changeEmoji, 1000);
+	});
+	inputbar.addEventListener("blur", function() {
+		searchButton.style.border = "none";
+		searchButton.style.backgroundColor = "rgba(128, 128, 128, 0.13)";
+		searchButton.innerHTML = "&#128270;";
+
+		// Ferma il cambiamento dell'emoji
+		clearInterval(emojiInterval);
+		// Ripristina l'emoji originale
+		searchButton.innerHTML = '&#128270;';
+		// Resetta l'indice dell'emoji
+		currentEmojiIndex = 0;
+	});
+
+	// Funzione per cambiare l'emoji
+	function changeEmoji() {
+		searchButton.innerHTML = snackEmojis[currentEmojiIndex];
+		currentEmojiIndex = (currentEmojiIndex + 1) % snackEmojis.length;
 	}
 
-	function createProductCard(product) {
-		console.log("Creating card for product:", product);
-		let card = document.createElement('div');
-		card.className = 'product-card';
-		card.dataset.price = product.price;
 
-		card.innerHTML = `
-            <div class="card-img">
-                <img src="${pageContext.request.contextPath}/resources/images/product_${product.code}.png" alt="${product.getName()}" class="product-image">
-                ${product.novita ? '<div class="new">Nuovo!</div>' : ''}
-                ${product.offerta ? '<div class="offer">Offerta!</div>' : ''}
-            </div>
-            <div class="product-info">
-                <h3 class="product-name">${product.name}</h3>
-                <p class="product-description">${product.description}</p>
-                <p class="product-price">&#8364;<span class="price-value">${product.price.toFixed(2)}</span></p>
-            </div>
-        </a>
-        <a href="cart?action=addC&id=${product.code}"><button class="add-to-cart">Aggiungi al Carrello</button></a>
-    `;
 
-		return card;
+
+
+
+
+	const sodaText = document.getElementById('sodaText');
+	const textWidth = sodaText.offsetWidth;
+	const textHeight = sodaText.offsetHeight;
+
+	function createBubble() {
+		const bubble = document.createElement('div');
+		bubble.classList.add('bubble');
+
+		const size = Math.random() * 8 + 2; // Dimensione casuale tra 2px e 10px
+		bubble.style.width = size + 'px';
+		bubble.style.height = size + 'px';
+
+		const startX = Math.random() * textWidth;
+		const startY = textHeight;
+
+		bubble.style.left = startX + 'px';
+		bubble.style.bottom = '0px';
+
+		sodaText.appendChild(bubble);
+
+		animateBubble(bubble);
 	}
+
+	function animateBubble(bubble) {
+		let position = 0;
+		const random = Math.random() * 3 + 1; // Velocità casuale
+
+		const animation = setInterval(function() {
+			position += random;
+			bubble.style.bottom = position + 'px';
+
+			// Movimento ondulatorio orizzontale
+			bubble.style.left = (parseFloat(bubble.style.left) + Math.sin(position / 10) * 0.5) + 'px';
+
+			if (position > textHeight - 20) { // Inizia il fading 20px prima del bordo superiore
+				let opacity = 1 - (position - (textHeight - 20)) / 20;
+				bubble.style.opacity = opacity;
+			}
+
+			if (position > textHeight) {
+				clearInterval(animation);
+				bubble.remove();
+			}
+		}, 20);
+	}
+
+	// Crea nuove bollicine ad intervalli regolari
+	setInterval(createBubble, 100);
+
+
+
 </script>
 
 
