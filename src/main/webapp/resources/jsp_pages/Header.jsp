@@ -150,24 +150,74 @@
     }
 
     document.getElementById("searchbar").addEventListener("input", function() {
-        let query = this.value;
+        let query = this.value.trim();
         if (query.length > 0) {
             fetch('${pageContext.request.contextPath}/Search?query=' + query)
                 .then(response => response.json())
                 .then(data => {
-                    let resultsDiv = document.getElementById("searchResults");
-                    resultsDiv.innerHTML = "";
-                    data.forEach(product => {
-                        let productLink = document.createElement("a");
-                        productLink.href = "${pageContext.request.contextPath}/resources/jsp_pages/ProductDetail.jsp?code=" + product.code;
-                        productLink.textContent = product.name;
-                        resultsDiv.appendChild(productLink);
-                    });
+                    console.log("Received data:", data);
+                    if (typeof updateProductView === "function") {
+                        updateProductView(data);
+                    } else {
+                        console.error("updateProductView is not a function");
+                    }
                 });
         } else {
-            document.getElementById("searchResults").innerHTML = "";
+            // Se la query è vuota, mostra tutti i prodotti
+            fetch('${pageContext.request.contextPath}/product')
+                .then(response => response.json())
+                .then(data => {
+                    if (typeof updateProductView === "function") {
+                        updateProductView(data);
+                    } else {
+                        console.error("updateProductView is not a function");
+                    }
+                });
         }
     });
+
+
+    function updateProductView(products) {
+        let container = document.querySelector('.container');
+        container.innerHTML = '';
+
+        if (products.length === 0) {
+            container.innerHTML = '<p>Nessun prodotto trovato.</p>';
+        } else {
+            products.forEach(product => {
+                if (!product.b2b) {  // Assicurati che solo i prodotti non B2B vengano mostrati
+                    let productCard = createProductCard(product);
+                    container.appendChild(productCard);
+                }
+            });
+        }
+    }
+
+
+    function createProductCard(product) {
+        let card = document.createElement('div');
+        card.className = 'product-card';
+        card.dataset.price = product.price;
+
+        card.innerHTML = `
+        <a href="${pageContext.request.contextPath}/resources/jsp_pages/ProductDetail.jsp?code=${product.code}" class="product-card-link">
+            <div class="card-img">
+                <img src="${pageContext.request.contextPath}/resources/images/product_${product.code}.png" alt="${product.name}" class="product-image">
+                ${product.novita ? '<div class="new">Nuovo!</div>' : ''}
+                ${product.offerta ? '<div class="offer">Offerta!</div>' : ''}
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-description">${product.description}</p>
+                <p class="product-price">&#8364;<span class="price-value">${product.price.toFixed(2)}</span></p>
+            </div>
+        </a>
+        <a href="cart?action=addC&id=${product.code}"><button class="add-to-cart">Aggiungi al Carrello</button></a>
+    `;
+
+        return card;
+    }
+
 </script>
 </body>
 </html>

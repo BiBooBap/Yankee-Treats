@@ -151,6 +151,14 @@
     <servlet-name>ProductAddControl</servlet-name>
     <url-pattern>/ProductAdd</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>SearchServlet</servlet-name>
+    <servlet-class>com.example.control.SearchServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchServlet</servlet-name>
+    <url-pattern>/Search</url-pattern>
+  </servlet-mapping>
   <!---
   <filter>
     <filter-name>ErrorHandlingFilter</filter-name>

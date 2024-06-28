@@ -162,6 +162,51 @@ public class ProductModelDM implements ProductModel {
 		return products;
 	}
 
+	public synchronized Collection<ProductBean> doRetrieveAllWithActiveNob2b() throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		Collection<ProductBean> products = new LinkedList<ProductBean>();
+
+		String selectSQL = "SELECT * FROM " + ProductModelDM.TABLE_NAME + " WHERE active = 1 AND (B2B!=1 OR B2B IS NULL)";
+
+
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				ProductBean bean = new ProductBean();
+				bean.setCode(rs.getInt("CODE"));
+				bean.setName(rs.getString("NAME"));
+				bean.setDescription(rs.getString("DESCRIPTION"));
+				bean.setPrice(rs.getInt("PRICE"));
+				bean.setQuantity(rs.getInt("QUANTITY"));
+				bean.setBestseller(rs.getBoolean("BESTSELLER"));
+				bean.setDolce(rs.getBoolean("DOLCE"));
+				bean.setSalato(rs.getBoolean("SALATO"));
+				bean.setBevanda(rs.getBoolean("BEVANDA"));
+				bean.setTrend(rs.getBoolean("TREND"));
+				bean.setNovita(rs.getBoolean("NOVITA"));
+				bean.setOfferta(rs.getBoolean("OFFERTA"));
+				bean.setBundle(rs.getBoolean("BUNDLE"));
+				bean.setB2B(rs.getBoolean("B2B"));
+				products.add(bean);
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+		return products;
+	}
+
 	public static synchronized Collection<ProductBean> doRetrieveAll() throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;

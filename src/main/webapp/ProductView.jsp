@@ -97,6 +97,51 @@
 			animatePrice();
 		});
 	});
+
+	function updateProductView(products) {
+		console.log("Updating product view with:", products);
+		let container = document.querySelector('.container');
+		if (!container) {
+			console.error("Container not found");
+			return;
+		}
+		container.innerHTML = '';
+
+		if (products.length === 0) {
+			container.innerHTML = '<p>Nessun prodotto trovato.</p>';
+		} else {
+			products.forEach(product => {
+				if (!product.b2b) {
+					let productCard = createProductCard(product);
+					container.appendChild(productCard);
+				}
+			});
+		}
+	}
+
+	function createProductCard(product) {
+		console.log("Creating card for product:", product);
+		let card = document.createElement('div');
+		card.className = 'product-card';
+		card.dataset.price = product.price;
+
+		card.innerHTML = `
+            <div class="card-img">
+                <img src="${pageContext.request.contextPath}/resources/images/product_${product.code}.png" alt="${product.getName()}" class="product-image">
+                ${product.novita ? '<div class="new">Nuovo!</div>' : ''}
+                ${product.offerta ? '<div class="offer">Offerta!</div>' : ''}
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-description">${product.description}</p>
+                <p class="product-price">&#8364;<span class="price-value">${product.price.toFixed(2)}</span></p>
+            </div>
+        </a>
+        <a href="cart?action=addC&id=${product.code}"><button class="add-to-cart">Aggiungi al Carrello</button></a>
+    `;
+
+		return card;
+	}
 </script>
 
 
