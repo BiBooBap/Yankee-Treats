@@ -27,7 +27,9 @@ public class CartControl extends HttpServlet {
             if (action != null && action.equalsIgnoreCase("addC")) {
                 int productId = Integer.parseInt(request.getParameter("id"));
                 cart.addProduct(productModel.doRetrieveByKey(productId));
-                response.sendRedirect("ProductView.jsp");
+                if(request.getParameter("fromProduct")!=null && request.getParameter("fromProduct").equals("true"))
+                    response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/Product.jsp?code="+productId);
+                else response.sendRedirect("ProductView.jsp");
                 return;
             } else if (action != null && action.equalsIgnoreCase("deleteC")) {
                 int productId = Integer.parseInt(request.getParameter("id"));
@@ -47,8 +49,12 @@ public class CartControl extends HttpServlet {
                 CartItem item = cart.getCartItem(productId);
                 if (item != null) {
                     item.reduceQuantity();
+                    if(item.getQuantityCart()==0)
+                        cart.deleteProduct(item.getProduct());
                 }
-                response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/Cart.jsp");
+                if(request.getParameter("fromProduct")!=null && request.getParameter("fromProduct").equals("true"))
+                    response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/Product.jsp?code="+productId);
+                else response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/Cart.jsp");
                 return;
             } else if (action != null && action.equalsIgnoreCase("addB2B")) {
                 int productId = Integer.parseInt(request.getParameter("id"));
