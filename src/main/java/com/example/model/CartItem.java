@@ -50,7 +50,7 @@ public class CartItem {
     }
 
     public void reduceQuantity() {
-        if (quantityCart > 1) {
+        if (quantityCart >= 1) {
             quantityCart -= 1;
         }
     }
