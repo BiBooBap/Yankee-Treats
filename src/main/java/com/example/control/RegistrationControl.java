@@ -49,6 +49,7 @@ public class RegistrationControl extends HttpServlet {
             session.setAttribute("userEmail", email);
             session.setAttribute("userType", UtilDS.getUserTypebyEmail(email));
             session.setAttribute("userName", UtilDS.getNamebyEmail(email));
+            session.setAttribute("userCode",UtilDS.getUserCodebyEmail(email));
             if(fromCart)
                 response.sendRedirect(request.getContextPath()+"/resources/jsp_pages/Checkout.jsp");
             else if(fromB2B && tipoUtente.equals("venditore"))

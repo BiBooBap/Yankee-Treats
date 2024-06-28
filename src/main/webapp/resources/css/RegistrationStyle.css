@@ -1,3 +1,4 @@
+/* General reset and base styles */
 body {
     font-family: 'Varela Round', sans-serif;
     margin: 0;
@@ -5,43 +6,87 @@ body {
     background-color: #f1f1f1;
 }
 
+a, a:hover, a:focus, a:active {
+    text-decoration: none;
+    color: #2d79f3;
+}
+
+/* Form container styles */
 .container {
     margin: 100px auto;
-    width: 400px;
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 450px;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-.error-message {
-    color: red;
-    font-size: 0.8em;
-    display: none; /* Inizialmente nascosto */
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"],
-select {
-    width: calc(100% - 20px);
+.container h2 {
+    text-align: center;
+    color: #151717;
     margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
 }
 
-input[type="submit"] {
+.container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.container input[type="text"],
+.container input[type="email"],
+.container input[type="password"],
+.container input[type="date"],
+.container select {
+    height: 50px;
+    border: 1.5px solid #ecedec;
+    border-radius: 10px;
+    padding: 0 10px;
+    font-size: 16px;
+}
+
+.container input[type="text"],
+.container input[type="email"],
+.container input[type="password"],
+.container input[type="date"],
+.container select,
+.container textarea {
     width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
+    box-sizing: border-box;
+}
+
+.container select {
+    background-color: white;
+}
+
+.container input[type="submit"] {
+    margin-top: 10px;
+    background-color: #174978;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
+    height: 50px;
+    font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
+.container input[type="submit"]:hover {
+    background-color: #2ba8fb;
+    transform: scale(1.05);
+}
+
+/* Error message styles */
 .error-message {
+    display: none;
     color: red;
-    font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* Optional: Styles for responsive design */
+@media screen and (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
 }
