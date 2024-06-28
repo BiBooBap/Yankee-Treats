@@ -68,35 +68,35 @@
         });
     </script>
 
-    <span id="icons">
-    <% if (isAdmin) { %>
-    <div class="welcome-message">Benvenuto, admin</div>
-    <% } else if (userLoggedIn) { %>
-    <div class="welcome-message">Benvenuto, <%= username %></div>
-    <% } %>
+    <div id="icons">
+        <% if (isAdmin) { %>
+        <span class="welcome-message">Benvenuto, Amministratore</span>
+        <% } else if (userLoggedIn) { %>
+        <span class="welcome-message">Benvenuto, <%= username %></span>
+        <% } %>
 
-    <% if (userLoggedIn) { %>
-    <div class="dropdown">
-        <button class="dropbtn"><i class="fa-solid fa-circle-user"></i></button>
-        <div class="dropdown-content">
-            <a href="${pageContext.request.contextPath}/resources/jsp_pages/MiddleUserData.jsp">Dati personali</a>
-            <% if (!isAdmin) { %>
-            <a href="${pageContext.request.contextPath}/ShowOrder">Storico ordini</a>
-            <% }else{ %>
-            <a href="${pageContext.request.contextPath}/resources/jsp_pages/DBInterface.jsp">Gestisci prodotti</a>
-            <a href="${pageContext.request.contextPath}/ShowOrderAdmin">Storico ordini</a>
-            <% } %>
-            <a href="${pageContext.request.contextPath}/logout">Logout</a>
+        <% if (userLoggedIn) { %>
+        <div class="dropdown">
+            <button class="dropbtn icon"><i class="fa-solid fa-circle-user custom-icon-size"></i></button>
+            <div class="dropdown-content">
+                <a href="${pageContext.request.contextPath}/resources/jsp_pages/MiddleUserData.jsp">Dati personali</a>
+                <% if (!isAdmin) { %>
+                <a href="${pageContext.request.contextPath}/ShowOrder">Storico ordini</a>
+                <% }else{ %>
+                <a href="${pageContext.request.contextPath}/resources/jsp_pages/DBInterface.jsp">Gestisci prodotti</a>
+                <a href="${pageContext.request.contextPath}/ShowOrderAdmin">Storico ordini</a>
+                <% } %>
+                <a href="${pageContext.request.contextPath}/logout">Logout</a>
+            </div>
         </div>
-    </div>
-    <% } else { %>
-    <a href="${pageContext.request.contextPath}/resources/jsp_pages/Login.jsp"><i class="fa-solid fa-circle-user"></i></a>
-    <% } %>
+        <% } else { %>
+        <a href="${pageContext.request.contextPath}/resources/jsp_pages/Login.jsp" class="icon"><i class="fa-solid fa-circle-user custom-icon-size"></i></a>
+        <% } %>
 
-    <a href="${pageContext.request.contextPath}/resources/jsp_pages/Cart.jsp"><i class="fa-solid fa-cart-shopping"></i></a>
-    <span class="totalQuantity"><%= cart.getTotalItemCount() %></span>
-    </span>
+        <a href="${pageContext.request.contextPath}/resources/jsp_pages/Cart.jsp" class="icon"><i class="fa-solid fa-cart-shopping custom-icon-size"></i></a>
+        <span class="totalQuantity"><%= cart.getTotalItemCount() %></span>
     </div>
+</div>
 
 <script>
     window.onscroll = function() { myFunction() };

@@ -15,9 +15,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-
-
 <div id="subheader">
 
 
@@ -86,14 +83,11 @@
                 }
             </script>
 
-        <li>
             <a href="#" onclick="return checkUserTypeForB2B();">
                 &#128666; B2B &#128666;
             </a>
         </li>
-        </li>
     </ul>
-
 </div>
 
 <script>

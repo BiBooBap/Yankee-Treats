@@ -2,6 +2,8 @@
     box-sizing: border-box;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
 #footer {
     text-align: center;
     background: radial-gradient(circle, rgba(254,232,152,1) 0%, rgba(255,190,79,1) 100%);
@@ -9,6 +11,7 @@
     padding: 3em 1em 2em 1em;
     position: relative;
     overflow: hidden;
+    font-family: 'Varela Round', sans-serif; /* Applica il font-family al footer */
 }
 
 .social-icons .fa-facebook {
@@ -30,6 +33,9 @@
     color: #0c457d;
     text-decoration: none;
     transition: color 0.3s ease;
+    font-size: 1.1em; /* Aumenta la dimensione del font */
+    font-family: 'Varela Round', sans-serif; /* Applica il font-family */
+    font-weight: 400; /* Applica il font-weight */
 }
 
 .footer-links {
@@ -63,11 +69,9 @@
 
 .footer-links-container, .footer-copy, .social-icons {
     margin-bottom: 2em;
-    font-family: 'Varela Round', sans-serif;
-    font-weight: 400;
 }
 
 .footer-copy {
     color: black;
-    font-size: 0.9em;
+    font-size: 1.2em;
 }

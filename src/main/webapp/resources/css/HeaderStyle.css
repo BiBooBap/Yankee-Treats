@@ -27,13 +27,13 @@
     margin-right: 15px;
 }
 
-.fa-cart-shopping{
+.fa-cart-shopping, .fa-circle-user{
     margin-left: 20px;
     color: black !important;
 }
 
-.fa-circle-user{
-    color: black !important;
+.custom-icon-size {
+    font-size: 32px !important;
 }
 
 #logo {
