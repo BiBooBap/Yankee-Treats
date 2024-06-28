@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page language="java"%>
 <%@ page import="java.util.*, com.example.model.*, com.example.control.*"%>
 <%@ page import="java.sql.SQLException" %>
 
@@ -37,6 +36,7 @@
     <link href="${pageContext.request.contextPath}/resources/css/ProductDetailStyle.css" rel="stylesheet" type="text/css">
     <title><%=prod.getName()%> - Dettagli Prodotto</title>
 </head>
+
 <body>
 <%@ include file="Header.jsp" %>
 <%@ include file="Subheader.jsp" %>
@@ -58,31 +58,28 @@
             <p class="prod-price">&#8364;<%=prod.getPrice()%></p>
             <div class="prod-details">
                 <% if(prod.isBestseller()) { %>
-                <p><strong>Bestseller</strong></p>
+                <p><strong>Prodotto Bestseller</strong></p>
                 <% } %>
                 <% if(prod.isTrend()) { %>
-                <p><strong>Prodotto di tendenza</strong></p>
+                <p><strong>Prodotto di Tendenza</strong></p>
                 <% } %>
-                <p>
-                    Categoria:
-                    <% if(prod.isDolce()) { %>Dolce<% }
-                else if(prod.isSalato()) { %>Salato<% }
-                else if(prod.isBevanda()) { %>Bevanda<% } %>
-                </p>
-                <% if(prod.isBundle()) { %>
-                <p><strong>Prodotto in bundle</strong></p>
+                <p>Categoria:
+                        <% if(prod.isDolce()) { %>Dolce<% }
+                    else if(prod.isSalato()) { %>Salato<% }
+                    else if(prod.isBevanda()) { %>Bevanda<% }
+                    else if(prod.isBundle()) { %>Bundle<% } %>
+            </div>
+            <div class="cart-actions">
+                <% if (isInCart) { %>
+                <a href="${pageContext.request.contextPath}/cart?action=decrementC&id=<%=prod.getCode()%>&fromProduct=true" class="cart-button remove-from-cart">Rimuovi dal Carrello</a>
                 <% } %>
-                <div class="cart-actions">
-                    <% if (isInCart) { %>
-                    <a href="${pageContext.request.contextPath}/cart?action=decrementC&id=<%=prod.getCode()%>&fromProduct=true" class="cart-button remove-from-cart">Rimuovi dal Carrello</a>
-                    <% } %>
-                    <a href="${pageContext.request.contextPath}/cart?action=addC&id=<%=prod.getCode()%>&fromProduct=true" class="cart-button add-to-cart">Aggiungi al Carrello</a>
-                </div>
+                <a href="${pageContext.request.contextPath}/cart?action=addC&id=<%=prod.getCode()%>&fromProduct=true" class="cart-button add-to-cart">Aggiungi al Carrello</a>
             </div>
         </div>
     </div>
+</div>
 
-    <%@ include file="Footer.jsp" %>
-
+<%@ include file="Footer.jsp" %>
 </body>
 </html>
+
