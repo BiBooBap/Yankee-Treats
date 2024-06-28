@@ -2,17 +2,11 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: "Varela Round", sans-serif;
-    font-weight: 400;
-}
-
 #footer {
     text-align: center;
     background: radial-gradient(circle, rgba(254,232,152,1) 0%, rgba(255,190,79,1) 100%);
     color: #0c457d;
     padding: 3em 1em 2em 1em;
-    font-family: 'Open Sans', sans-serif;
     position: relative;
     overflow: hidden;
 }
@@ -69,6 +63,8 @@ body {
 
 .footer-links-container, .footer-copy, .social-icons {
     margin-bottom: 2em;
+    font-family: 'Varela Round', sans-serif;
+    font-weight: 400;
 }
 
 .footer-copy {
