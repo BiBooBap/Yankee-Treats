@@ -49,7 +49,7 @@
 	<div class="container">
 		<% for (ProductBean bean : products) {
 			if (!bean.isB2B()) {%>
-		<a href="${pageContext.request.contextPath}/resources/jsp_pages/Product.jsp?code=<%=bean.getCode()%>" class="product-card-link">
+		<a href="${pageContext.request.contextPath}/resources/jsp_pages/ProductDetail.jsp?code=<%=bean.getCode()%>" class="product-card-link">
 		<div class="product-card" data-price="<%=bean.getPrice()%>">
 			<div class="card-img">
 				<img src="${pageContext.request.contextPath}/resources/images/product_<%=bean.getCode()%>.png" alt="<%=bean.getName()%>" class="product-image">

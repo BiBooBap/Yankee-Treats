@@ -42,10 +42,11 @@
     <a href="${pageContext.request.contextPath}/product"><img id="logo" src="${pageContext.request.contextPath}/resources/images/logo.png" alt=""/></a>
 
     <div class="input-wrapper">
-        <form id="searchForm">
-            <input type="text" placeholder="Oggi ho voglia di.." name="text" class="searchbar">
+        <form id="searchForm" onsubmit="return false;">
+            <input type="text" placeholder="Oggi ho voglia di.." name="text" class="searchbar" id="searchbar">
             <button type="submit" class="search-button">&#128270;</button>
         </form>
+        <div id="searchResults"></div>
     </div>
 
     <script>
@@ -147,6 +148,26 @@
         searchButton.innerHTML = snackEmojis[currentEmojiIndex];
         currentEmojiIndex = (currentEmojiIndex + 1) % snackEmojis.length;
     }
+
+    document.getElementById("searchbar").addEventListener("input", function() {
+        let query = this.value;
+        if (query.length > 0) {
+            fetch('${pageContext.request.contextPath}/Search?query=' + query)
+                .then(response => response.json())
+                .then(data => {
+                    let resultsDiv = document.getElementById("searchResults");
+                    resultsDiv.innerHTML = "";
+                    data.forEach(product => {
+                        let productLink = document.createElement("a");
+                        productLink.href = "${pageContext.request.contextPath}/resources/jsp_pages/ProductDetail.jsp?code=" + product.code;
+                        productLink.textContent = product.name;
+                        resultsDiv.appendChild(productLink);
+                    });
+                });
+        } else {
+            document.getElementById("searchResults").innerHTML = "";
+        }
+    });
 </script>
 </body>
 </html>

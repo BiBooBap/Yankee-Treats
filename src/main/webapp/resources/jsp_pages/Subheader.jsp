@@ -22,47 +22,47 @@
 
     <ul>
         <li>
-            <a href="ProductView.jsp">
+            <a href="${pageContext.request.contextPath}/ProductView.jsp">
                 &#128269; Tutti i prodotti &#128269;
             </a>
         </li>
         <li>
-            <a href="product?sort=offerta">
+            <a href="${pageContext.request.contextPath}/product?sort=offerta">
                 &#128293; Offerte &#128293;
             </a>
         </li>
         <li>
-            <a href="product?sort=novita">
+            <a href="${pageContext.request.contextPath}/product?sort=novita">
                 &#10024; Novit&agrave; &#10024;
             </a>
         </li>
         <li>
-            <a href="product?sort=trend">
+            <a href="${pageContext.request.contextPath}/product?sort=trend">
                 &#127852; Trend &#127852;
             </a>
         </li>
         <li>
-            <a href="product?sort=bundle">
+            <a href=${pageContext.request.contextPath}/"product?sort=bundle">
                 &#127873; Bundle &#127873;
             </a>
         </li>
         <li>
-            <a href="product?sort=bestseller">
+            <a href="${pageContext.request.contextPath}/product?sort=bestseller">
                 &#127881; Bestsellers &#127881;
             </a>
         </li>
         <li>
-            <a href="product?sort=bevanda">
+            <a href="${pageContext.request.contextPath}/product?sort=bevanda">
                 &#127862; Bevande &#127862;
             </a>
         </li>
         <li>
-            <a href="product?sort=dolce">
+            <a href="${pageContext.request.contextPath}/product?sort=dolce">
                 &#127849; Dolci &#127849;
             </a>
         </li>
         <li>
-            <a href="product?sort=salato">
+            <a href="${pageContext.request.contextPath}/product?sort=salato">
                 &#127839; Salati &#127839;
             </a>
         </li>
@@ -70,13 +70,13 @@
             <script>
                 function checkUserTypeForB2B() {
                     <% if (!userLogged) { %>
-                    window.location.href = "resources/jsp_pages/Login.jsp?fromB2B=true";
+                    window.location.href = "${pageContext.request.contextPath}/resources/jsp_pages/Login.jsp?fromB2B=true";
                     return false;
                     <% } else if (user_typ != null && user_typ.equals("privato")) { %>
                     alert("Spiacenti, l'accesso alla pagina B2B è riservato ai venditori.");
                     return false;
                     <% } else if (user_typ != null && (user_typ.equals("venditore") || user_typ.equals("admin"))) { %>
-                    window.location.href = "resources/jsp_pages/B2b.jsp";
+                    window.location.href = "${pageContext.request.contextPath}/resources/jsp_pages/B2b.jsp";
                     return false;
                     <% } %>
                     return true;

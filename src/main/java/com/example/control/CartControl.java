@@ -28,7 +28,7 @@ public class CartControl extends HttpServlet {
                 int productId = Integer.parseInt(request.getParameter("id"));
                 cart.addProduct(productModel.doRetrieveByKey(productId));
                 if(request.getParameter("fromProduct")!=null && request.getParameter("fromProduct").equals("true"))
-                    response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/Product.jsp?code="+productId);
+                    response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/ProductDetail.jsp?code="+productId);
                 else response.sendRedirect("ProductView.jsp");
                 return;
             } else if (action != null && action.equalsIgnoreCase("deleteC")) {
@@ -53,7 +53,7 @@ public class CartControl extends HttpServlet {
                         cart.deleteProduct(item.getProduct());
                 }
                 if(request.getParameter("fromProduct")!=null && request.getParameter("fromProduct").equals("true"))
-                    response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/Product.jsp?code="+productId);
+                    response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/ProductDetail.jsp?code="+productId);
                 else response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/Cart.jsp");
                 return;
             } else if (action != null && action.equalsIgnoreCase("addB2B")) {
