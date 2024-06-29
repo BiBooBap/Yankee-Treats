@@ -12,16 +12,16 @@
     List<ProductBean> products = (List<ProductBean>) request.getSession().getAttribute("products");
     request.getSession().setAttribute("products", products);
 
-    if(products == null) {
+    if (products == null) {
         response.sendRedirect(request.getContextPath() + "/B2b.jsp");
         return;
     }
 
-    String user_type=request.getParameter("userType");
-    if (user_type != null && !user_type.isEmpty()) {
-        session.setAttribute("userType", user_type);
+    String userType = request.getParameter("userType");
+    if (userType != null && !userType.isEmpty()) {
+        session.setAttribute("userType", userType);
     } else {
-        user_type = (String) session.getAttribute("userType");
+        userType = (String) session.getAttribute("userType");
     }
 
 %>
@@ -32,31 +32,29 @@
     <link href="${pageContext.request.contextPath}/resources/css/B2bStyle.css" rel="stylesheet" type="text/css">
     <title>B2B - Yankee Treats</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 </head>
-
 <body>
 <%@ include file="Header.jsp" %>
 
 <section id="intro">
     <h1>Benvenuto al nostro programma B2B</h1>
-    <p>Scopri la nostra vasta selezione di snack americani, perfetti per rivenditori, distributori e aziende che desiderano offrire il meglio ai propri clienti o dipendenti. Approfitta di prezzi competitivi, offerte speciali e un servizio clienti dedicato.</p>
-    <p>I nostri prezzi all'ingrosso sono pensati per offrire il massimo vantaggio ai nostri clienti B2B. Offriamo prezzi speciali per ordini di grandi dimensioni.</p>
+    <p>Scopri la nostra vasta selezione di snack americani, perfetti per rivenditori, distributori e aziende. Approfitta di prezzi competitivi, offerte speciali e un servizio clienti dedicato.</p>
+    <p>I nostri prezzi all'ingrosso sono pensati per offrire il massimo vantaggio ai nostri clienti B2B. Offriamo prezzi speciali per ordini di grandi dimensioni. Ordina oggi per sorprendere i tuoi clienti con i migliori marchi americani come Lay's, Coca-Cola, Hershey's e molti altri!</p>
 </section>
 
 <div class="container">
     <% for (ProductBean bean : products) {
-        if (bean.isB2B()) {%>
-    <div class="product-card" data-price="<%=bean.getPrice()%>">
+        if (bean.isB2B()) { %>
+    <div class="product-card">
         <div class="card-img">
             <img src="${pageContext.request.contextPath}/resources/images/product_<%=bean.getCode()%>.png" alt="<%=bean.getName()%>" class="product-image">
         </div>
         <div class="product-info">
             <h3 class="product-name"><%=bean.getName()%></h3>
             <p class="product-description"><%=bean.getDescription()%></p>
-            <p class="product-price">&#8364;<span class="price-value"></span></p>
+            <p class="product-price">&#8364;<%=bean.getPrice()%></p>
+            <a href="${pageContext.request.contextPath}/cart?action=addB2B&id=<%=bean.getCode()%>"><button class="add-to-cart">Aggiungi al Carrello</button></a>
         </div>
-        <a href="${pageContext.request.contextPath}/cart?action=addB2B&id=<%=bean.getCode()%>"><button class="add-to-cart">Aggiungi</button></a>
     </div>
     <% } } %>
 </div>
@@ -105,6 +103,10 @@
         });
     });
 </script>
+
+<%@ include file="Footer.jsp" %>
 </body>
 </html>
+
+
 

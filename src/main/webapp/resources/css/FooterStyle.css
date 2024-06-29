@@ -1,77 +1,134 @@
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
-
-#footer {
-    text-align: center;
-    background: radial-gradient(circle, rgba(254,232,152,1) 0%, rgba(255,190,79,1) 100%);
-    color: #0c457d;
-    padding: 3em 1em 2em 1em;
-    position: relative;
-    overflow: hidden;
-    font-family: 'Varela Round', sans-serif; /* Applica il font-family al footer */
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
 }
 
-.social-icons .fa-facebook {
-    margin-right: 15px;
-    margin-left: 12px;
+#footer {
+    background: linear-gradient(rgba(12, 69, 125, 0.9), rgba(12, 69, 125, 0.9)), url('../images/footer.jpg') no-repeat center center;
+    background-size: cover;
+    color: #ffffff;
+    padding: 4em 0 2em;
+    position: relative;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-section {
+    flex: 1;
+    margin: 20px;
+    min-width: 250px;
+}
+
+.footer-section h3 {
+    color: #ffbe4f;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.footer-section h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 50px;
+    height: 2px;
+    background: #ffbe4f;
+}
+
+.footer-section p, .footer-section ul {
+    margin-bottom: 15px;
+}
+
+.footer-section ul {
+    list-style-type: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: #ffbe4f;
+}
+
+.social-icons {
+    margin-top: 20px;
+}
+
+.social-icons a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-right: 10px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 1.2em;
+    transition: all 0.3s ease;
 }
 
 .social-icons a:hover {
-    color: #d9534f !important;
-}
-
-#footer ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-#footer a {
+    background: #ffbe4f;
     color: #0c457d;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    font-size: 1.1em; /* Aumenta la dimensione del font */
-    font-family: 'Varela Round', sans-serif; /* Applica il font-family */
-    font-weight: 400; /* Applica il font-weight */
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 40px;
 }
 
 .footer-links {
-    margin-left: 10px;
-    padding: 0;
-    margin-top: 8px;
-    display: inline-block;
-    position: relative;
+    margin-bottom: 15px;
 }
 
-.footer-links:after {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 0;
-    bottom: -1px;
-    height: 1px;
-    margin: -2px 0;
-    left: 0;
-    background-color: #0c457d;
-    transition: all 0.2s ease-in 0s;
+.footer-links a {
+    color: #ffffff;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: color 0.3s ease;
 }
 
-.footer-links:hover:after {
-    width: 100%;
+.footer-links a:hover {
+    color: #ffbe4f;
 }
 
-.footer-links:hover {
-    color: #d9534f;
+.footer-bottom p {
+    font-size: 0.8em;
+    color: rgba(255, 255, 255, 0.6);
 }
 
-.footer-links-container, .footer-copy, .social-icons {
-    margin-bottom: 2em;
-}
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+    }
 
-.footer-copy {
-    color: black;
-    font-size: 1.2em;
+    .footer-section {
+        margin: 20px 0;
+    }
 }
