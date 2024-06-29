@@ -19,7 +19,8 @@ public class RegistrationControl extends HttpServlet {
         String cognome = request.getParameter("cognome");
         String dataDiNascita = request.getParameter("data_di_nascita");
         String email = request.getParameter("email");
-        String password = request.getParameter("password");
+            String password = request.getParameter("password");
+            String hashedPassword = PasswordUtils.hashPassword(password);
         String tipoUtente = request.getParameter("tipo_utente");
         String partitaIVA = null;
         String codiceFiscale = null;
@@ -36,7 +37,7 @@ public class RegistrationControl extends HttpServlet {
         registrazioneBean.setCognome(cognome);
         registrazioneBean.setDataDiNascita(dataDiNascita);
         registrazioneBean.setEmail(email);
-        registrazioneBean.setPassword(password);
+        registrazioneBean.setPassword(hashedPassword);
         registrazioneBean.setTipoUtente(tipoUtente);
         registrazioneBean.setPartitaIVA(partitaIVA);
         registrazioneBean.setCodiceFiscale(codiceFiscale);
@@ -60,3 +61,4 @@ public class RegistrationControl extends HttpServlet {
         }
     }
 }
+
