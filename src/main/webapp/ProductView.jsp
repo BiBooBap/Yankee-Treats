@@ -46,20 +46,27 @@
 	<div class="soda-text" id="sodaText">Vetrina</div>
 </div>
 
-<div class="input-wrapper">
-	<form id="searchForm" onsubmit="return false;">
-		<input type="text" placeholder="Oggi ho voglia di.." name="text" class="searchbar" id="searchbar">
-		<button type="submit" class="search-button">&#128270;</button>
-	</form>
-	<div id="searchResults"></div>
+<div class="search-container">
+	<div class="input-wrapper">
+		<form id="searchForm" onsubmit="return false;">
+			<input type="text" placeholder="Oggi ho voglia di.." name="text" class="searchbar" id="searchbar">
+			<button type="submit" class="search-button">&#128270;</button>
+		</form>
+	</div>
+	<div id="searchResults" class="search-results"></div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+	let originalProducts = null;
+
 	$(document).ready(function() {
+		// Salva i prodotti originali quando la pagina viene caricata
+		originalProducts = $('.container').first().html();
+
 		$('#searchbar').on('input', function() {
 			var query = $(this).val();
-			if (query.length > 2) {
+			if (query.length >= 3) {
 				console.log("Sending AJAX request for query: " + query);
 
 				$.ajax({
@@ -74,32 +81,95 @@
 					}
 				});
 			} else {
-				$('#searchResults').empty();
+				// Se la query è troppo corta o vuota, ripristina la view originale
+				restoreOriginalView();
 			}
 		});
 	});
 
 	function displayResults(products) {
-		var resultsDiv = $('#searchResults');
-		resultsDiv.empty();
+		var mainContainer = $('.container').first(); // Seleziona il container principale
+		mainContainer.empty(); // Svuota il container principale
 
 		if (products.length === 0) {
-			resultsDiv.append('<p>Nessun risultato trovato</p>');
+			mainContainer.append('<p>Nessun risultato trovato</p>');
 			return;
 		}
 
-		var resultsList = $('<ol>');
-		products.forEach(function(product, index) {
-			var listItem = $('<li>').append(
-					$('<a>', {
-						href: '${pageContext.request.contextPath}/resources/jsp_pages/ProductDetail.jsp?code=' + product.code,
-						text: (index + 1) + '. ' + product.name + ' - €' + product.price.toFixed(2)
+		products.forEach(function(product) {
+			var productCard = $('<div>', {
+				class: 'product-card',
+				'data-price': product.price
+			});
+
+			var cardImg = $('<div>', { class: 'card-img' }).append(
+					$('<img>', {
+						src: '${pageContext.request.contextPath}/resources/images/product_' + product.code + '.png',
+						alt: product.name,
+						class: 'product-image'
 					})
 			);
-			resultsList.append(listItem);
+
+			if (product.novita) {
+				cardImg.append($('<div>', { class: 'new', text: 'Nuovo!' }));
+			}
+			if (product.offerta) {
+				cardImg.append($('<div>', { class: 'offer', text: 'Offerta!' }));
+			}
+
+			var productInfo = $('<div>', { class: 'product-info' }).append(
+					$('<h3>', { class: 'product-name', text: product.name }),
+					$('<p>', { class: 'product-description', text: product.description }),
+					$('<p>', { class: 'product-price' }).html('&#8364;<span class="price-value">' + product.price.toFixed(2) + '</span>')
+			);
+
+			var addToCartButton = $('<a>', {
+				href: 'cart?action=addC&id=' + product.code,
+				html: '<button class="add-to-cart">Aggiungi al Carrello</button>'
+			});
+
+			// Aggiungi i componenti alla card
+			productCard.append(cardImg, productInfo, addToCartButton);
+
+			// Aggiungi la card al main container
+			var cardLink = $('<a>', {
+				href: '${pageContext.request.contextPath}/resources/jsp_pages/ProductDetail.jsp?code=' + product.code,
+				class: 'product-card-link'
+			}).append(productCard);
+
+			mainContainer.append(cardLink);
 		});
 
-		resultsDiv.append(resultsList);
+		animatePrices();
+	}
+	function restoreOriginalView() {
+		if (originalProducts) {
+			$('.container').first().html(originalProducts);
+			animatePrices();
+		}
+	}
+
+
+	function animatePrices() {
+		const cards = document.querySelectorAll('#searchResults .product-card');
+
+		cards.forEach(card => {
+			const priceElement = card.querySelector('.price-value');
+			const originalPrice = parseFloat(card.dataset.price);
+			let currentPrice = 0;
+
+			const animatePrice = () => {
+				if (currentPrice < originalPrice) {
+					currentPrice += 0.01;
+					priceElement.textContent = currentPrice.toFixed(2);
+					requestAnimationFrame(animatePrice);
+				} else {
+					priceElement.textContent = originalPrice.toFixed(2);
+				}
+			};
+
+			animatePrice();
+		});
 	}
 </script>
 
