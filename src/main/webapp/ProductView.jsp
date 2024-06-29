@@ -36,9 +36,10 @@
 
 <body>
 
-	<%@ include file="resources/jsp_pages/Offers.jsp" %>
+
 	<%@ include file="resources/jsp_pages/Header.jsp" %>
 	<%@ include file="resources/jsp_pages/Subheader.jsp" %>
+	<%@ include file="resources/jsp_pages/Offers.jsp" %>
 
 
 	<br>

@@ -38,11 +38,12 @@
 
 <html>
 <body>
-<div id="header">
-    <a href="${pageContext.request.contextPath}/product"><img id="logo" src="${pageContext.request.contextPath}/resources/images/logo.png" alt=""/></a>
+
+<div class="header">
+    <a href="${pageContext.request.contextPath}/product"><img class="logo" src="${pageContext.request.contextPath}/resources/images/logo.png" alt=""/></a>
 
 
-    <div id="icons">
+    <div class="icons">
         <% if (isAdmin) { %>
         <span class="welcome-message">Benvenuto, Amministratore</span>
         <% } else if (userLoggedIn) { %>
@@ -73,19 +74,57 @@
 </div>
 
 <script>
-    window.onscroll = function() { myFunction() };
+    let header = document.querySelector(".header");
+    let placeholder = document.createElement('div');
+    placeholder.style.display = 'none';
+    header.parentNode.insertBefore(placeholder, header);
 
-    let header = document.getElementById("header");
-    let sticky = header.offsetTop;
+    function updateStickyPosition() {
+        return header.offsetTop + (placeholder.style.display === 'block' ? placeholder.offsetHeight : 0);
+    }
 
     function myFunction() {
+        let sticky = updateStickyPosition();
+
         if (window.scrollY > sticky) {
-            header.classList.add("sticky");
+            if (!header.classList.contains("sticky")) {
+                placeholder.style.display = 'block';
+                placeholder.style.height = header.offsetHeight + 'px';
+                header.classList.add("sticky");
+            }
         } else {
-            header.classList.remove("sticky");
+            if (header.classList.contains("sticky")) {
+                header.classList.remove("sticky");
+                placeholder.style.display = 'none';
+            }
         }
     }
 
+    // Debounce function to limit how often the scroll event fires
+    function debounce(func, wait = 10, immediate = true) {
+        let timeout;
+        return function() {
+            let context = this, args = arguments;
+            let later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            let callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    }
+
+    // Use the debounced version of myFunction for the scroll event
+    window.addEventListener('scroll', debounce(myFunction));
+
+    // Call myFunction on page load and resize
+    window.addEventListener('load', myFunction);
+    window.addEventListener('resize', debounce(myFunction));
+
+    // Initial call to set correct state
+    myFunction();
 </script>
 </body>
 </html>
