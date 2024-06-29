@@ -19,55 +19,8 @@ body::-webkit-scrollbar{
     width: 0;
 }
 
-.animated-header {
-    font-family: 'Arial', sans-serif;
-    font-size: 3rem;
-    font-weight: bold;
-    text-align: center;
-    color: #ff6b6b;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-}
 
-.animated-header span {
-    display: inline-block;
-    animation: bounce 2s ease-in-out infinite;
-}
-
-@keyframes bounce {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-20px);
-    }
-}
-
-/* Apply different delays to each letter */
-.animated-header span:nth-child(2n) {
-    animation-delay: 0.1s;
-}
-.animated-header span:nth-child(3n) {
-    animation-delay: 0.2s;
-}
-.animated-header span:nth-child(4n) {
-    animation-delay: 0.3s;
-}
-.animated-header span:nth-child(5n) {
-    animation-delay: 0.4s;
-}
-
-
-
-h2 {
-    font-family: "Playwrite GB S", cursive;
-    font-optical-sizing: auto;
-    font-weight: bold;
-    font-size: 50px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    text-align: center;
-}
-
-a {
+.container a {
     text-decoration: none;
 }
 
@@ -309,7 +262,6 @@ a {
 
 .search-button {
     font-size: 0.9rem;
-    margin-right: -0.8rem;
     margin-left: -0.3rem;
     cursor: pointer;
     background-color: rgba(128, 128, 128, 0.13);
@@ -344,8 +296,9 @@ a {
 
 .soda-text {
     position: relative;
-    font-size: 88px;
+    font-size: 68px;
     font-weight: bold;
+    font-family: 'Poppins', sans-serif;
     color: #2ba8fb; /* Colore marrone per simulare una cola */
     overflow: hidden;
     padding: 10px;
