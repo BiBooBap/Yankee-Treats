@@ -30,28 +30,24 @@ public class LoginModelDS {
     }
 
     public boolean validateUser(LoginBean loginBean) {
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE email = ? AND password = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE email = ?";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, loginBean.getEmail());
-            stmt.setString(2, loginBean.getPassword());
 
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.getString(2) != null && PasswordUtils.checkPassword(loginBean.getPassword(), rs.getString(2)))
-                {
-                return rs.next();
-            }
-            } catch (SQLException e) {
-                System.out.println("Error validating user: " + e.getMessage());
+                if (rs.next()) {
+                    String storedHash = rs.getString("password");
+                    return PasswordUtils.checkPassword(loginBean.getPassword(), storedHash);
+                }
                 return false;
             }
         } catch (SQLException e) {
-            System.out.println("Error validating user: " + e.getMessage());
+            System.out.println("Error validating user: " + loginBean.getEmail() + e.getMessage());
             return false;
         }
-        return false;
     }
 }
 
