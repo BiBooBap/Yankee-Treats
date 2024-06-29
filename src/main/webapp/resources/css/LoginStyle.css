@@ -45,6 +45,11 @@ a, a:hover, a:focus, a:active {
     transition: 0.2s ease-in-out;
 }
 
+.inputForm input[type="date"] {
+    font-family: 'Varela Round', sans-serif;
+    float: left;
+}
+
 .input {
     margin-left: 10px;
     border-radius: 10px;
@@ -53,7 +58,18 @@ a, a:hover, a:focus, a:active {
     height: 100%;
 }
 
+.input-nomargin {
+    border-radius: 10px;
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
 .input:focus {
+    outline: none;
+}
+
+.input-nomargin:focus {
     outline: none;
 }
 
@@ -174,6 +190,10 @@ a, a:hover, a:focus, a:active {
     background-color: #2ba8fb;
     box-shadow: 0 0 20px #6fc5ff50;
     transform: scale(1.1);
+}
+
+.form select {
+    background-color: white;
 }
 
 

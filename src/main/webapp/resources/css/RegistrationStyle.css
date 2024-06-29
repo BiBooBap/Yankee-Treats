@@ -43,6 +43,7 @@ a, a:hover, a:focus, a:active {
     border-radius: 10px;
     padding: 0 10px;
     font-size: 16px;
+    transition: 0.2s ease-in-out;
 }
 
 .container input[type="text"],
@@ -53,6 +54,15 @@ a, a:hover, a:focus, a:active {
 .container textarea {
     width: 100%;
     box-sizing: border-box;
+    transition: 0.2s ease-in-out;
+}
+
+.container input:focus {
+    outline: none;
+}
+
+.container input:focus-within {
+    border: 2px solid #2d79f3;
 }
 
 .container select {
@@ -68,12 +78,20 @@ a, a:hover, a:focus, a:active {
     height: 50px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-}
+    transition: all 0.5s;
 
-.container input[type="submit"]:hover {
-    background-color: #2ba8fb;
-    transform: scale(1.05);
+    &:hover {
+        background-color: #2ba8fb;
+        box-shadow: 0 0 20px #6fc5ff50;
+        transform: scale(1.1);
+    }
+
+    &:active {
+        background-color: #3d94cf;
+        transition: all 0.25s;
+        box-shadow: none;
+        transform: scale(0.98);
+    }
 }
 
 /* Error message styles */
@@ -89,4 +107,30 @@ a, a:hover, a:focus, a:active {
     .container {
         width: 90%;
     }
+}
+
+.inputForm {
+    border: 1.5px solid #ecedec;
+    border-radius: 10px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    transition: 0.2s ease-in-out;
+}
+
+.input {
+    margin-left: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.inputForm:focus-within {
+    border: 2px solid #2d79f3;
 }
