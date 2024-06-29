@@ -46,6 +46,7 @@
     <% for (ProductBean bean : products) {
         if (bean.isB2B()) { %>
     <div class="product-card">
+        <a href="${pageContext.request.contextPath}/resources/jsp_pages/ProductDetail.jsp?code=<%=bean.getCode()%>" class="product-card-link">
         <div class="card-img">
             <img src="${pageContext.request.contextPath}/resources/images/product_<%=bean.getCode()%>.png" alt="<%=bean.getName()%>" class="product-image">
         </div>
@@ -55,6 +56,7 @@
             <p class="product-price">&#8364;<%=bean.getPrice()%></p>
             <a href="${pageContext.request.contextPath}/cart?action=addB2B&id=<%=bean.getCode()%>"><button class="add-to-cart">Aggiungi al Carrello</button></a>
         </div>
+        </a>
     </div>
     <% } } %>
 </div>

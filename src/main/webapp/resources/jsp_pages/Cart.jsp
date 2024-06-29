@@ -74,13 +74,12 @@
             CHIUDI
         </button></a>
 
+        <% if (cart.isEmpty()){%>
+        <a href="${pageContext.request.contextPath}/ProductView.jsp">
 
-        <% if (userLoggedIn)
-        { %>
+        <% }else if (userLoggedIn) { %>
         <a href="${pageContext.request.contextPath}/resources/jsp_pages/Checkout.jsp">
-                <% }
-                else
-                { %>
+                <% } else { %>
                     <a href="${pageContext.request.contextPath}/resources/jsp_pages/Login.jsp?fromCart=true">
                 <% } %><button>
                     CHECKOUT

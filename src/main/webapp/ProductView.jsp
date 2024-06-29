@@ -36,33 +36,77 @@
 
 <body>
 
+<%@ include file="resources/jsp_pages/Header.jsp" %>
+<%@ include file="resources/jsp_pages/Subheader.jsp" %>
+<%@ include file="resources/jsp_pages/Offers.jsp" %>
 
-	<%@ include file="resources/jsp_pages/Header.jsp" %>
-	<%@ include file="resources/jsp_pages/Subheader.jsp" %>
-	<%@ include file="resources/jsp_pages/Offers.jsp" %>
+<br>
 
+<div class="text-header-container">
+	<div class="soda-text" id="sodaText">Vetrina</div>
+</div>
 
-	<br>
+<div class="input-wrapper">
+	<form id="searchForm" onsubmit="return false;">
+		<input type="text" placeholder="Oggi ho voglia di.." name="text" class="searchbar" id="searchbar">
+		<button type="submit" class="search-button">&#128270;</button>
+	</form>
+	<div id="searchResults"></div>
+</div>
 
-	<div class="text-header-container">
-		<div class="soda-text" id="sodaText">Vetrina</div>
-	</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#searchbar').on('input', function() {
+			var query = $(this).val();
+			if (query.length > 2) {
+				console.log("Sending AJAX request for query: " + query);
 
+				$.ajax({
+					url: '${pageContext.request.contextPath}/Search',
+					method: 'GET',
+					data: { query: query },
+					success: function(data) {
+						displayResults(data);
+					},
+					error: function() {
+						console.log('Errore durante la ricerca');
+					}
+				});
+			} else {
+				$('#searchResults').empty();
+			}
+		});
+	});
 
+	function displayResults(products) {
+		var resultsDiv = $('#searchResults');
+		resultsDiv.empty();
 
-	<div class="input-wrapper">
-		<form id="searchForm" onsubmit="return false;">
-			<input type="text" placeholder="Oggi ho voglia di.." name="text" class="searchbar" id="searchbar">
-			<button type="submit" class="search-button">&#128270;</button>
-		</form>
-		<div id="searchResults"></div>
-	</div>
+		if (products.length === 0) {
+			resultsDiv.append('<p>Nessun risultato trovato</p>');
+			return;
+		}
 
-	<div class="container">
+		var resultsList = $('<ol>');
+		products.forEach(function(product, index) {
+			var listItem = $('<li>').append(
+					$('<a>', {
+						href: '${pageContext.request.contextPath}/resources/jsp_pages/ProductDetail.jsp?code=' + product.code,
+						text: (index + 1) + '. ' + product.name + ' - €' + product.price.toFixed(2)
+					})
+			);
+			resultsList.append(listItem);
+		});
 
-		<% for (ProductBean bean : products) {
-			if (!bean.isB2B()) {%>
-		<a href="${pageContext.request.contextPath}/resources/jsp_pages/ProductDetail.jsp?code=<%=bean.getCode()%>" class="product-card-link">
+		resultsDiv.append(resultsList);
+	}
+</script>
+
+<div class="container">
+	<% for (ProductBean bean : products) {
+		if (!bean.isB2B()) {%>
+	<a href="${pageContext.request.contextPath}/resources/jsp_pages/ProductDetail.jsp?code=<%=bean.getCode()%>" class="product-card-link">
 		<div class="product-card" data-price="<%=bean.getPrice()%>">
 			<div class="card-img">
 				<img src="${pageContext.request.contextPath}/resources/images/product_<%=bean.getCode()%>.png" alt="<%=bean.getName()%>" class="product-image">
@@ -80,19 +124,17 @@
 			</div>
 			<a href="cart?action=addC&id=<%=bean.getCode()%>"><button class="add-to-cart">Aggiungi al Carrello</button></a>
 		</div>
-		<% } } %>
-	</div>
+			<% } } %>
+</div>
 
-	<%@ include file="resources/jsp_pages/Footer.jsp" %>
+<%@ include file="resources/jsp_pages/Footer.jsp" %>
 </body>
-
 
 <script>
 	document.addEventListener('DOMContentLoaded', () => {
 		const cards = document.querySelectorAll('.product-card');
 
 		cards.forEach(card => {
-			// Price animation
 			const priceElement = card.querySelector('.price-value');
 			const originalPrice = parseFloat(card.dataset.price);
 			let currentPrice = 0;
@@ -111,8 +153,6 @@
 		});
 	});
 
-
-	// Array di emoji snack
 	const snackEmojis = ['&#127871', '&#127851;', '&#127850;', '&#x1F968;', '&#127829;', '&#127839;', '&#x1F964;', '&#127846;', '&#127849;', '&#x1F95C;'];
 
 	let emojiInterval;
@@ -124,9 +164,7 @@
 		searchButton.style.border = "2px solid #0563df";
 		searchButton.style.backgroundColor = "#83a4d2";
 
-		// Cambia l'emoji immediatamente
 		changeEmoji();
-		// Imposta l'intervallo per cambiare l'emoji ogni secondo
 		emojiInterval = setInterval(changeEmoji, 1000);
 	});
 	inputbar.addEventListener("blur", function() {
@@ -134,25 +172,15 @@
 		searchButton.style.backgroundColor = "rgba(128, 128, 128, 0.13)";
 		searchButton.innerHTML = "&#128270;";
 
-		// Ferma il cambiamento dell'emoji
 		clearInterval(emojiInterval);
-		// Ripristina l'emoji originale
 		searchButton.innerHTML = '&#128270;';
-		// Resetta l'indice dell'emoji
 		currentEmojiIndex = 0;
 	});
 
-	// Funzione per cambiare l'emoji
 	function changeEmoji() {
 		searchButton.innerHTML = snackEmojis[currentEmojiIndex];
 		currentEmojiIndex = (currentEmojiIndex + 1) % snackEmojis.length;
 	}
-
-
-
-
-
-
 
 	const sodaText = document.getElementById('sodaText');
 	const textWidth = sodaText.offsetWidth;
@@ -162,7 +190,7 @@
 		const bubble = document.createElement('div');
 		bubble.classList.add('bubble');
 
-		const size = Math.random() * 8 + 2; // Dimensione casuale tra 2px e 10px
+		const size = Math.random() * 8 + 2;
 		bubble.style.width = size + 'px';
 		bubble.style.height = size + 'px';
 
@@ -179,16 +207,15 @@
 
 	function animateBubble(bubble) {
 		let position = 0;
-		const random = Math.random() * 3 + 1; // Velocità casuale
+		const random = Math.random() * 3 + 1;
 
 		const animation = setInterval(function() {
 			position += random;
 			bubble.style.bottom = position + 'px';
 
-			// Movimento ondulatorio orizzontale
 			bubble.style.left = (parseFloat(bubble.style.left) + Math.sin(position / 10) * 0.5) + 'px';
 
-			if (position > textHeight - 20) { // Inizia il fading 20px prima del bordo superiore
+			if (position > textHeight - 20) {
 				let opacity = 1 - (position - (textHeight - 20)) / 20;
 				bubble.style.opacity = opacity;
 			}
@@ -200,13 +227,6 @@
 		}, 20);
 	}
 
-	// Crea nuove bollicine ad intervalli regolari
 	setInterval(createBubble, 100);
-
-
-
 </script>
-
-
 </html>
-
