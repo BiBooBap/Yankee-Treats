@@ -411,4 +411,32 @@ public class UtilDS     {
         }
         return orders;
     }
+
+    public static List<OrderItem> getOrderItems(int orderId) {
+        List<OrderItem> items = new ArrayList<>();
+        String query = "SELECT oi.product_code, p.name, oi.quantity, p.price " +
+                "FROM order_items oi " +
+                "JOIN product p ON oi.product_code = p.code " +
+                "WHERE oi.order_id = ?";
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, orderId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    OrderItem item = new OrderItem();
+                    item.setProductCode(rs.getInt("product_code"));
+                    item.setProductName(rs.getString("name"));
+                    item.setQuantity(rs.getInt("quantity"));
+                    item.setPrice(rs.getDouble("price"));
+                    items.add(item);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Error retrieving order items: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return items;
+    }
 }

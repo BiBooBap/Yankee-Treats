@@ -145,7 +145,24 @@
 	function restoreOriginalView() {
 		if (originalProducts) {
 			$('.container').first().html(originalProducts);
-			animatePrices();
+			const cards = document.querySelectorAll('.product-card');
+			cards.forEach(card => {
+				const priceElement = card.querySelector('.price-value');
+				const originalPrice = parseFloat(card.dataset.price);
+				let currentPrice = 0;
+
+				const animatePrice = () => {
+					if (currentPrice < originalPrice) {
+						currentPrice += 0.01;
+						priceElement.textContent = currentPrice.toFixed(2);
+						requestAnimationFrame(animatePrice);
+					} else {
+						priceElement.textContent = originalPrice.toFixed(2);
+					}
+				};
+
+				animatePrice();
+			});
 		}
 	}
 
