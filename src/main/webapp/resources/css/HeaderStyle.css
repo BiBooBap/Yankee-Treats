@@ -219,7 +219,35 @@
     right: 0;
     font-size: 22px;
     font-weight: 300;
-    padding: 12px 0; /* Aggiungi padding per migliorare la visualizzazione */
+    padding: 12px 0;
+    margin-right: -70px;
+    margin-top: 10px;
+    border: 2px solid #174978;
+    border-radius: 10px;
+}
+
+.dropdown-content::before {
+    content: '';
+    position: absolute;
+    top: -10px; /* Posiziona il triangolo sopra il dropdown */
+    right: 75px; /* Allinea il triangolo con l'icona (potrebbe necessitare aggiustamenti) */
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #174978; /* Colore del bordo del dropdown */
+}
+
+.dropdown-content::after {
+    content: '';
+    position: absolute;
+    top: -7px; /* Leggermente sotto il triangolo del bordo */
+    right: 77px; /* Allinea con il triangolo del bordo */
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white; /* Colore di sfondo del dropdown */
 }
 
 .dropdown-content a {
@@ -233,15 +261,30 @@
     background-color: #ddd;
 }
 
-.dropdown:hover .dropdown-content {
-    display: flex;
-}
-
 .dropdown .dropbtn {
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
+}
+
+
+
+
+@font-face {
+    font-family: 'Rocher';
+    src: url(https://assets.codepen.io/9632/RocherColorGX.woff2);
+}
+
+@font-palette-values --Color {
+    font-family: Rocher;
+    base-palette: 3;
+}
+
+.welcome-message {
+    font-family: 'Rocher', sans-serif;
+    font-palette: --Color;
+    font-size: 21px;
 }
 
 

@@ -44,16 +44,15 @@
 
 
     <div class="icons">
-        <% if (isAdmin) { %>
-        <span class="welcome-message">Benvenuto, Amministratore</span>
-        <% } else if (userLoggedIn) { %>
-        <span class="welcome-message">Benvenuto, <%= username %></span>
-        <% } %>
-
-        <% if (userLoggedIn) { %>
+        <% if (userLoggedIn || isAdmin) { %>
         <div class="dropdown">
-            <button class="dropbtn icon"><i class="fa-solid fa-circle-user custom-icon-size"></i></button>
+            <button class="dropbtn icon"><i class="fa-solid fa-face-smile custom-icon-size"></i></button>
             <div class="dropdown-content">
+                <% if (isAdmin) { %>
+                <span class="welcome-message">Benvenuto Admin!</span>
+                <% } else if (userLoggedIn) { %>
+                <span class="welcome-message">Benvenuto!</span>
+                <% } %>
                 <a href="${pageContext.request.contextPath}/resources/jsp_pages/MiddleUserData.jsp">Dati personali</a>
                 <% if (!isAdmin) { %>
                 <a href="${pageContext.request.contextPath}/ShowOrder">Storico ordini</a>
@@ -125,6 +124,18 @@
 
     // Initial call to set correct state
     myFunction();
+
+
+
+
+    let dropdown = document.querySelector(".dropdown");
+    let dropdownContent = document.querySelector(".dropdown-content");
+
+    dropdown.addEventListener("click", function() {
+        dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+    });
+
+
 </script>
 </body>
 </html>
