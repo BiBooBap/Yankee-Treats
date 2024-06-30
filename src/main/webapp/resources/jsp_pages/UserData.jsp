@@ -19,42 +19,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dati Personali</title>
     <style>
-        :root {
-            --primary-color: #3498db;
-            --secondary-color: #2c3e50;
-            --background-color: #ecf0f1;
-            --text-color: #34495e;
-            --border-color: #bdc3c7;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+        @import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
+            font-family: "Varela Round", sans-serif;
+            background-color: white;
+            color: #333;
             line-height: 1.6;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
 
         .container {
             max-width: 800px;
             margin: 40px auto;
             padding: 20px;
-            background-color: #ffffff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            box-shadow: 10px 10px 20px #d1d1d1, -10px -10px 20px #ffffff;
+            border-radius: 20px;
         }
 
         h1, h2 {
-            color: var(--secondary-color);
+            color: #2ba8fb;
+            font-family: 'Poppins', sans-serif;
             margin-bottom: 20px;
         }
 
         .section {
             margin-bottom: 30px;
             padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
+            background-color: rgba(128, 128, 128, 0.13);
+            border-radius: 10px;
         }
 
         .form-group {
@@ -65,7 +62,7 @@
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
-            color: var(--secondary-color);
+            color: #333;
         }
 
         input[type="text"],
@@ -74,35 +71,37 @@
         input[type="number"],
         select {
             width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
             font-size: 16px;
+            background-color: rgba(128, 128, 128, 0.13);
         }
 
         .btn {
             display: inline-block;
-            background-color: var(--primary-color);
-            color: #ffffff;
-            padding: 12px 20px;
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 24px;
             border: none;
-            border-radius: 4px;
+            border-radius: 25px;
             cursor: pointer;
             font-size: 16px;
             text-decoration: none;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .btn:hover {
-            background-color: #2980b9;
+            background-color: #45a049;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
         }
 
         .btn-secondary {
-            background-color: var(--secondary-color);
+            background-color: #2ba8fb;
         }
 
         .btn-secondary:hover {
-            background-color: #34495e;
+            background-color: #1c8ad9;
         }
 
         .form-buttons {
@@ -114,8 +113,8 @@
 <div class="container">
     <h1>Dati Personali</h1>
 
-    <form id="mainForm" action="${pageContext.request.contextPath}/SaveAllUserData" method="post">
-        <input type="hidden" name="action" id="formAction" value="">
+    <form id="deliveryForm" action="${pageContext.request.contextPath}/SaveAllUserData" method="post">
+        <input type="hidden" name="action" value="saveDelivery">
         <input type="hidden" name="fromCheckout" value="${param.fromCheckout}">
 
         <div class="section">
@@ -141,9 +140,14 @@
                 <input type="text" id="deliveryAddressZIP" name="deliveryAddressZIP" required>
             </div>
             <div class="form-buttons">
-                <button type="button" class="btn" onclick="submitForm('saveDelivery')">Salva Indirizzo di Consegna</button>
+                <button type="submit" class="btn">Salva Indirizzo di Consegna</button>
             </div>
         </div>
+    </form>
+
+    <form id="paymentForm" action="${pageContext.request.contextPath}/SaveAllUserData" method="post">
+        <input type="hidden" name="action" value="savePayment">
+        <input type="hidden" name="fromCheckout" value="${param.fromCheckout}">
 
         <div class="section">
             <h2>Metodo di Pagamento</h2>
@@ -168,37 +172,36 @@
                 <input type="text" id="cvv" name="cvv" maxlength="3" required>
             </div>
             <div class="form-buttons">
-                <button type="button" class="btn" onclick="submitForm('savePayment')">Salva Metodo di Pagamento</button>
+                <button type="submit" class="btn">Salva Metodo di Pagamento</button>
             </div>
-        </div>
-
-        <div class="section">
-            <h2>Indirizzo di Fatturazione</h2>
-            <div class="form-group">
-                <label for="billingAddressStreet">Via e numero civico</label>
-                <input type="text" id="billingAddressStreet" name="billingAddressStreet" required>
-            </div>
-            <div class="form-group">
-                <label for="billingAddressCity">Città</label>
-                <input type="text" id="billingAddressCity" name="billingAddressCity" required>
-            </div>
-            <div class="form-group">
-                <label for="billingAddressProvince">Provincia</label>
-                <input type="text" id="billingAddressProvince" name="billingAddressProvince" required>
-            </div>
-            <div class="form-group">
-                <label for="billingAddressZIP">CAP</label>
-                <input type="text" id="billingAddressZIP" name="billingAddressZIP" required>
-            </div>
-            <div class="form-buttons">
-                <button type="button" class="btn" onclick="submitForm('saveBilling')">Salva Indirizzo di Fatturazione</button>
-            </div>
-        </div>
-
-        <div class="form-buttons">
-            <button type="button" class="btn" onclick="submitForm('saveAll')">Salva Tutte le Informazioni</button>
         </div>
     </form>
+
+    <input type="hidden" name="action" value="saveBilling">
+    <input type="hidden" name="fromCheckout" value="${param.fromCheckout}">
+
+    <div class="section">
+        <h2>Indirizzo di Fatturazione</h2>
+        <div class="form-group">
+            <label for="billingAddressStreet">Via e numero civico</label>
+            <input type="text" id="billingAddressStreet" name="billingAddressStreet" required>
+        </div>
+        <div class="form-group">
+            <label for="billingAddressCity">Città</label>
+            <input type="text" id="billingAddressCity" name="billingAddressCity" required>
+        </div>
+        <div class="form-group">
+            <label for="billingAddressProvince">Provincia</label>
+            <input type="text" id="billingAddressProvince" name="billingAddressProvince" required>
+        </div>
+        <div class="form-group">
+            <label for="billingAddressZIP">CAP</label>
+            <input type="text" id="billingAddressZIP" name="billingAddressZIP" required>
+        </div>
+        <div class="form-buttons">
+            <button type="submit" class="btn">Salva Indirizzo di Fatturazione</button>
+        </div>
+    </div>
 
     <% if ("true".equals(fromCheckout)) { %>
     <form action="Checkout.jsp" method="get" style="margin-top: 20px;">
@@ -212,13 +215,6 @@
     </form>
     <% } %>
 </div>
-
-<script>
-    function submitForm(action) {
-        document.getElementById('formAction').value = action;
-        document.getElementById('mainForm').submit();
-    }
-</script>
 
 </body>
 </html>

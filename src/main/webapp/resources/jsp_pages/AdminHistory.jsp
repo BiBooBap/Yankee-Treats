@@ -19,7 +19,10 @@
 <div class="order">
     <h2>ID dell'ordine: <%= order.getOrderId() %></h2>
     <p>Codice utente: <%= order.getUserCode() %></p>
+    <% if(order.getUserName() != null) { %>
     <p>Username: <%= order.getUserName() %></p>
+    <% } else  %>
+    <p>Utente non registrato</p>
     <p>Email: <%= order.getUserEmail() %></p>
     <p>Data: <%= order.getOrderDate() %></p>
     <p>Costo totale: $<%= String.format("%.2f", order.getTotalCost()) %></p>

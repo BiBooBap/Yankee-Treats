@@ -36,7 +36,7 @@ public class GuestControl extends HttpServlet {
         Context envCtx = (Context) initCtx.lookup("java:comp/env");
         DataSource ds = (DataSource) envCtx.lookup("jdbc/storage");
 
-        String query = "INSERT INTO users (email, user_type) VALUES (?, 'guest')";
+        String query = "INSERT INTO users (email, user_type, password) VALUES (?, 'guest','guest')";
         try (Connection conn = ds.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 

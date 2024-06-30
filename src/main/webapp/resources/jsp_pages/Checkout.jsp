@@ -6,14 +6,14 @@
 <%
     String userE = (String) request.getSession().getAttribute("userEmail");
     String userType= (String) request.getSession().getAttribute("userType");
-    boolean userLoggedIn = userE != null && !userE.isEmpty();
+    boolean log = userE != null && !userE.isEmpty();
 
     int userCode;
     ArrayList<ArrayList<String>> billingAddresses = null;
     ArrayList<ArrayList<String>> deliveryAddresses= null;
     ArrayList<ArrayList<String>> paymentMethods= null;
 
-    if(userLoggedIn) {
+    if(log) {
         userCode = UtilDS.getUserCodebyEmail(userE);
         request.getSession().setAttribute("userCode",userCode);
         billingAddresses = UtilDS.showBillingAddress(userCode);
@@ -21,14 +21,14 @@
         paymentMethods = UtilDS.showPaymentMethods(userCode);
     }
 
-    Cart cart = (Cart) request.getSession().getAttribute("cart");
-    if (cart == null) {
-        cart = new Cart();
-        request.getSession().setAttribute("cart", cart);
+    Cart s = (Cart) request.getSession().getAttribute("s");
+    if (s == null) {
+        s = new Cart();
+        request.getSession().setAttribute("s", s);
     }
 
 
-    double cartTotal = cart.getCartTotalPrice();
+    double cartTotal = s.getCartTotalPrice();
     request.getSession().setAttribute("cartTotal",cartTotal);
 %>
 
@@ -59,7 +59,7 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 800px;
             margin: 40px auto;
             padding: 20px;
             background-color: #ffffff;
@@ -67,7 +67,7 @@
             border-radius: 8px;
         }
 
-        h1, h2, h3 {
+        h1, h2 {
             color: var(--secondary-color);
             margin-bottom: 20px;
         }
@@ -79,25 +79,26 @@
             border-radius: 5px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        .form-group {
             margin-bottom: 20px;
         }
 
-        th, td {
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        select {
+            width: 100%;
             padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        th {
-            background-color: var(--secondary-color);
-            color: #ffffff;
-        }
-
-        .select-radio {
-            margin-right: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 16px;
         }
 
         .btn {
@@ -125,66 +126,20 @@
             background-color: #34495e;
         }
 
-        .btn-container {
+        .form-buttons {
             margin-top: 20px;
-            text-align: right;
-        }
-
-        .guest-area {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-
-        .guest-form {
-            max-width: 400px;
-            margin: auto;
-        }
-
-        .guest-form label {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .guest-form input[type="email"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        .error-message {
-            color: var(--error-color);
-            margin-top: 5px;
-        }
-
-        .no-data-message {
-            font-style: italic;
-            color: var(--text-color);
-        }
-
-        .add-info-link {
-            display: inline-block;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        .add-info-link:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
 <body>
+
+<%@ include file="Header.jsp" %>
+
+
 <div class="container">
     <h1>Checkout</h1>
 
-    <% if (!userLoggedIn) { %>
+    <% if (!log) { %>
     <div class="guest-area">
         <h2>Informazioni Obbligatorie</h2>
         <form id="guestForm" action="${pageContext.request.contextPath}/Guest" method="post" class="guest-form">
