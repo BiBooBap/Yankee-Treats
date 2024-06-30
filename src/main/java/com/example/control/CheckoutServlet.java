@@ -307,7 +307,6 @@ public class CheckoutServlet extends HttpServlet {
                  PreparedStatement deactivateStmt = conn.prepareStatement(deactivateSql)) {
 
                 for (CartItem item : cart.getCart()) {
-                    item.reduceQuantity();
                     stmt.setInt(1, orderId);
                     stmt.setInt(2, item.getId());
                     stmt.setInt(3, item.getQuantityCart());
@@ -339,4 +338,3 @@ public class CheckoutServlet extends HttpServlet {
     }
 
 }
-

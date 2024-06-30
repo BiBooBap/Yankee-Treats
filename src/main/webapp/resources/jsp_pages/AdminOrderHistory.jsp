@@ -47,7 +47,7 @@
             <tr>
                 <td><%= item.getProductCode() %></td>
                 <td><%= item.getProductName() %></td>
-                <td><%= item.getQuantity()+1 %></td>
+                <td><%= item.getQuantity()%></td>
                 <td>$<%= String.format("%.2f", item.getPrice()) %></td>
             </tr>
             <%
