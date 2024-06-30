@@ -148,6 +148,37 @@ public class InsertProductAdmin extends HttpServlet {
                         message = "Operazione fallita!";
                     }
                 }
+
+                if ("updateFeaturesP".equals(action)) {
+                    int id = Integer.parseInt(request.getParameter("id"));
+
+                    byte newBestseller = (byte) (request.getParameter("newBestseller") != null ? 1 : 0);
+                    byte newDolce = (byte) (request.getParameter("newDolce") != null ? 1 : 0);
+                    byte newSalato = (byte) (request.getParameter("newSalato") != null ? 1 : 0);
+                    byte newBevanda = (byte) (request.getParameter("newBevanda") != null ? 1 : 0);
+                    byte newTrend = (byte) (request.getParameter("newTrend") != null ? 1 : 0);
+                    byte newNovita = (byte) (request.getParameter("newNovita") != null ? 1 : 0);
+                    byte newOfferta = (byte) (request.getParameter("newOfferta") != null ? 1 : 0);
+                    byte newBundle = (byte) (request.getParameter("newBundle") != null ? 1 : 0);
+                    byte newB2B = (byte) (request.getParameter("newB2B") != null ? 1 : 0);
+
+
+                    if ( ProductDAO.doUpdateFeatures(id, newBestseller, newDolce, newSalato, newBevanda, newTrend, newNovita, newOfferta, newBundle, newB2B)) {
+                        message = "Operazione riuscita con successo!";
+                    } else {
+                        message = "Operazione fallita!";
+                    }
+                }
+
+                if ("delete".equals(action)) {
+                    handleDelete(request, response);
+                    return;
+                }
+
+                if ("readd".equals(action)) {
+                    handleReadd(request, response);
+                    return;
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -156,4 +187,35 @@ public class InsertProductAdmin extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/DBInterface.jsp");
         request.getSession().setAttribute("message", message);
     }
+
+    private void handleDelete(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        int code = Integer.parseInt(request.getParameter("code"));
+        boolean success = ProductDAO.doDelete(code);
+        String message = success ? "Prodotto eliminato con successo." : "Errore durante l'eliminazione del prodotto.";
+        request.getSession().setAttribute("message", message);
+        response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/DBInterface.jsp");
+    }
+
+    private void handleReadd(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        int code = Integer.parseInt(request.getParameter("code"));
+        boolean success = ProductDAO.addActive(code);
+        String message = success ? "Prodotto riaggiunto con successo." : "Errore durante la riaggiunta del prodotto.";
+        request.getSession().setAttribute("message", message);
+        response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/DBInterface.jsp");
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+        if ("confirmDelete".equals(action)) {
+            int code = Integer.parseInt(request.getParameter("code"));
+            request.setAttribute("deleteCode", code);
+            request.getRequestDispatcher("/resources/jsp_pages/confirmDelete.jsp").forward(request, response);
+        } else {
+            response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/DBInterface.jsp");
+        }
+    }
 }
+
+
+
+
