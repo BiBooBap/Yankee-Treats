@@ -151,7 +151,7 @@
     </div>
 
     <div class="section billing-info">
-        <h2 class="section-title">Informazioni di Fatturazione</h2>
+        <h2 class="section-title">Indirizzi di Fatturazione</h2>
         <form action="${pageContext.request.contextPath}/Delete" method="post">
             <table>
                 <thead>
@@ -211,7 +211,7 @@
                     for (String[] method : paymentMethods) { %>
                 <tr>
                     <td><input type="radio" class="select-radio" name="selectedAddressId" value="<%= method[0] %>"></td>
-                    <td><%= method[2] %></td>
+                    <td>**** **** **** <%= method[2].substring(12, 16) %></td>
                     <td><%= method[3] %></td>
                     <td><%= method[4].substring(0, 4) %></td>
                     <td><%= method[5] %></td>

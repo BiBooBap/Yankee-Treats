@@ -163,6 +163,10 @@
             margin-top: 20px;
         }
 
+        .guest-area{
+            padding: 25px 40px;
+        }
+
         #paypal-button-container {
             max-width: 250px;
             margin-top: 20px;
@@ -190,36 +194,6 @@
     </div>
     <% } else { %>
     <form id="checkoutForm" action="${pageContext.request.contextPath}/Checkout" method="post" onsubmit="return validateForm()">
-        <div class="section">
-            <h2>Indirizzo di Fatturazione</h2>
-            <% if (billingAddresses != null && !billingAddresses.isEmpty()) { %>
-            <table>
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>Via</th>
-                    <th>Citt&agrave;</th>
-                    <th>Provincia</th>
-                    <th>CAP</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% for (ArrayList<String> address : billingAddresses) { %>
-                <tr>
-                    <td><input type="radio" class="select-radio" name="selectedAddressId" value="<%= address.get(0) %>"></td>
-                    <td><%= address.get(2) %></td>
-                    <td><%= address.get(3) %></td>
-                    <td><%= address.get(4) %></td>
-                    <td><%= address.get(5) %></td>
-                </tr>
-                <% } %>
-                </tbody>
-            </table>
-            <% } else { %>
-            <p class="no-data-message">Nessun indirizzo di fatturazione disponibile.</p>
-            <a href="UserData.jsp?fromCheckout=true" class="add-info-link">Inserisci indirizzo di fatturazione</a>
-            <% } %>
-        </div>
 
         <div class="section">
             <h2>Indirizzo di Consegna</h2>
@@ -255,6 +229,37 @@
         </div>
 
         <div class="section">
+            <h2>Indirizzo di Fatturazione</h2>
+            <% if (billingAddresses != null && !billingAddresses.isEmpty()) { %>
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Via</th>
+                    <th>Citt&agrave;</th>
+                    <th>Provincia</th>
+                    <th>CAP</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for (ArrayList<String> address : billingAddresses) { %>
+                <tr>
+                    <td><input type="radio" class="select-radio" name="selectedAddressId" value="<%= address.get(0) %>"></td>
+                    <td><%= address.get(2) %></td>
+                    <td><%= address.get(3) %></td>
+                    <td><%= address.get(4) %></td>
+                    <td><%= address.get(5) %></td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+            <% } else { %>
+            <p class="no-data-message">Nessun indirizzo di fatturazione disponibile.</p>
+            <a href="UserData.jsp?fromCheckout=true" class="add-info-link">Inserisci indirizzo di fatturazione</a>
+            <% } %>
+        </div>
+
+        <div class="section">
             <h2>Metodo di Pagamento</h2>
             <% if (paymentMethods != null && !paymentMethods.isEmpty()) { %>
             <table>
@@ -270,7 +275,7 @@
                 <% for (ArrayList<String> method : paymentMethods) { %>
                 <tr>
                     <td><input type="radio" class="select-radio" name="selectedPaymentMethodId" value="<%= method.get(0) %>"></td>
-                    <td><%= method.get(2) %></td>
+                    <td>**** **** **** <%= method.get(2).substring(12, 16) %></td>
                     <td><%= method.get(3) %>/<%= method.get(4) %></td>
                     <td><%= method.get(6) %></td>
                 </tr>

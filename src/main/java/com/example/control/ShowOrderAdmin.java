@@ -17,6 +17,6 @@ public class ShowOrderAdmin extends HttpServlet {
             throws ServletException, IOException {
         ArrayList<OrderBeans> orders = UtilDS.showAllOrders();
         request.getSession().setAttribute("orders", orders);
-        request.getRequestDispatcher("/resources/jsp_pages/AdminHistory.jsp").forward(request, response);
+        request.getRequestDispatcher("/resources/jsp_pages/AdminOrderHistory.jsp").forward(request, response);
     }
 }

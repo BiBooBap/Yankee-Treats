@@ -182,6 +182,20 @@ body {
     font-style: italic;
 }
 
+.product-card-link {
+    text-decoration: none;
+}
+
+.product-card-link:hover {
+    text-decoration: none;
+}
+
+.product-card-link .product-name,
+.product-card-link .product-description,
+.product-card-link .product-price {
+    text-decoration: none;
+}
+
 
 
 
