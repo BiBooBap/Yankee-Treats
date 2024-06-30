@@ -102,11 +102,11 @@ body::-webkit-scrollbar{
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: bold;
     text-transform: uppercase;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    pointer-events: none; /* Assicura che il badge non risponda agli eventi del mouse */
+    pointer-events: none;
 }
 
 .offer {
@@ -121,11 +121,11 @@ body::-webkit-scrollbar{
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    font-size: 11px; /* Ridotto il font-size per far stare il testo nel badge */
+    font-size: 10px;
     font-weight: bold;
     text-transform: uppercase;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    pointer-events: none; /* Assicura che il badge non risponda agli eventi del mouse */
+    pointer-events: none;
 }
 
 

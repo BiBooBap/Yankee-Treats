@@ -49,7 +49,7 @@
             <div class="new">Nuovo!</div>
             <% } %>
             <% if (prod.isOfferta()) { %>
-            <div class="offer">Offerta!</div>
+            <div class="offer" style="font-size: 12px">Offerta!</div>
             <% } %>
         </div>
         <div class="prod-info">
