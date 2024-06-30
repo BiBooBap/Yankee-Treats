@@ -56,6 +56,8 @@ function checkEmail() {
 
 
 function validateForm() {
+    let isValid = true;
+    event.preventDefault();
 
     // Funzione per validare l'email
     function validateEmail(email) {
@@ -65,8 +67,32 @@ function validateForm() {
 
     // Funzione per validare la password
     function validatePassword(password) {
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
-        return passwordRegex.test(password);
+        if (password.length < 8) {
+            return false;
+        }
+
+        // Verifica la presenza di almeno una lettera maiuscola
+        if (!/[A-Z]/.test(password)) {
+            return false;
+        }
+
+        // Verifica la presenza di almeno una lettera minuscola
+        if (!/[a-z]/.test(password)) {
+            return false;
+        }
+
+        // Verifica la presenza di almeno un carattere speciale
+        if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+            return false;
+        }
+
+        // Verifica che tutti i caratteri siano validi
+        if (!/^[A-Za-z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+$/.test(password)) {
+            return false;
+        }
+
+        // Se tutte le verifiche sono passate, la password è valida
+        return true;
     }
 
     // Funzione per validare la partita IVA italiana
@@ -110,8 +136,6 @@ function validateForm() {
 
         return true;
     }
-
-    let isValid = true;
 
     let userType = document.querySelector('select[name="tipo_utente"]').value;
     if (userType === 'venditore') {
@@ -171,15 +195,11 @@ function validateForm() {
         document.getElementById('password-error').style.display = 'none';
     }
 
-    if (!isValid) {
-        document.getElementById('submit-btn').disabled = true;
-    } else {
-        document.getElementById('submit-btn').disabled = false;
+    if (isValid) {
+        event.target.submit();
     }
+
+    return isValid;
 }
 
-document.querySelector("form").addEventListener("submit", function(event) {
-    if (!validateForm()) {
-        event.preventDefault();
-    }
-});
+document.querySelector("form").addEventListener("submit", validateForm);
