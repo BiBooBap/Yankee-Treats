@@ -8,6 +8,8 @@
 
 </head>
 <body>
+<%@ include file="Header.jsp" %>
+
 <h1>Storico ordini</h1>
 <%
     request.getSession().setAttribute("lastOrder", null);

@@ -11,34 +11,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dettagli Ordine</title>
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: #ecf0f1;
+            --text-color: #34495e;
+            --border-color: #bdc3c7;
+            --success-color: #2ecc71;
+            --error-color: #e74c3c;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
             margin: 0;
             padding: 0;
         }
 
         .container {
-            width: 80%;
-            margin: 20px auto;
-        }
-
-        .section {
-            margin-bottom: 40px;
-        }
-
-        h2 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .address, .billing-info, .payment-methods {
-            background-color: #f4f4f4;
+            max-width: 1000px;
+            margin: 40px auto;
             padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
 
-        .section-title {
-            margin-bottom: 10px;
+        h2 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--secondary-color);
+            color: #ffffff;
+        }
+
+        .select-radio {
+            margin-right: 10px;
+        }
+
+        button[type="submit"] {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9;
         }
 
         .hidden {
@@ -47,6 +95,7 @@
     </style>
 </head>
 <body>
+<%@ include file="Header.jsp" %>
 <div class="container">
     <div class="section address">
         <h2 class="section-title">Indirizzi di Consegna</h2>
