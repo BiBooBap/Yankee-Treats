@@ -66,5 +66,6 @@
     <a href="${pageContext.request.contextPath}/Download" class="btn btn-download">Scarica Fattura</a>
     <% } %>
 </div>
+
 </body>
 </html>
