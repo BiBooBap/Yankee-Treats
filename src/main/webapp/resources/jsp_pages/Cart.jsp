@@ -67,7 +67,7 @@
     </div>
 
     <div class="buttons">
-        <div class="total">Totale: <%= cart.getCartTotalPrice() %> &euro;</div>
+        <div class="total">Totale: <span style="color: #4caf50;"> <%= cart.getCartTotalPrice() %> &euro;</span></div>
 
 
         <a href="${pageContext.request.contextPath}/ProductView.jsp"><button>
@@ -81,9 +81,7 @@
         <a href="${pageContext.request.contextPath}/resources/jsp_pages/Checkout.jsp">
                 <% } else { %>
                     <a href="${pageContext.request.contextPath}/resources/jsp_pages/Login.jsp?fromCart=true">
-                <% } %><button style="background-color: ">
-                    Checkout
-        </button></a>
+                <% } %><button>Checkout</button></a>
     </div>
 </div>
 
