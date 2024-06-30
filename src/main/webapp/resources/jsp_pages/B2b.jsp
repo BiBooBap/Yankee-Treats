@@ -32,6 +32,7 @@
     <link href="${pageContext.request.contextPath}/resources/css/B2bStyle.css" rel="stylesheet" type="text/css">
     <title>B2B - Yankee Treats</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="${pageContext.request.contextPath}/resources/scripts/B2b.js"></script>
 </head>
 <body>
 <%@ include file="Header.jsp" %>
@@ -80,31 +81,6 @@
         <span>- Giulia Neri, Proprietaria di Snack Corner</span>
     </div>
 </section>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const cards = document.querySelectorAll('.product-card');
-
-        cards.forEach(card => {
-            // Price animation
-            const priceElement = card.querySelector('.price-value');
-            const originalPrice = parseFloat(card.dataset.price);
-            let currentPrice = 0;
-
-            const animatePrice = () => {
-                if (currentPrice < originalPrice) {
-                    currentPrice += 0.01;
-                    priceElement.textContent = currentPrice.toFixed(2);
-                    requestAnimationFrame(animatePrice);
-                } else {
-                    priceElement.textContent = originalPrice.toFixed(2);
-                }
-            };
-
-            animatePrice();
-        });
-    });
-</script>
 
 <%@ include file="Footer.jsp" %>
 </body>

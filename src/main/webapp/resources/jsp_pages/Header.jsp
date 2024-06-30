@@ -71,6 +71,7 @@
         <span class="totalQuantity"><%= cart.getTotalItemCount() %></span>
     </div>
 </div>
+</body>
 
 <script>
     let header = document.querySelector(".header");
@@ -134,9 +135,6 @@
     dropdown.addEventListener("click", function() {
         dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
     });
-
-
 </script>
-</body>
 </html>
 

@@ -32,6 +32,7 @@
 	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 	<link href="${pageContext.request.contextPath}/resources/css/ProductStyle.css" rel="stylesheet" type="text/css">
 	<title>Catalogo</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -56,7 +57,6 @@
 	<div id="searchResults" class="search-results"></div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 	let originalProducts = null;
 

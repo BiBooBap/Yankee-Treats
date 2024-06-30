@@ -8,49 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conferma Pagamento</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
-            width: 50%;
-            margin: auto;
-        }
-
-        .details {
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-        }
-
-        .details h2 {
-            margin-top: 0;
-        }
-
-        .details ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .details ul li {
-            margin-bottom: 10px;
-        }
-
-        .btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/PaymentConfirmation.css" type="text/css"/>
 </head>
 <body>
 <div class="container">
