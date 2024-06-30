@@ -1,3 +1,4 @@
+
 <%@ page language="java"%>
 <%@ page import="java.util.*, com.example.model.*, com.example.control.*"%>
 <%@ page import="java.sql.SQLException" %>
@@ -5,10 +6,11 @@
 
 <%
     String userE = (String) request.getSession().getAttribute("userEmail");
+
     String userType= (String) request.getSession().getAttribute("userType");
     boolean log = userE != null && !userE.isEmpty();
 
-    int userCode;
+    int userCode=0;
     ArrayList<ArrayList<String>> billingAddresses = null;
     ArrayList<ArrayList<String>> deliveryAddresses= null;
     ArrayList<ArrayList<String>> paymentMethods= null;
@@ -21,12 +23,12 @@
         paymentMethods = UtilDS.showPaymentMethods(userCode);
     }
 
-    Cart s = (Cart) request.getSession().getAttribute("s");
+    Cart s = (Cart) request.getSession().getAttribute("cart");
     if (s == null) {
+        System.out.println("carrello nullo");
         s = new Cart();
         request.getSession().setAttribute("s", s);
     }
-
 
     double cartTotal = s.getCartTotalPrice();
     request.getSession().setAttribute("cartTotal",cartTotal);
@@ -162,13 +164,19 @@
         .btn-container {
             margin-top: 20px;
         }
+
+        #paypal-button-container {
+            max-width: 250px;
+            margin-top: 20px;
+        }
     </style>
+    <script src="https://www.paypal.com/sdk/js?client-id=AWlk6FZqd56NI4ZCsRLyt6cI_OBH48dkwWT_byq9uaKFDyoFxKcwvVRP5hFXIp7wilDvlTpAcvZ9cVAP&currency=EUR&components=buttons"></script>
 </head>
 <body>
 
+<%if(!userType.equals("guest")){%>
 <%@ include file="Header.jsp" %>
-
-
+<%}%>
 <div class="container">
     <h1>Checkout</h1>
 
@@ -275,16 +283,16 @@
             <p class="no-data-message">Nessun metodo di pagamento disponibile.</p>
             <a href="UserData.jsp?fromCheckout=true" class="add-info-link">Inserisci metodo di pagamento</a>
             <% } %>
+            <div id="paypal-button-container" class="btn-container"></div>
         </div>
 
         <div class="btn-container">
-            <button type="submit" class="btn">Conferma Ordine</button>
+            <button id="conferma" type="submit" class="btn">Conferma Ordine</button>
         </div>
 
         <div class="btn-container">
             <a href="UserData.jsp?fromCheckout=true" class="btn btn-secondary">Inserisci Nuove Informazioni</a>
         </div>
-
     </form>
     <% } %>
 </div>
@@ -329,6 +337,68 @@
             return false;
         }
         return true;
+    }
+
+
+    if (document.getElementById('paypal-button-container')) {
+        paypal.Buttons({
+            fundingSource: paypal.FUNDING.PAYPAL,
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '<%= cartTotal %>'
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    // Invia i dati del pagamento alla servlet
+                    var form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '${pageContext.request.contextPath}/PayPal';
+
+                    var userCode = document.createElement('input');
+                    userCode.type = 'hidden';
+                    userCode.name = 'userCode';
+                    userCode.value = '<%= userCode %>';
+                    form.appendChild(userCode);
+
+                    var cardNumber = document.createElement('input');
+                    cardNumber.type = 'hidden';
+                    cardNumber.name = 'cardNumber';
+                    cardNumber.value = details.purchase_units[0].payments.captures[0].id; // Utilizziamo l'ID della transazione come identificatore unico
+                    form.appendChild(cardNumber);
+
+                    var expiryMonth = document.createElement('input');
+                    expiryMonth.type = 'hidden';
+                    expiryMonth.name = 'expiryMonth';
+                    expiryMonth.value = '11'
+                    form.appendChild(expiryMonth);
+
+                    var expiryYear = document.createElement('input');
+                    expiryYear.type = 'hidden';
+                    expiryYear.name = 'expiryYear';
+                    expiryYear.value = '2030'; // Valore fittizio
+                    form.appendChild(expiryYear);
+
+                    var cardholderName = document.createElement('input');
+                    cardholderName.type = 'hidden';
+                    cardholderName.name = 'cardholderName';
+                    cardholderName.value = details.payer.name.given_name + ' ' + details.payer.name.surname;
+                    form.appendChild(cardholderName);
+
+                    document.body.appendChild(form);
+                    form.submit();
+                });
+            },
+            onError: function(err) {
+                console.error('PayPal error:', err);
+                alert('An error occurred during the payment process: ' + err.message);
+            }
+        }).render('#paypal-button-container');
+
     }
 </script>
 </body>
