@@ -268,20 +268,6 @@ body::-webkit-scrollbar{
     border: none;
     padding: 1rem;
     border-radius: 0 1rem 1rem 0;
-
-    &:hover {
-        background-color: #2ba8fb;
-        box-shadow: 0 0 20px #6fc5ff50;
-        transition: linear 0.5s;
-        transform: scale(1.1);
-    }
-
-    &:active {
-        background-color: #3d94cf;
-        transition: all 0.25s;
-        box-shadow: none;
-        transform: scale(0.98);
-    }
 }
 
 
@@ -326,11 +312,9 @@ body::-webkit-scrollbar{
     right: 0;
     z-index: 1000;
     background-color: white;
-    border: 1px solid #ddd;
-    border-top: none;
     max-height: 400px;
     overflow-y: auto;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
 }
 
 .search-results .container {
