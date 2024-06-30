@@ -215,7 +215,3 @@ public class InsertProductAdmin extends HttpServlet {
         }
     }
 }
-
-
-
-

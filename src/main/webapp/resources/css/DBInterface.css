@@ -125,10 +125,16 @@ form {
 }
 
 .btn-edit, .btn-delete, .btn-readd {
-    padding: 5px 10px;
+    display: inline-block;
+    padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    margin: 2px;
+    transition: background-color 0.3s ease;
 }
 
 .btn-edit {
@@ -152,11 +158,16 @@ form {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
-    padding: 20px;
+    padding: 15px 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     z-index: 1000;
     display: none;
+}
+
+.product-actions form {
+    margin: 0;
+    padding: 0;
 }
 
 #alert {
@@ -178,6 +189,41 @@ form {
     padding: 20px;
     border-radius: 8px;
     display: none;
+}
+
+.btn-save, .btn-cancel {
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    border: none;
+}
+
+.btn-save {
+    background-color: var(--success-color);
+    color: #fff;
+}
+
+.btn-cancel {
+    background-color: var(--error-color);
+    color: #fff;
+}
+
+.popup-form {
+    width: 300px;
+    max-width: 90%;
+}
+
+.popup-form input[type="text"],
+.popup-form input[type="number"] {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.popup-form .checkbox-group {
+    max-height: 200px;
+    overflow-y: auto;
 }
 
 @media (max-width: 768px) {
