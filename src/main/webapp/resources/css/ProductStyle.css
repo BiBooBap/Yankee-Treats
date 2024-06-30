@@ -282,7 +282,7 @@ body::-webkit-scrollbar{
 
 .soda-text {
     position: relative;
-    font-size: 68px;
+    font-size: clamp(2rem, 10vw, 4rem);
     font-weight: bold;
     font-family: 'Poppins', sans-serif;
     color: #2ba8fb; /* Colore marrone per simulare una cola */
