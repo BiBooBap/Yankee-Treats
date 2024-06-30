@@ -233,6 +233,33 @@ public class ProductDAO {
         }
     }
 
+    public static boolean doUpdateFeatures(int code, byte bestseller, byte dolce, byte salato, byte bevanda,
+                                           byte trend, byte novita, byte offerta, byte bundle, byte b2b) throws SQLException {
+        String updateSQL = "UPDATE " + TABLE_NAME + " SET bestseller = ?, dolce = ?, salato = ?, bevanda = ?, trend = ?, novita = ?, offerta = ?, bundle = ?, b2b = ? WHERE code = ?";
+        try (Connection connection = ds.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+
+            connection.setAutoCommit(false);
+            preparedStatement.setByte(1, bestseller);
+            preparedStatement.setByte(2, dolce);
+            preparedStatement.setByte(3, salato);
+            preparedStatement.setByte(4, bevanda);
+            preparedStatement.setByte(5, trend);
+            preparedStatement.setByte(6, novita);
+            preparedStatement.setByte(7, offerta);
+            preparedStatement.setByte(8, bundle);
+            preparedStatement.setByte(9, b2b);
+            preparedStatement.setInt(10, code);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            connection.commit();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            System.out.println("Error:" + e.getMessage());
+            return false;
+        }
+    }
+
 
 
 }

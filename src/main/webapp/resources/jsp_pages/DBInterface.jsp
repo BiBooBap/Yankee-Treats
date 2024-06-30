@@ -149,10 +149,16 @@
         }
 
         .btn-edit, .btn-delete, .btn-readd {
-            padding: 5px 10px;
+            display: inline-block;
+            padding: 10px 20px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 14px;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            margin: 2px;
+            transition: background-color 0.3s ease;
         }
 
         .btn-edit {
@@ -176,11 +182,17 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: #fff;
-            padding: 20px;
+            padding: 15px 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             z-index: 1000;
             display: none;
+        }
+
+        .product-actions form {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
         }
 
         #alert {
@@ -202,6 +214,41 @@
             padding: 20px;
             border-radius: 8px;
             display: none;
+        }
+
+        .btn-save, .btn-cancel {
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            border: none;
+        }
+
+        .btn-save {
+            background-color: var(--success-color);
+            color: #fff;
+        }
+
+        .btn-cancel {
+            background-color: var(--error-color);
+            color: #fff;
+        }
+
+        .popup-form {
+            width: 300px;
+            max-width: 90%;
+        }
+
+        .popup-form input[type="text"],
+        .popup-form input[type="number"] {
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        .popup-form .checkbox-group {
+            max-height: 200px;
+            overflow-y: auto;
         }
 
         @media (max-width: 768px) {
@@ -339,19 +386,28 @@
                 <button class="btn btn-edit" onclick="toggleForm('nameForm_<%= bean.getCode() %>')">Modifica Nome</button>
                 <button class="btn btn-edit" onclick="toggleForm('descriptionForm_<%= bean.getCode() %>')">Modifica Descrizione</button>
                 <button class="btn btn-edit" onclick="toggleForm('priceForm_<%= bean.getCode() %>')">Modifica Prezzo</button>
-                <% if(bean.isActive()){%>
-                <a href="${pageContext.request.contextPath}/ProductDelete?code=<%=bean.getCode()%>&fromInsertProduct=true"> <button class="btn btn-delete">Elimina</button> </a>
-                <%} else {%>
-                <a href="${pageContext.request.contextPath}/ProductAdd?code=<%=bean.getCode()%>"> <button class="btn btn-readd">Riaggiungi</button> </a>
-                <%}%>
+                <button class="btn btn-edit" onclick="toggleForm('featuresForm_<%= bean.getCode() %>')">Modifica Caratteristiche</button>
+                <% if(bean.isActive()) { %>
+                <form action="${pageContext.request.contextPath}/InsertProduct" method="get" style="display: inline;">
+                    <input type="hidden" name="action" value="confirmDelete">
+                    <input type="hidden" name="code" value="<%=bean.getCode()%>">
+                    <button type="submit" class="btn btn-delete">Elimina</button>
+                </form>
+                <% } else { %>
+                <form action="${pageContext.request.contextPath}/InsertProduct" method="post" style="display: inline;">
+                    <input type="hidden" name="action" value="readd">
+                    <input type="hidden" name="code" value="<%=bean.getCode()%>">
+                    <button type="submit" class="btn btn-readd">Riaggiungi</button>
+                </form>
+                <% } %>
                 <!-- Form per modificare la quantità -->
                 <form id="quantityForm_<%= bean.getCode() %>" class="popup-form" method="post" action="${pageContext.request.contextPath}/InsertProduct">
                     <input type="hidden" name="action" value="updateqP">
                     <input type="hidden" name="id" value="<%=bean.getCode()%>">
                     <label for="newQ_<%= bean.getCode() %>">Nuova Quantità:</label>
                     <input type="number" id="newQ_<%= bean.getCode() %>" name="newQ" required>
-                    <button type="submit">Salva</button>
-                    <button type="button" onclick="toggleForm('quantityForm_<%= bean.getCode() %>')">Annulla</button>
+                    <button type="submit" class="btn-save">Salva</button>
+                    <button type="button" class="btn-cancel" onclick="toggleForm('quantityForm_<%= bean.getCode() %>')">Annulla</button>
                 </form>
 
                 <!-- Form per modificare il nome -->
@@ -360,8 +416,8 @@
                     <input type="hidden" name="id" value="<%=bean.getCode()%>">
                     <label for="newN_<%= bean.getCode() %>">Nuovo Nome:</label>
                     <input type="text" id="newN_<%= bean.getCode() %>" name="newN" required>
-                    <button type="submit">Salva</button>
-                    <button type="button" onclick="toggleForm('nameForm_<%= bean.getCode() %>')">Annulla</button>
+                    <button type="submit" class="btn-save">Salva</button>
+                    <button type="button" class="btn-cancel" onclick="toggleForm('nameForm_<%= bean.getCode() %>')">Annulla</button>
                 </form>
 
                 <!-- Form per modificare la descrizione -->
@@ -370,8 +426,8 @@
                     <input type="hidden" name="id" value="<%=bean.getCode()%>">
                     <label for="newD_<%= bean.getCode() %>">Nuova Descrizione:</label>
                     <input type="text" id="newD_<%= bean.getCode() %>" name="newD" required>
-                    <button type="submit">Salva</button>
-                    <button type="button" onclick="toggleForm('descriptionForm_<%= bean.getCode() %>')">Annulla</button>
+                    <button type="submit" class="btn-save">Salva</button>
+                    <button type="button" class="btn-cancel" onclick="toggleForm('descriptionForm_<%= bean.getCode() %>')">Annulla</button>
                 </form>
 
                 <!-- Form per modificare il prezzo -->
@@ -380,9 +436,57 @@
                     <input type="hidden" name="id" value="<%=bean.getCode()%>">
                     <label for="newP_<%= bean.getCode() %>">Nuovo Prezzo:</label>
                     <input type="number" id="newP_<%= bean.getCode() %>" name="newP" required>
-                    <button type="submit">Salva</button>
-                    <button type="button" onclick="toggleForm('priceForm_<%= bean.getCode() %>')">Annulla</button>
+                    <button type="submit" class="btn-save">Salva</button>
+                    <button type="button" class="btn-cancel" onclick="toggleForm('priceForm_<%= bean.getCode() %>')">Annulla</button>
                 </form>
+
+                <!-- Form per modificare le caratteristiche -->
+                <form id="featuresForm_<%= bean.getCode() %>" class="popup-form" method="post" action="${pageContext.request.contextPath}/InsertProduct">
+                    <input type="hidden" name="action" value="updateFeaturesP">
+                    <input type="hidden" name="id" value="<%=bean.getCode()%>">
+                    <label for="newFeatures_<%= bean.getCode() %>">Modifica Caratteristiche:</label>
+                    <div class="checkbox-group">
+                        <div>
+                            <input type="checkbox" id="newBestseller_<%= bean.getCode() %>" name="newBestseller" value="1" <%= bean.isBestseller() ? "checked" : "" %> >
+                            <label for="newBestseller_<%= bean.getCode() %>">Bestseller</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="newDolce_<%= bean.getCode() %>" name="newDolce" value="1" <%= bean.isDolce() ? "checked" : "" %> >
+                            <label for="newDolce_<%= bean.getCode() %>">Dolce</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="newSalato_<%= bean.getCode() %>" name="newSalato" value="1" <%= bean.isSalato() ? "checked" : "" %> >
+                            <label for="newSalato_<%= bean.getCode() %>">Salato</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="newBevanda_<%= bean.getCode() %>" name="newBevanda" value="1" <%= bean.isBevanda() ? "checked" : "" %> >
+                            <label for="newBevanda_<%= bean.getCode() %>">Bevanda</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="newTrend_<%= bean.getCode() %>" name="newTrend" value="1" <%= bean.isTrend() ? "checked" : "" %> >
+                            <label for="newTrend_<%= bean.getCode() %>">Trend</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="newNovita_<%= bean.getCode() %>" name="newNovita" value="1" <%= bean.isNovita() ? "checked" : "" %> >
+                            <label for="newNovita_<%= bean.getCode() %>">Novità</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="newOfferta_<%= bean.getCode() %>" name="newOfferta" value="1" <%= bean.isOfferta() ? "checked" : "" %> >
+                            <label for="newOfferta_<%= bean.getCode() %>">Offerta</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="newBundle_<%= bean.getCode() %>" name="newBundle" value="1" <%= bean.isBundle() ? "checked" : "" %> >
+                            <label for="newBundle_<%= bean.getCode() %>">Bundle</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="newB2B_<%= bean.getCode() %>" name="newB2B" value="1" <%= bean.isB2B() ? "checked" : "" %> >
+                            <label for="newB2B_<%= bean.getCode() %>">B2B</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-save">Salva</button>
+                    <button type="button" class="btn-cancel" onclick="toggleForm('featuresForm_<%= bean.getCode() %>')">Annulla</button>
+                </form>
+
             </div>
         </div>
         <% } %>
