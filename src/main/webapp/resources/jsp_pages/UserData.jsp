@@ -19,39 +19,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dati Personali</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
-        @import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: #ecf0f1;
+            --text-color: #34495e;
+            --border-color: #bdc3c7;
+            --success-color: #2ecc71;
+            --error-color: #e74c3c;
+        }
 
         body {
-            font-family: "Varela Round", sans-serif;
-            background-color: white;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 40px auto;
             padding: 20px;
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
-            box-shadow: 10px 10px 20px #d1d1d1, -10px -10px 20px #ffffff;
-            border-radius: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
 
         h1, h2 {
-            color: #2ba8fb;
-            font-family: 'Poppins', sans-serif;
+            color: var(--secondary-color);
             margin-bottom: 20px;
         }
 
         .section {
             margin-bottom: 30px;
             padding: 20px;
-            background-color: rgba(128, 128, 128, 0.13);
-            border-radius: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
         }
 
         .form-group {
@@ -62,7 +67,7 @@
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
-            color: #333;
+            color: var(--text-color);
         }
 
         input[type="text"],
@@ -72,45 +77,69 @@
         select {
             width: 100%;
             padding: 12px;
-            border: none;
-            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
             font-size: 16px;
-            background-color: rgba(128, 128, 128, 0.13);
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: #4caf50;
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 16px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: #45a049;
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
-        }
-
-        .btn-secondary {
-            background-color: #2ba8fb;
-        }
-
-        .btn-secondary:hover {
-            background-color: #1c8ad9;
+            background-color: var(--background-color);
         }
 
         .form-buttons {
             margin-top: 20px;
         }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #34495e;
+        }
+
+        .nav-buttons {
+            margin-bottom: 20px;
+        }
     </style>
+
 </head>
 <body>
+
 <div class="container">
+
+    <% if ( !("true".equals(guest)) && !("true".equals(fromCheckout))) { %>
+    <div class="nav-buttons">
+        <a href="MiddleUserData.jsp" class="btn btn-secondary">Torna indietro</a>
+    </div>
+    <% } %>
+
+    <% if ("true".equals(fromCheckout)) { %>
+    <form action="Checkout.jsp" method="get">
+        <button type="submit" class="btn btn-secondary">Torna al checkout</button>
+    </form>
+    <% } %>
+
+    <% if ("true".equals(guest)) { %>
+    <form action="Checkout.jsp" method="get">
+        <button type="submit" class="btn btn-secondary">Procedi con il checkout</button>
+    </form>
+    <% } %>
+
     <h1>Dati Personali</h1>
 
     <form id="deliveryForm" action="${pageContext.request.contextPath}/SaveAllUserData" method="post">
@@ -146,37 +175,6 @@
     </form>
 
     <form id="paymentForm" action="${pageContext.request.contextPath}/SaveAllUserData" method="post">
-        <input type="hidden" name="action" value="savePayment">
-        <input type="hidden" name="fromCheckout" value="${param.fromCheckout}">
-
-        <div class="section">
-            <h2>Metodo di Pagamento</h2>
-            <div class="form-group">
-                <label for="cardholder_name">Nome Titolare della Carta</label>
-                <input type="text" id="cardholder_name" name="cardholder_name" maxlength="100" required>
-            </div>
-            <div class="form-group">
-                <label for="card_number">Numero della Carta</label>
-                <input type="text" id="card_number" name="card_number" maxlength="20" required>
-            </div>
-            <div class="form-group">
-                <label for="expiry_month">Mese di Scadenza (1-12)</label>
-                <input type="number" id="expiry_month" name="expiry_month" min="1" max="12" required>
-            </div>
-            <div class="form-group">
-                <label for="expiry_year">Anno di Scadenza (YYYY)</label>
-                <input type="number" id="expiry_year" name="expiry_year" min="2024" required>
-            </div>
-            <div class="form-group">
-                <label for="cvv">CVV</label>
-                <input type="text" id="cvv" name="cvv" maxlength="3" required>
-            </div>
-            <div class="form-buttons">
-                <button type="submit" class="btn">Salva Metodo di Pagamento</button>
-            </div>
-        </div>
-    </form>
-
     <input type="hidden" name="action" value="saveBilling">
     <input type="hidden" name="fromCheckout" value="${param.fromCheckout}">
 
@@ -202,19 +200,38 @@
             <button type="submit" class="btn">Salva Indirizzo di Fatturazione</button>
         </div>
     </div>
-
-    <% if ("true".equals(fromCheckout)) { %>
-    <form action="Checkout.jsp" method="get" style="margin-top: 20px;">
-        <button type="submit" class="btn btn-secondary">Torna al checkout</button>
     </form>
-    <% } %>
 
-    <% if ("true".equals(guest)) { %>
-    <form action="Checkout.jsp" method="get" style="margin-top: 20px;">
-        <button type="submit" class="btn btn-secondary">Procedi con il checkout</button>
-    </form>
-    <% } %>
-</div>
+        <form id="paymentForm" action="${pageContext.request.contextPath}/SaveAllUserData" method="post">
+            <input type="hidden" name="action" value="savePayment">
+            <input type="hidden" name="fromCheckout" value="${param.fromCheckout}">
 
+            <div class="section">
+                <h2>Metodo di Pagamento</h2>
+                <div class="form-group">
+                    <label for="cardholder_name">Nome Titolare della Carta</label>
+                    <input type="text" id="cardholder_name" name="cardholder_name" maxlength="100" required>
+                </div>
+                <div class="form-group">
+                    <label for="card_number">Numero della Carta</label>
+                    <input type="text" id="card_number" name="card_number" maxlength="20" required>
+                </div>
+                <div class="form-group">
+                    <label for="expiry_month">Mese di Scadenza (1-12)</label>
+                    <input type="number" id="expiry_month" name="expiry_month" min="1" max="12" required>
+                </div>
+                <div class="form-group">
+                    <label for="expiry_year">Anno di Scadenza (YYYY)</label>
+                    <input type="number" id="expiry_year" name="expiry_year" min="2024" required>
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" name="cvv" maxlength="3" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn">Salva Metodo di Pagamento</button>
+                </div>
+            </div>
+        </form>
 </body>
 </html>

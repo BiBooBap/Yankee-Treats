@@ -38,6 +38,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
+    Checkout.jsp
     <style>
         :root {
             --primary-color: #3498db;
@@ -59,7 +60,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 40px auto;
             padding: 20px;
             background-color: #ffffff;
@@ -79,26 +80,25 @@
             border-radius: 5px;
         }
 
-        .form-group {
+        table {
+            width: 100%;
+            border-collapse: collapse;
             margin-bottom: 20px;
         }
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="number"],
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 16px;
+        th {
+            background-color: var(--secondary-color);
+            color: #ffffff;
+        }
+
+        .select-radio {
+            margin-right: 10px;
         }
 
         .btn {
@@ -126,7 +126,40 @@
             background-color: #34495e;
         }
 
-        .form-buttons {
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: var(--background-color);
+        }
+
+        .no-data-message {
+            color: var(--error-color);
+            font-style: italic;
+        }
+
+        .add-info-link {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .add-info-link:hover {
+            text-decoration: underline;
+        }
+
+        .btn-container {
             margin-top: 20px;
         }
     </style>
@@ -146,7 +179,7 @@
             <label for="email">Inserisci la tua email:</label>
             <input type="email" id="email" name="email" placeholder="Email" required onkeyup="checkEmail()">
             <div id="email-error" class="error-message" style="display: none;"></div>
-            <button type="submit" id="submit-btn" class="btn">Conferma</button>
+            <button type="submit" id="submit-btn" class="btn" style="margin-top: 15px;">Conferma</button>
         </form>
     </div>
     <% } else { %>

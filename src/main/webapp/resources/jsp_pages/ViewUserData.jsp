@@ -72,7 +72,7 @@
             margin-right: 10px;
         }
 
-        button[type="submit"] {
+        .btn {
             display: inline-block;
             background-color: var(--primary-color);
             color: #ffffff;
@@ -85,18 +85,32 @@
             transition: background-color 0.3s ease;
         }
 
-        button[type="submit"]:hover {
+        .btn:hover {
             background-color: #2980b9;
         }
 
-        .hidden {
-            display: none;
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #34495e;
+        }
+
+        .nav-buttons {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
 <%@ include file="Header.jsp" %>
+
 <div class="container">
+
+    <div class="nav-buttons">
+        <a href="MiddleUserData.jsp" class="btn btn-secondary">Torna indietro</a>
+    </div>
+
     <div class="section address">
         <h2 class="section-title">Indirizzi di Consegna</h2>
         <form action="${pageContext.request.contextPath}/Delete" method="post">
@@ -132,7 +146,7 @@
                 </tbody>
             </table>
             <input type="hidden" name="code" value="1">
-            <button type="submit">Elimina</button>
+            <button type="submit" class="btn">Elimina</button>
         </form>
     </div>
 
@@ -169,7 +183,7 @@
                 </tbody>
             </table>
             <input type="hidden" name="code" value="2">
-            <button type="submit">Elimina</button>
+            <button type="submit" class="btn" >Elimina</button>
         </form>
     </div>
 
@@ -208,7 +222,7 @@
                 </tbody>
             </table>
             <input type="hidden" name="code" value="3">
-            <button type="submit">Elimina</button>
+            <button type="submit" class="btn">Elimina</button>
         </form>
     </div>
 </div>

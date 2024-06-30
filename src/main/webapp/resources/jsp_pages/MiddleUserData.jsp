@@ -70,6 +70,14 @@
         .btn:active {
             transform: translateY(1px);
         }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #34495e;
+        }
     </style>
 </head>
 <body>
@@ -79,6 +87,7 @@
     <div class="links">
         <a href="UserData.jsp" class="btn">Inserisci dati personali</a>
         <a href="ViewUserData.jsp" class="btn">Visualizza ed elimina dati</a>
+        <a href="${pageContext.request.contextPath}/ProductView.jsp" class="btn btn-secondary">Torna alla Home</a>
     </div>
 </div>
 </body>
