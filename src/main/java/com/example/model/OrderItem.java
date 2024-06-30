@@ -3,6 +3,17 @@ package com.example.model;
 public class OrderItem {
     private int productCode;
     private String productName;
+
+    private String productDescription;
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
+    }
+
+    public String getProductDescription() {
+        return productDescription;
+    }
+
     private int quantity;
     private double price;
 

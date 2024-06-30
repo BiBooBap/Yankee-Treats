@@ -35,6 +35,7 @@
             <tr>
                 <th>Nome</th>
                 <th>Quantità</th>
+                <th>Descrizione</th>
                 <th>Prezzo</th>
             </tr>
             <%
@@ -45,6 +46,7 @@
             <tr>
                 <td><%= item.getProductName() %></td>
                 <td><%= item.getQuantity()%></td>
+                <td><%= item.getProductDescription()%></td>
                 <td>$<%= String.format("%.2f", item.getPrice()) %></td>
             </tr>
             <%
