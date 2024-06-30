@@ -1,4 +1,3 @@
-
 <%@ page language="java"%>
 <%@ page import="java.util.*, com.example.model.*, com.example.control.*"%>
 <%@ page import="java.sql.SQLException" %>
@@ -40,7 +39,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
-    Checkout.jsp
     <style>
         :root {
             --primary-color: #3498db;
