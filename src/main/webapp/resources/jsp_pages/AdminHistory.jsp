@@ -1,77 +1,65 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.example.model.OrderBeans, com.example.model.PaymentMethod, com.example.model.DeliveryAddress, com.example.model.BillingAddress, java.util.ArrayList" %>
+<%@ page import="java.util.ArrayList, java.util.List, java.util.Map, com.example.model.OrderBeans, com.example.model.OrderItem, com.example.model.UtilDS" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
     <title>Admin Order History</title>
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/OrderHistoryStyle.css" type="text/css"/>
 </head>
 <body>
-<h1>Admin Order History</h1>
+<%@ include file="Header.jsp" %>
 
+<h1>Storico ordini utenti</h1>
 <%
-    ArrayList<OrderBeans> orders = (ArrayList<OrderBeans>)session.getAttribute("orders");
+    ArrayList<OrderBeans> orders = (ArrayList<OrderBeans>) session.getAttribute("orders");
+    if (orders != null && !orders.isEmpty()) {
+        for (OrderBeans order : orders) {
+            List<OrderItem> orderItems = UtilDS.getOrderItems(order.getOrderId());
 %>
+<div class="order">
+    <h2>ID dell'ordine: <%= order.getOrderId() %></h2>
+    <p>Codice utente: <%= order.getUserCode() %></p>
+    <p>Username: <%= order.getUserName() %></p>
+    <p>Email: <%= order.getUserEmail() %></p>
+    <p>Data: <%= order.getOrderDate() %></p>
+    <p>Costo totale: $<%= String.format("%.2f", order.getTotalCost()) %></p>
+    <p>Indirizzo di consegna: <%= order.getDeliveryAddress().getStreet() %>, <%= order.getDeliveryAddress().getCity() %>, <%= order.getDeliveryAddress().getZip() %>, <%= order.getDeliveryAddress().getCountry() %></p>
+    <p>Metodo di pagamento: **** **** **** <%= order.getPaymentMethod().getCardNumber().substring(order.getPaymentMethod().getCardNumber().length() - 4) %></p>
+    <p>Indirizzo di fatturazione: <%= order.getBillingAddress().getStreet() %>, <%= order.getBillingAddress().getCity() %>, <%= order.getBillingAddress().getZip() %>, <%= order.getBillingAddress().getProvince() %></p>
 
-<table>
-    <thead>
-    <tr>
-        <th>Order ID</th>
-        <th>User Code</th>
-        <th>User Name</th>
-        <th>User Email</th>
-        <th>Total Cost</th>
-        <th>Order Date</th>
-        <th>Payment Method</th>
-        <th>Delivery Address</th>
-        <th>Billing Address</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <%
-        if (orders != null && !orders.isEmpty()) {
-            for (OrderBeans order : orders) {
-    %>
-    <tr>
-        <td><%= order.getOrderId() %></td>
-        <td><%= order.getUserCode() %></td>
-        <td><%= order.getUserName() %></td>
-        <td><%= order.getUserEmail() %></td>
-        <td><%= order.getTotalCost() %></td>
-        <td><%= order.getOrderDate() %></td>
-        <td><%= (order.getPaymentMethod() != null) ? order.getPaymentMethod().getCardNumber() : "N/A" %></td>
-        <td>
-            <%= (order.getDeliveryAddress() != null) ?
-                    order.getDeliveryAddress().getStreet() + ", " +
-                            order.getDeliveryAddress().getCity() + ", " +
-                            order.getDeliveryAddress().getZip() + ", " +
-                            order.getDeliveryAddress().getCountry() : "N/A" %>
-        </td>
-        <td>
-            <%= (order.getBillingAddress() != null) ?
-                    order.getBillingAddress().getStreet() + ", " +
-                            order.getBillingAddress().getCity() + ", " +
-                            order.getBillingAddress().getZip() + ", " +
-                            order.getBillingAddress().getProvince() : "N/A" %>
-        </td>
-        <td>
-            <a href="OrderDetails?orderId=<%= order.getOrderId() %>">View Details</a>
-            <a href="<%=request.getContextPath()%>/Download?orderId=<%= order.getOrderId() %>">Scarica Fattura</a></td>
-    </tr>
-    <%
-        }
-    } else {
-    %>
-    <tr>
-        <td colspan="10">No orders found.</td>
-    </tr>
-    <%
-        }
-    %>
-    </tbody>
-</table>
+    <p><a href="<%=request.getContextPath()%>/Download?orderId=<%= order.getOrderId() %>&t=<%= System.currentTimeMillis() %>" class="download-button">Scarica fattura</a></p>
 
+    <h3>Prodotti ordinati:</h3>
+    <table>
+        <tr>
+            <th>Codice prodotto</th>
+            <th>Nome</th>
+            <th>Quantita'</th>
+            <th>Prezzo</th>
+        </tr>
+        <%
+            if (orderItems != null) {
+                for (OrderItem item : orderItems) {
+        %>
+        <tr>
+            <td><%= item.getProductCode() %></td>
+            <td><%= item.getProductName() %></td>
+            <td><%= item.getQuantity()+1 %></td>
+            <td>$<%= String.format("%.2f", item.getPrice()) %></td>
+        </tr>
+        <%
+                }
+            }
+        %>
+    </table>
+</div>
+<%
+    }
+} else {
+%>
+<p class="no-orders">No orders found.</p>
+<%
+    }
+%>
 </body>
 </html>

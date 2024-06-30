@@ -67,7 +67,6 @@
 		$('#searchbar').on('input', function() {
 			var query = $(this).val();
 			if (query.length >= 3) {
-				console.log("Sending AJAX request for query: " + query);
 
 				$.ajax({
 					url: '${pageContext.request.contextPath}/Search',

@@ -20,9 +20,6 @@ public class SearchServlet extends HttpServlet {
         String query = request.getParameter("query");
         String userType = (String) request.getSession().getAttribute("userType");
 
-        System.out.println("Received search query: " + query);
-        System.out.println("User type: " + userType);
-
         try {
             ProductModelDM productModel = new ProductModelDM();
             Collection<ProductBean> allProducts;
@@ -42,7 +39,6 @@ public class SearchServlet extends HttpServlet {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             String jsonResults = convertToJSON(filteredProducts);
-            System.out.println("JSON results: " + jsonResults); // Aggiungi questo per il debug
             response.getWriter().write(jsonResults);
         } catch (SQLException e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

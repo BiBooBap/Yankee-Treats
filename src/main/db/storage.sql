@@ -99,7 +99,7 @@ CREATE TABLE users (
 
 
 INSERT INTO users (name, surname, date_of_birth, email, password, user_type, partita_iva, CF)
-VALUES ('Null', 'Null', '01-01-01', 'yankeetreats.confirm@gmail.com', 'YankeeTreats2024', 'admin', NULL, NULL);
+VALUES ('Null', 'Null', '01-01-01', 'yankeetreats.confirm@gmail.com', '$2a$10$JUHkIAHbObWPDztGMuSuBuGfnaM7vrAU9ZjsT3yUrmkBAldUPO6BS', 'admin', NULL, NULL); /*YankeeTreats2024*/
 
 
 CREATE TABLE billing_addresses (
