@@ -59,7 +59,7 @@
                 <form action="${pageContext.request.contextPath}/cart" method="get">
                     <input type="hidden" name="action" value="deleteC">
                     <input type="hidden" name="id" value="<%=item.getId()%>">
-                    <button type="submit" class="remove">Rimuovi</button>
+                    <button type="submit" class="remove-entirely">Rimuovi</button>
                 </form>
             </div>
         </div>
@@ -71,7 +71,7 @@
 
 
         <a href="${pageContext.request.contextPath}/ProductView.jsp"><button>
-            CHIUDI
+            Chiudi
         </button></a>
 
         <% if (cart.isEmpty()){%>
@@ -81,8 +81,8 @@
         <a href="${pageContext.request.contextPath}/resources/jsp_pages/Checkout.jsp">
                 <% } else { %>
                     <a href="${pageContext.request.contextPath}/resources/jsp_pages/Login.jsp?fromCart=true">
-                <% } %><button>
-                    CHECKOUT
+                <% } %><button style="background-color: ">
+                    Checkout
         </button></a>
     </div>
 </div>
