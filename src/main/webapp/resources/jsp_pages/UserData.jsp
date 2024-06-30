@@ -177,6 +177,7 @@
         </div>
     </form>
 
+    <form id="methodForm" action="${pageContext.request.contextPath}/SaveAllUserData" method="post">
     <input type="hidden" name="action" value="saveBilling">
     <input type="hidden" name="fromCheckout" value="${param.fromCheckout}">
 
@@ -202,6 +203,7 @@
             <button type="submit" class="btn">Salva Indirizzo di Fatturazione</button>
         </div>
     </div>
+    </form>
 
     <% if ("true".equals(fromCheckout)) { %>
     <form action="Checkout.jsp" method="get" style="margin-top: 20px;">
