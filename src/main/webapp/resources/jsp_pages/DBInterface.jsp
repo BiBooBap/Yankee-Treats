@@ -22,60 +22,45 @@
     <title>Inserimento dei prodotti</title>
 
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: #ecf0f1;
+            --text-color: #34495e;
+            --border-color: #bdc3c7;
+            --success-color: #2ecc71;
+            --error-color: #e74c3c;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
             margin: 0;
             padding: 0;
         }
 
         .container {
-            width: 60%;
+            max-width: 1000px;
             margin: 40px auto;
-            background-color: #fff;
             padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
         }
 
         form {
-            margin-bottom: 20px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-
-        form label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        form input[type="text"],
-        form input[type="number"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-        }
-
-        form button[type="submit"],
-        form button[type="button"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-right: 10px;
-        }
-
-        form button[type="submit"]:hover,
-        form button[type="button"]:hover {
-            background-color: #45a049;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         .form-group {
@@ -86,6 +71,7 @@
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
+            color: var(--secondary-color);
         }
 
         .form-group input[type="text"],
@@ -94,7 +80,7 @@
         .form-group input[type="file"] {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--border-color);
             border-radius: 4px;
             box-sizing: border-box;
         }
@@ -110,27 +96,32 @@
             align-items: center;
         }
 
-        .btn {
-            background-color: #4CAF50;
-            color: white;
+        .btn, .btn-home {
+            display: inline-block;
             padding: 10px 20px;
-            border: none;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            text-decoration: none;
             border-radius: 4px;
+            transition: background-color 0.3s ease;
+            border: none;
             cursor: pointer;
             font-size: 16px;
         }
 
-        .btn:hover {
-            background-color: #45a049;
+        .btn:hover, .btn-home:hover {
+            background-color: #2980b9;
         }
 
-        h2 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .section {
-            margin-bottom: 40px;
+        .product-item {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         .product-image {
@@ -141,20 +132,6 @@
             margin-right: 20px;
         }
 
-        .product-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background-color: #fff;
-        }
-
-        .product-info {
-            flex: 1;
-        }
-
         .product-info {
             flex: 1;
             margin-right: 20px;
@@ -162,51 +139,35 @@
 
         .product-info h3 {
             margin-bottom: 5px;
-        }
-
-        .product-info p {
-            margin: 0;
+            color: var(--secondary-color);
         }
 
         .product-actions {
             display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
-        .product-actions button {
-            margin-right: 10px;
-        }
-
-        .btn-readd, .btn-delete, .btn-edit {
+        .btn-edit, .btn-delete, .btn-readd {
             padding: 5px 10px;
-            border: 1px solid #ccc;
             border-radius: 4px;
             cursor: pointer;
-        }
-
-        .btn-quantity:hover, .btn-delete:hover, .btn-edit:hover {
-            background-color: #eee;
-        }
-
-        .btn-delete {
-            background-color: #f00;
-            color: #fff;
+            font-size: 14px;
         }
 
         .btn-edit {
-            background-color: #007bff;
+            background-color: var(--primary-color);
             color: #fff;
         }
 
-        #messageBox {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #333;
+        .btn-delete {
+            background-color: var(--error-color);
             color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            display: none;
+        }
+
+        .btn-readd {
+            background-color: var(--success-color);
+            color: #fff;
         }
 
         .popup-form {
@@ -222,47 +183,74 @@
             display: none;
         }
 
-        .popup-form button[type="button"] {
-            background-color: #f00;
-        }
-
         #alert {
-            /* Style the alert text */
-            color: #d9534f; /* Red or your preferred alert color */
+            color: var(--error-color);
             font-weight: bold;
-
-            /* Style the container for better visual distinction */
-            background-color: rgba(255, 221, 221, 0.8); /* Light red background */
+            background-color: rgba(231, 76, 60, 0.1);
             padding: 3px 5px;
-            border-radius: 3px; /* Rounded corners */
-            margin-left: 5px; /* Add spacing for better readability */
+            border-radius: 3px;
+            margin-left: 5px;
         }
 
-        .btn-home {
-            display: inline-block;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-            margin-bottom: 20px;
+        #messageBox {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--secondary-color);
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
         }
 
-        .btn-home:hover {
-            background-color: #45a049;
-        }
+        @media (max-width: 768px) {
+            .product-actions {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
 
-        .btn-home:active {
-            background-color: #3e8e41;
-        }
+            @media (max-width: 480px) {
+                .btn, .btn-home, .btn-edit, .btn-delete, .btn-readd {
+                    width: 100%;
+                }
+
+                .product-image {
+                    margin-right: 0;
+                    margin-bottom: 20px;
+                }
+
+                .product-info {
+                    margin-right: 0;
+                    margin-bottom: 20px;
+                }
+
+                .product-actions {
+                    width: 100%;
+                    justify-content: space-between;
+                }
+
+                btn, .btn-home, .btn-edit, .btn-delete, .btn-readd {
+                    width: calc(50% - 5px);
+                    margin-bottom: 10px;
+                    text-align: center;
+                    padding: 10px 5px;
+                    font-size: 14px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }}}
     </style>
+
 </head>
 <body>
+<%@ include file="Header.jsp" %>
+
 <div class="container">
     <% if (message != null) { %>
-        <div id="messageBox"><%= message %></div>
+    <div id="messageBox"><%= message %></div>
     <% } %>
     <div class="section">
         <a href="${pageContext.request.contextPath}/product" class="btn-home">Torna alla Home</a>
@@ -418,5 +406,3 @@
 </script>
 </body>
 </html>
-
-
