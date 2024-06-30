@@ -205,7 +205,7 @@
 
     <% if ("true".equals(fromCheckout)) { %>
     <form action="Checkout.jsp" method="get" style="margin-top: 20px;">
-        <button type="submit" class="btn btn-secondary">Torna al checkout</button>
+        <button type="submit" class="btn btn-secondary">Torna al Checkout</button>
     </form>
     <% } %>
 
