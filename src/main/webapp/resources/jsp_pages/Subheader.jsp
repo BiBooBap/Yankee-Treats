@@ -41,7 +41,7 @@
             </a>
         </li>
         <li>
-            <a href=${pageContext.request.contextPath}/product?sort=bundle">
+            <a href="${pageContext.request.contextPath}/product?sort=bundle">
                 &#127873; Bundle &#127873;
             </a>
         </li>

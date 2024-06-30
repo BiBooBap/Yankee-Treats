@@ -298,7 +298,7 @@ public class CheckoutServlet extends HttpServlet {
         DataSource ds = (DataSource) envCtx.lookup("jdbc/storage");
 
         try (Connection conn = ds.getConnection()) {
-            String sql = "INSERT INTO order_items (order_id, product_code, quantity) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO order_items (order_id, product_code, product_name, product_description, product_price, quantity) VALUES (?, ?, ?, ?, ?, ?)";
             String updateSql = "UPDATE product SET quantity = quantity - ? WHERE code = ?";
             String deactivateSql = "UPDATE product SET active = 0 WHERE code = ? AND quantity = 0";
 
@@ -308,8 +308,11 @@ public class CheckoutServlet extends HttpServlet {
 
                 for (CartItem item : cart.getCart()) {
                     stmt.setInt(1, orderId);
-                    stmt.setInt(2, item.getId());
-                    stmt.setInt(3, item.getQuantityCart());
+                    stmt.setInt(2, item.getProduct().getCode());
+                    stmt.setString(3, item.getProduct().getName());
+                    stmt.setString(4, item.getProduct().getDescription());
+                    stmt.setInt(5, item.getProduct().getPrice());
+                    stmt.setInt(6, item.getQuantityCart());
                     stmt.addBatch();
 
                     updateStmt.setInt(1, item.getQuantityCart());

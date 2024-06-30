@@ -87,7 +87,7 @@
 
         if (window.scrollY > sticky) {
             if (!header.classList.contains("sticky")) {
-                placeholder.style.display = 'block';
+                placeholder.style.display = 'flex';
                 placeholder.style.height = header.offsetHeight + 'px';
                 header.classList.add("sticky");
             }

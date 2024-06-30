@@ -414,10 +414,9 @@ public class UtilDS     {
 
     public static List<OrderItem> getOrderItems(int orderId) {
         List<OrderItem> items = new ArrayList<>();
-        String query = "SELECT oi.product_code, p.name, oi.quantity, p.price " +
-                "FROM order_items oi " +
-                "JOIN product p ON oi.product_code = p.code " +
-                "WHERE oi.order_id = ?";
+        String query = "SELECT product_code, product_name, product_description, product_price, quantity " +
+                "FROM order_items " +
+                "WHERE order_id = ?";
 
         try (Connection conn = ds.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -427,9 +426,10 @@ public class UtilDS     {
                 while (rs.next()) {
                     OrderItem item = new OrderItem();
                     item.setProductCode(rs.getInt("product_code"));
-                    item.setProductName(rs.getString("name"));
+                    item.setProductName(rs.getString("product_name"));
+                    item.setProductDescription(rs.getString("product_description"));
+                    item.setPrice(rs.getDouble("product_price"));
                     item.setQuantity(rs.getInt("quantity"));
-                    item.setPrice(rs.getDouble("price"));
                     items.add(item);
                 }
             }
