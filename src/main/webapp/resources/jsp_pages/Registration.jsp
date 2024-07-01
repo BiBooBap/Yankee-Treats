@@ -131,77 +131,62 @@ function validateForm() {
     let isValid = true;
     event.preventDefault();
 
-    // Funzione per validare l'email
     function validateEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     }
 
-    // Funzione per validare la password
     function validatePassword(password) {
         if (password.length < 8) {
             return false;
         }
 
-        // Verifica la presenza di almeno una lettera maiuscola
         if (!/[A-Z]/.test(password)) {
             return false;
         }
 
-        // Verifica la presenza di almeno una lettera minuscola
         if (!/[a-z]/.test(password)) {
             return false;
         }
 
-        // Verifica la presenza di almeno un carattere speciale
         if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
             return false;
         }
 
-        // Verifica che tutti i caratteri siano validi
         if (!/^[A-Za-z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+$/.test(password)) {
             return false;
         }
 
-        // Se tutte le verifiche sono passate, la password è valida
         return true;
     }
 
-    // Funzione per validare la partita IVA italiana
     function validatePartitaIVA(partitaIVA) {
         const partitaIVARegex = /^[0-9]{11}$/;
         return partitaIVARegex.test(partitaIVA);
     }
 
-    // Funzione per validare il codice fiscale italiano
     function validateCodiceFiscale(codiceFiscale) {
         const codiceFiscaleRegex = /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/;
         return codiceFiscaleRegex.test(codiceFiscale);
     }
 
     function validateItalianName(name) {
-        // Espressione regolare per caratteri italiani
         const italianNameRegex = /^[a-zA-ZàáèéìíòóùúÀÁÈÉÌÍÒÓÙÚ' ]+$/;
 
-        // Rimuove spazi all'inizio e alla fine
         name = name.trim();
 
-        // Controlla se il nome è vuoto
         if (name.length === 0) {
             return false;
         }
 
-        // Controlla se il nome contiene solo caratteri italiani
         if (!italianNameRegex.test(name)) {
             return false;
         }
 
-        // Controlla se ci sono spazi doppi
         if (/\s{2,}/.test(name)) {
             return false;
         }
 
-        // Controlla se inizia con una lettera maiuscola
         if (!/^[A-ZÀÁÈÉÌÍÒÓÙÚ]/.test(name)) {
             return false;
         }

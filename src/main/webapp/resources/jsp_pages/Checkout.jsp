@@ -223,7 +223,6 @@ if (document.getElementById('paypal-button-container')) {
         },
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(details) {
-                // Invia i dati del pagamento alla servlet
                 var form = document.createElement('form');
                 form.method = 'POST';
                 form.action = '${pageContext.request.contextPath}/PayPal';
@@ -237,7 +236,7 @@ if (document.getElementById('paypal-button-container')) {
                 var cardNumber = document.createElement('input');
                 cardNumber.type = 'hidden';
                 cardNumber.name = 'cardNumber';
-                cardNumber.value = details.purchase_units[0].payments.captures[0].id; // Utilizziamo l'ID della transazione come identificatore unico
+                cardNumber.value = details.purchase_units[0].payments.captures[0].id;
                 form.appendChild(cardNumber);
 
                 var expiryMonth = document.createElement('input');

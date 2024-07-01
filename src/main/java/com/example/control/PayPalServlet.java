@@ -23,7 +23,6 @@ public class PayPalServlet extends HttpServlet {
         String expiryYear = request.getParameter("expiryYear");
         String cardholderName = request.getParameter("cardholderName");
 
-        // Validate input
         if (userCode == null || cardNumber == null || expiryMonth == null || expiryYear == null || cardholderName == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing required parameters");
             return;
@@ -35,10 +34,9 @@ public class PayPalServlet extends HttpServlet {
             DataSource ds = (DataSource) envCtx.lookup("jdbc/storage");
 
             try (Connection con = ds.getConnection()) {
-                con.setAutoCommit(false);  // Start transaction
+                con.setAutoCommit(false);
 
                 try {
-                    // Insert new payment method
                     String insertQuery = "INSERT INTO payment_method (user_code, card_number, expiry_month, expiry_year, cardholder_name) VALUES (?, ?, ?, ?, ?)";
                     try (PreparedStatement pstmt = con.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
                         pstmt.setInt(1, Integer.parseInt(userCode));
@@ -56,10 +54,10 @@ public class PayPalServlet extends HttpServlet {
 
                     }
 
-                    con.commit();  // Commit transaction
+                    con.commit();
                     response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/Checkout.jsp");
                 } catch (Exception e) {
-                    con.rollback();  // Rollback in case of error
+                    con.rollback();
                     throw e;
                 }
             } catch (SQLException e) {

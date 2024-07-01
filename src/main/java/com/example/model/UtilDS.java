@@ -280,13 +280,13 @@ public class UtilDS     {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     ArrayList<String> row = new ArrayList<>();
-                    row.add(String.valueOf(rs.getInt("card_id")));           // card_id
-                    row.add(String.valueOf(rs.getInt("user_code")));         // user_code
-                    row.add(rs.getString("card_number"));                   // card_number
-                    row.add(String.valueOf(rs.getInt("expiry_month")));      // expiry_month
-                    row.add(String.valueOf(rs.getInt("expiry_year")));       // expiry_year
-                    row.add(rs.getString("cvv"));                           // cvv
-                    row.add(rs.getString("cardholder_name"));               // cardholder_name
+                    row.add(String.valueOf(rs.getInt("card_id")));
+                    row.add(String.valueOf(rs.getInt("user_code")));
+                    row.add(rs.getString("card_number"));
+                    row.add(String.valueOf(rs.getInt("expiry_month")));
+                    row.add(String.valueOf(rs.getInt("expiry_year")));
+                    row.add(rs.getString("cvv"));
+                    row.add(rs.getString("cardholder_name"));
                     paymentMethods.add(row);
                 }
             }
@@ -385,7 +385,7 @@ public class UtilDS     {
             while (rs.next()) {
                 OrderBeans order = new OrderBeans();
                 order.setOrderId(rs.getInt("order_id"));
-                order.setUserCode(rs.getInt("user_code"));  // Aggiunto il codice utente
+                order.setUserCode(rs.getInt("user_code"));
                 order.setUserName(rs.getString("user_name"));
                 order.setUserEmail(rs.getString("user_email"));
                 order.setTotalCost(rs.getDouble("total_cost"));

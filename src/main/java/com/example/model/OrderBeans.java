@@ -9,7 +9,7 @@ import java.util.List;
 
 public class OrderBeans {
     private int orderId;
-    private int userCode;  // Nuovo campo aggiunto
+    private int userCode;
     private String userName;
     private String userEmail;
     private double totalCost;
@@ -21,7 +21,7 @@ public class OrderBeans {
 
     private List<OrderItem> orderItems;
 
-    // Getter e Setter per userCode
+
     public int getUserCode() {
         return userCode;
     }
@@ -30,7 +30,6 @@ public class OrderBeans {
         this.userCode = userCode;
     }
 
-    // Altri getter e setter rimangono invariati
 
     public List<OrderItem> getOrderItems() {
         return orderItems;

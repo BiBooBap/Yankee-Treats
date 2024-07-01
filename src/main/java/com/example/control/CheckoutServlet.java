@@ -137,7 +137,7 @@ public class CheckoutServlet extends HttpServlet {
             PDPage page = new PDPage();
             document.addPage(page);
 
-            // Recupera i dettagli dell'ordine dal database
+
             OrderDetails orderDetails = OrderDetails.getOrderDetails(orderId);
 
             try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
@@ -145,12 +145,12 @@ public class CheckoutServlet extends HttpServlet {
                 contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
                 contentStream.newLineAtOffset(25, 750);
 
-                // Intestazione fattura
+
                 contentStream.setFont(PDType1Font.TIMES_BOLD, 16);
                 contentStream.showText("Fattura per l'ordine #" + orderId);
                 contentStream.newLineAtOffset(0, -20);
 
-                // Dettagli cliente
+
                 contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
                 if(orderDetails.getUserName()!=null) {
                     contentStream.showText("Cliente: " + orderDetails.getUserName());
@@ -159,7 +159,7 @@ public class CheckoutServlet extends HttpServlet {
                 contentStream.showText("Email: " + orderDetails.getUserEmail());
                 contentStream.newLineAtOffset(0, -20);
 
-                // Indirizzo di consegna
+
                 contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
                 contentStream.showText("Indirizzo di Consegna:");
                 contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
@@ -175,7 +175,7 @@ public class CheckoutServlet extends HttpServlet {
                 contentStream.showText("Paese: " + orderDetails.getDeliveryAddress().getCountry());
                 contentStream.newLineAtOffset(0, -20);
 
-                // Indirizzo di fatturazione
+
                 contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
                 contentStream.showText("Indirizzo di Fatturazione:");
                 contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
@@ -189,7 +189,7 @@ public class CheckoutServlet extends HttpServlet {
                 contentStream.showText("CAP: " + orderDetails.getBillingAddress().getZip());
                 contentStream.newLineAtOffset(0, -20);
 
-                // Metodo di pagamento
+
                 contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
                 contentStream.showText("Metodo di Pagamento:");
                 contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
@@ -199,7 +199,7 @@ public class CheckoutServlet extends HttpServlet {
                 contentStream.showText("Intestatario: " + orderDetails.getPaymentMethod().getCardholderName());
                 contentStream.newLineAtOffset(0, -20);
 
-                // Dettagli ordine
+
                 contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
                 contentStream.showText("Dettagli Ordine:");
                 contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
@@ -207,7 +207,7 @@ public class CheckoutServlet extends HttpServlet {
                 contentStream.showText("Data Ordine: " + orderDetails.getOrderDate());
                 contentStream.newLineAtOffset(0, -20);
 
-                // Prodotti ordinati
+
                 contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
                 contentStream.showText("Prodotti Ordinati:");
                 contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
@@ -218,7 +218,7 @@ public class CheckoutServlet extends HttpServlet {
                 }
 
 
-                // Totale
+
                 contentStream.newLineAtOffset(0, -20);
                 contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
                 contentStream.showText("Totale: €" + String.format("%.2f", orderDetails.getTotalCost()));
@@ -321,7 +321,6 @@ public class CheckoutServlet extends HttpServlet {
 
                     item.getProduct().decreaseQuantity(item.getQuantityCart());
 
-                    // Check if the product quantity is now 0 and deactivate if so
                     if (item.getProduct().getQuantity() == 0) {
                         deactivateStmt.setInt(1, item.getId());
                         deactivateStmt.addBatch();

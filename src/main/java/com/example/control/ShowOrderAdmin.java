@@ -19,10 +19,10 @@ public class ShowOrderAdmin extends HttpServlet {
         String sortOrder = request.getParameter("sortOrder");
 
         if (sortBy == null) {
-            sortBy = "date"; // Default sort field
+            sortBy = "date";
         }
         if (sortOrder == null) {
-            sortOrder = "DESC"; // Default sorting order
+            sortOrder = "DESC";
         }
 
         ArrayList<OrderBeans> orders = UtilDS.showAllOrders(sortBy, sortOrder);

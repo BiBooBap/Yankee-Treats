@@ -32,7 +32,7 @@ public class SearchServlet extends HttpServlet {
 
             List<ProductBean> filteredProducts = allProducts.stream()
                     .filter(p -> p.getName().toLowerCase().contains(query.toLowerCase()))
-                    .limit(5)  // Limita i risultati a 5 per una migliore performance
+                    .limit(5)
                     .collect(Collectors.toList());
 
 
@@ -79,31 +79,3 @@ public class SearchServlet extends HttpServlet {
     }
 }
 
-/*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-    var originalContent = $('.container').html();
-
-    $('#searchbar').on('input', function() {
-        var query = $(this).val();
-        if (query.length > 2) {
-            $.ajax({
-                    url: '${pageContext.request.contextPath}/Search',
-                    method: 'GET',
-                    data: { query: query },
-            dataType: 'json',  // Specifica che ci aspettiamo dati JSON
-                    success: function(data) {
-                console.log("Received data:", data);
-                displayResults(data);
-            },
-            error: function(xhr, status, error) {
-                console.log("AJAX error:", status, error);
-            }
-					});
-        } else {
-            $('.container').html(originalContent);
-        }
-    });
-});
-
- */

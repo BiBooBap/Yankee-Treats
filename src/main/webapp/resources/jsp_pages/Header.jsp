@@ -100,7 +100,6 @@
         }
     }
 
-    // Debounce function to limit how often the scroll event fires
     function debounce(func, wait = 10, immediate = true) {
         let timeout;
         return function() {
@@ -116,14 +115,11 @@
         };
     }
 
-    // Use the debounced version of myFunction for the scroll event
     window.addEventListener('scroll', debounce(myFunction));
 
-    // Call myFunction on page load and resize
     window.addEventListener('load', myFunction);
     window.addEventListener('resize', debounce(myFunction));
 
-    // Initial call to set correct state
     myFunction();
 
 

@@ -24,7 +24,7 @@ public class DeleteServlet extends HttpServlet {
         String userCode = request.getParameter("userCode");
         int code = Integer.parseInt(request.getParameter("code"));
 
-        if(code==1){ //eliminiamo delivery adress
+        if(code==1){
             Context initCtx = null;
             try {
                 initCtx = new InitialContext();
@@ -58,7 +58,7 @@ public class DeleteServlet extends HttpServlet {
                 }
                 response.sendRedirect("resources/jsp_pages/ViewUserData.jsp");
         }
-        if(code==2){ //eliminiamo BillingAdress
+        if(code==2){
             Context initCtx = null;
             try {
                 initCtx = new InitialContext();

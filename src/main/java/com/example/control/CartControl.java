@@ -43,7 +43,7 @@ public class CartControl extends HttpServlet {
                     item.addQuantity();
                 }
                 response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/Cart.jsp");
-                return; // Ensure no further processing occurs after redirect
+                return;
             } else if (action != null && action.equalsIgnoreCase("decrementC")) {
                 int productId = Integer.parseInt(request.getParameter("id"));
                 CartItem item = cart.getCartItem(productId);
@@ -71,8 +71,6 @@ public class CartControl extends HttpServlet {
 
         request.getSession().setAttribute("cart", cart);
         request.setAttribute("cart", cart);
-
-        // Fallback redirect if no action matched
         response.sendRedirect(request.getContextPath() + "/resources/jsp_pages/Cart.jsp");
     }
 }

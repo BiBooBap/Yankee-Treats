@@ -76,7 +76,6 @@ public class InsertProductAdmin extends HttpServlet {
                                     File file = new File(uploadPath + File.separator + fileName);
                                     fileItem.write(file);
 
-                                    // Ensure the file is actually saved
                                     if (file.exists()) {
                                         System.out.println("File uploaded to: " + file.getAbsolutePath());
                                     } else {

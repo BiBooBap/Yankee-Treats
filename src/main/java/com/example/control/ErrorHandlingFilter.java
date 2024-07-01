@@ -25,7 +25,6 @@ public class ErrorHandlingFilter implements Filter {
         try {
             chain.doFilter(request, response);
         } catch (Exception e) {
-            // Logica di gestione degli errori
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             HttpServletRequest httpRequest = (HttpServletRequest) request;
 
