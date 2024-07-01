@@ -23,6 +23,15 @@
 
     <div class="section address">
         <h2 class="section-title">Indirizzi di Consegna</h2>
+        <%
+            ArrayList<String[]> deliveryAddresses = null;
+            try {
+                deliveryAddresses = UtilDS.returnDeliveryAddress(userEmail);
+            } catch (NamingException | SQLException e) {
+                throw new RuntimeException(e);
+            }
+            if (deliveryAddresses != null && !deliveryAddresses.isEmpty()) {
+        %>
         <form action="${pageContext.request.contextPath}/Delete" method="post">
             <table>
                 <thead>
@@ -36,13 +45,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <% ArrayList<String[]> deliveryAddresses = null;
-                    try {
-                        deliveryAddresses = UtilDS.returnDeliveryAddress(userEmail);
-                    } catch (NamingException | SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                    for (String[] address : deliveryAddresses) { %>
+                <% for (String[] address : deliveryAddresses) { %>
                 <tr>
                     <td><input type="radio" class="select-radio" name="selectedAddressId" value="<%= address[0] %>"></td>
                     <td><%= address[5] %></td>
@@ -58,10 +61,22 @@
             <input type="hidden" name="code" value="1">
             <button type="submit" class="btn">Elimina</button>
         </form>
+        <% } else { %>
+        <p>Nessun indirizzo di consegna disponibile.</p>
+        <% } %>
     </div>
 
     <div class="section billing-info">
         <h2 class="section-title">Indirizzi di Fatturazione</h2>
+        <%
+            ArrayList<String[]> billingAddresses = null;
+            try {
+                billingAddresses = UtilDS.returnBillingAddress(userEmail);
+            } catch (NamingException | SQLException e) {
+                throw new RuntimeException(e);
+            }
+            if (billingAddresses != null && !billingAddresses.isEmpty()) {
+        %>
         <form action="${pageContext.request.contextPath}/Delete" method="post">
             <table>
                 <thead>
@@ -74,13 +89,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <% ArrayList<String[]> billingAddresses = null;
-                    try {
-                        billingAddresses = UtilDS.returnBillingAddress(userEmail);
-                    } catch (NamingException | SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                    for (String[] address : billingAddresses) { %>
+                <% for (String[] address : billingAddresses) { %>
                 <tr>
                     <td><input type="radio" class="select-radio" name="selectedAddressId" value="<%= address[0] %>"></td>
                     <td><%= address[2] %></td>
@@ -93,12 +102,24 @@
                 </tbody>
             </table>
             <input type="hidden" name="code" value="2">
-            <button type="submit" class="btn" >Elimina</button>
+            <button type="submit" class="btn">Elimina</button>
         </form>
+        <% } else { %>
+        <p>Nessun indirizzo di fatturazione disponibile.</p>
+        <% } %>
     </div>
 
     <div class="section payment-methods">
         <h2 class="section-title">Metodi di Pagamento</h2>
+        <%
+            ArrayList<String[]> paymentMethods = null;
+            try {
+                paymentMethods = UtilDS.returnPaymentMethod(userEmail);
+            } catch (NamingException | SQLException e) {
+                throw new RuntimeException(e);
+            }
+            if (paymentMethods != null && !paymentMethods.isEmpty()) {
+        %>
         <form action="${pageContext.request.contextPath}/Delete" method="post">
             <table>
                 <thead>
@@ -112,16 +133,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <% ArrayList<String[]> paymentMethods = null;
-                    try {
-                        paymentMethods = UtilDS.returnPaymentMethod(userEmail);
-                    } catch (NamingException | SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                    for (String[] method : paymentMethods) { %>
+                <% for (String[] method : paymentMethods) { %>
                 <tr>
                     <td><input type="radio" class="select-radio" name="selectedAddressId" value="<%= method[0] %>"></td>
-                    <td>**** **** **** <%= method[2].substring(12, 16) %></td>
+                    <td><%= method[2]%></td>
                     <td><%= method[3] %></td>
                     <td><%= method[4].substring(0, 4) %></td>
                     <td><%= method[5] %></td>
@@ -134,6 +149,9 @@
             <input type="hidden" name="code" value="3">
             <button type="submit" class="btn">Elimina</button>
         </form>
+        <% } else { %>
+        <p>Nessun metodo di pagamento disponibile.</p>
+        <% } %>
     </div>
 </div>
 

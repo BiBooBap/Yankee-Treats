@@ -356,8 +356,16 @@ public class UtilDS     {
         return orders;
     }
 
-    public static ArrayList<OrderBeans> showAllOrders() {
+    public static ArrayList<OrderBeans> showAllOrders(String sortBy, String sortOrder) {
         ArrayList<OrderBeans> orders = new ArrayList<>();
+        String orderByClause;
+
+        if (sortBy.equals("user")) {
+            orderByClause = "o.user_code " + sortOrder + ", o.order_date DESC";
+        } else {
+            orderByClause = "o.order_date " + sortOrder;
+        }
+
         String query = "SELECT o.order_id, o.user_code, o.total_cost, o.order_date,\n" +
                 "       u.name as user_name, u.email as user_email,\n" +
                 "       p.card_number, p.cardholder_name,\n" +
@@ -368,7 +376,7 @@ public class UtilDS     {
                 "LEFT JOIN delivery_addresses d ON o.delivery_address_id = d.address_id\n" +
                 "LEFT JOIN billing_addresses b ON o.billing_address_id = b.address_id\n" +
                 "LEFT JOIN users u ON o.user_code = u.code\n" +
-                "ORDER BY o.order_date DESC";
+                "ORDER BY " + orderByClause;
 
         try (Connection conn = ds.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);

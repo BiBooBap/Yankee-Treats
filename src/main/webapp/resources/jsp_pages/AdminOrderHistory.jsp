@@ -9,14 +9,33 @@
 <body>
 <%@ include file="Header.jsp" %>
 
+
 <div class="container">
     <h1>Storico ordini utenti</h1>
+
+    <form action="${pageContext.request.contextPath}/ShowOrderAdmin" method="get">
+        <label for="sortBy">Ordina per:</label>
+        <select name="sortBy" id="sortBy">
+            <option value="date" ${currentSortBy == 'date' ? 'selected' : ''}>Data</option>
+            <option value="user" ${currentSortBy == 'user' ? 'selected' : ''}>Codice utente</option>
+        </select>
+
+        <label for="sortOrder">Ordine:</label>
+        <select name="sortOrder" id="sortOrder">
+            <option value="DESC" ${currentSortOrder == 'DESC' ? 'selected' : ''}>Decrescente</option>
+            <option value="ASC" ${currentSortOrder == 'ASC' ? 'selected' : ''}>Crescente</option>
+        </select>
+
+        <input type="submit" value="Applica">
+    </form>
+
     <%
         ArrayList<OrderBeans> orders = (ArrayList<OrderBeans>) session.getAttribute("orders");
         if (orders != null && !orders.isEmpty()) {
             for (OrderBeans order : orders) {
                 List<OrderItem> orderItems = UtilDS.getOrderItems(order.getOrderId());
     %>
+
     <div class="order">
         <h2>Ordine #<%= order.getOrderId() %></h2>
         <div class="order-info">

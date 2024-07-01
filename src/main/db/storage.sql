@@ -155,11 +155,14 @@ CREATE TABLE order_items (
                              order_item_id INT PRIMARY KEY AUTO_INCREMENT,
                              order_id INT,
                              product_code INT,
+                             product_name char(50) not null,
+                             product_description char(100),
+                             product_price int default 0,
                              quantity INT,
                              FOREIGN KEY (order_id) REFERENCES orders(order_id),
                              FOREIGN KEY (product_code) REFERENCES product(code)
 );
 
+
 -- sb-0lgkm31358344@personal.example.com
 -- 0%P6o4nQ
-
