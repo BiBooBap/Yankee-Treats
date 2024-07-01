@@ -137,6 +137,42 @@ function validateForm() {
         return true;
     }
 
+    function validateBirthDate(birthDate) {
+        // Converte la stringa della data in un oggetto Date
+        const inputDate = new Date(birthDate);
+
+        // Ottiene la data corrente
+        const currentDate = new Date();
+
+        // Calcola la data minima accettabile (18 anni fa da oggi)
+        const minDate = new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate());
+
+        // Verifica se la data è valida
+        if (isNaN(inputDate.getTime())) {
+            return false;
+        }
+
+        // Verifica se l'utente ha almeno 18 anni
+        if (inputDate > minDate) {
+            return false;
+        }
+
+        // Verifica se la data è nel futuro
+        if (inputDate > currentDate) {
+            return false;
+        }
+
+        // Verifica se l'anno è ragionevole (ad esempio, non più di 120 anni fa)
+        const maxAge = 120;
+        const minYear = currentDate.getFullYear() - maxAge;
+        if (inputDate.getFullYear() < minYear) {
+            return false;
+        }
+
+        // Se tutte le verifiche sono passate, la data è valida
+        return true;
+    }
+
     let userType = document.querySelector('select[name="tipo_utente"]').value;
     if (userType === 'venditore') {
         let partitaIva = document.querySelector('input[name="partita_iva"]').value.trim();
@@ -177,6 +213,15 @@ function validateForm() {
     } else {
         document.getElementById('cognome-error').style.display = 'none';
     }
+
+    let birthDate = document.getElementById('birthdate').value;
+        if (!validateBirthDate(birthDate)) {
+            isValid = false;
+            document.getElementById('birthdate-error').style.display = 'block';
+
+        } else {
+            document.getElementById('birthdate-error').style.display = 'none';
+        }
 
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
